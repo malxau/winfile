@@ -410,6 +410,7 @@ CreateLBLine(register DWORD dwLineFormat, LPXDTA lpxdta, LPWSTR szBuffer)
 
 
 LRESULT
+CALLBACK
 DirWndProc(
    HWND hwnd,
    UINT uMsg,

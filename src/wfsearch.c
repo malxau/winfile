@@ -545,6 +545,7 @@ UpdateSearchStatus(HWND hwndLB, INT nCount)
 
 
 LRESULT
+CALLBACK
 SearchWndProc(
    register HWND hwnd,
    UINT uMsg,

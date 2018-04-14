@@ -691,6 +691,7 @@ DrivesSetDrive(
 /*--------------------------------------------------------------------------*/
 
 LRESULT
+CALLBACK
 DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   INT nDrive, nDriveCurrent, nDriveFocus;

@@ -439,6 +439,7 @@ InitPopupMenus(UINT uMenus, HMENU hMenu, HWND hwndActive)
 
 
 LRESULT
+CALLBACK
 FrameWndProc(HWND hwnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    RECT     rc;

@@ -351,6 +351,7 @@ SwitchDriveSelection(HWND hwndChild, BOOL bSelectToolbarDrive)
 // directory tree child windows.
 
 LRESULT
+CALLBACK
 TreeWndProc(
    register HWND hwnd,
    UINT uMsg,

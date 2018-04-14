@@ -569,17 +569,17 @@ VOID  GetDriveRect(DRIVEIND driveInd, PRECT prc);
 
 // Wnd Procs
 
-LRESULT FrameWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK FrameWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 BOOL  AppCommandProc(DWORD id);
-LRESULT TreeWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK TreeWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 LRESULT DriveWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
-LRESULT DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 LRESULT VolumeWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 LRESULT TreeChildWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
-LRESULT TreeControlWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
-LRESULT DirWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK TreeControlWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK DirWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 
-LRESULT SearchWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK SearchWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 VOID (*lpfnFormat)(PWSTR,FMIFS_MEDIA_TYPE,PWSTR,PWSTR,BOOLEAN,FMIFS_CALLBACK);
 VOID (*lpfnDiskCopy)(PWSTR,PWSTR,BOOLEAN,FMIFS_CALLBACK);
 BOOLEAN (*lpfnSetLabel)(PWSTR,PWSTR);

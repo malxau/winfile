@@ -1847,6 +1847,7 @@ ExpandLevel(HWND hWnd, WPARAM wParam, INT nIndex, LPTSTR szPath)
 /////////////////////////////////////////////////////////////////////
 
 LRESULT
+CALLBACK
 TreeControlWndProc(
    register HWND hwnd,
    UINT uMsg,
