@@ -176,12 +176,12 @@ InitExtensions()
                      InsertMenuW(hMenuFrame,
                         IDM_EXTENSIONS + iMenuOffset + iMax,
                         MF_BYPOSITION | MF_POPUP,
-                        (UINT_PTR) hMenu, lsW.szMenuName);
+                        (UINT) hMenu, lsW.szMenuName);
                   } else {
                      InsertMenuA(hMenuFrame,
                         IDM_EXTENSIONS + iMenuOffset + iMax,
                         MF_BYPOSITION | MF_POPUP,
-                        (UINT_PTR) hMenu, lsA.szMenuName);
+                        (UINT) hMenu, lsA.szMenuName);
                   }
                   iMenuOffset++;
                }

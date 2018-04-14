@@ -40,7 +40,7 @@ typedef enum {
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-INT_PTR
+BOOL
 ChooseDriveDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    TCHAR szDrive[5];
@@ -148,7 +148,7 @@ DoHelp:
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-INT_PTR
+BOOL
 DiskLabelDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    TCHAR szNewVol[MAXPATHLEN];
@@ -503,7 +503,7 @@ FillDriveCapacity(HWND hDlg, INT nDrive, FMIFS_MEDIA_TYPE fmSelect, BOOL fDoPopu
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-INT_PTR
+BOOL
 FormatDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    TCHAR szBuf[128];
@@ -1160,7 +1160,7 @@ CancelDlgProc(HWND hDlg,
 //
 /////////////////////////////////////////////////////////////////////
 
-INT_PTR
+BOOL
 ProgressDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    static PCOPYINFO pCopyInfo;
@@ -1387,7 +1387,7 @@ UpdateConnections(BOOL bUpdateDriveList)
 
 }
 
-INT_PTR
+BOOL
 DrivesDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    DRIVEIND driveInd;

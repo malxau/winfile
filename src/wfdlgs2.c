@@ -102,7 +102,7 @@ StarFilename(LPTSTR pszPath)
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-INT_PTR
+BOOL
 SearchDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   LPTSTR     p;
@@ -230,7 +230,7 @@ DoHelp:
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-INT_PTR
+BOOL
 RunDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   LPTSTR p,pDir,pFile,pPar;
@@ -525,7 +525,7 @@ MessWithRenameDirPath(LPTSTR pszPath)
 // The calling routine (AppCommandProc()) sets 'dwSuperDlgMode' before
 // calling DialogBox() to indicate which function is being used.
 
-INT_PTR
+BOOL
 SuperDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    UINT          len;
@@ -1629,7 +1629,7 @@ FullPath:
 // assumes the active MDI child has a directory window
 /*--------------------------------------------------------------------------*/
 
-INT_PTR
+BOOL
 AttribsDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    LPTSTR p, pSel;
@@ -1884,7 +1884,7 @@ DoHelp:
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-INT_PTR
+BOOL
 MakeDirDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    //

@@ -126,7 +126,7 @@ DO_AGAIN:
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-INT_PTR
+BOOL
 OtherDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   DWORD          dwView;
@@ -217,7 +217,7 @@ DoHelp:
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-INT_PTR
+BOOL
 IncludeDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   DWORD dwAttribs;
@@ -319,7 +319,7 @@ DoHelp:
 }
 
 
-INT_PTR
+BOOL
 SelectDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
         HWND hwndActive, hwnd;
@@ -629,7 +629,7 @@ NewFont()
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-INT_PTR
+BOOL
 ConfirmDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   UNREFERENCED_PARAMETER(lParam);

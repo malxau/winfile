@@ -142,7 +142,7 @@ PEXT pExtBase = NULL;
 
 // Prototypes
 
-INT APIENTRY AssociateFileDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL AssociateFileDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
 BOOL AssociateDlgInit(HWND hDlg, LPTSTR lpszExt, INT iSel);
 VOID AssoicateFileDlgCommand(HWND hDlg, WPARAM wParam, LPARAM lParam, PASSOCIATEFILEDLGINFO pAssociateFileDlgInfo);
 BOOL AssociateFileDlgExtAdd(HWND hDlg, PASSOCIATEFILEDLGINFO pAssociateFileDlgInfo);
@@ -411,7 +411,7 @@ UpdateSelectionExt(HWND hDlg, BOOL bForce)
 //--------------------------------------------------------------------------
 
 
-INT_PTR
+BOOL
 AssociateDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    TCHAR szTemp[STRINGSIZ];
@@ -1013,7 +1013,7 @@ DoHelp:
 /////////////////////////////////////////////////////////////////////
 
 
-INT
+BOOL
 AssociateFileDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    INT i;
