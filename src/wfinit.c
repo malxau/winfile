@@ -1094,9 +1094,9 @@ JAPANEND
 // wndClass.cbClsExtra     = 0;
 
 #ifdef PROGMAN
-   wndClass.cbWndExtra     = 11 * sizeof(LONG_PTR);
+   wndClass.cbWndExtra     = 11 * sizeof(LONG);
 #else
-   wndClass.cbWndExtra     = 10 * sizeof(LONG_PTR);
+   wndClass.cbWndExtra     = 10 * sizeof(LONG);
 #endif
 
 
@@ -1114,9 +1114,9 @@ JAPANEND
    wndClass.style          = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
    wndClass.lpfnWndProc    = DrivesWndProc;
 // wndClass.cbClsExtra     = 0;
-   wndClass.cbWndExtra     = sizeof(LONG_PTR) +// GWL_CURDRIVEIND
-                             sizeof(LONG_PTR) +// GWL_CURDRIVEFOCUS
-                             sizeof(LONG_PTR); // GWL_LPSTRVOLUME
+   wndClass.cbWndExtra     = sizeof(LONG) +// GWL_CURDRIVEIND
+                             sizeof(LONG) +// GWL_CURDRIVEFOCUS
+                             sizeof(LONG); // GWL_LPSTRVOLUME
 
 // wndClass.hInstance      = hInstance;
 // wndClass.hIcon          = NULL;
@@ -1132,7 +1132,7 @@ JAPANEND
    wndClass.style          = CS_DBLCLKS;
    wndClass.lpfnWndProc    = TreeControlWndProc;
 // wndClass.cbClsExtra     = 0;
-   wndClass.cbWndExtra     = 2 * sizeof(LONG_PTR); // GWL_READLEVEL, GWL_XTREEMAX
+   wndClass.cbWndExtra     = 2 * sizeof(LONG); // GWL_READLEVEL, GWL_XTREEMAX
 // wndClass.hInstance      = hInstance;
 // wndClass.hIcon          = NULL;
    wndClass.hCursor        = hcurArrow;
@@ -1147,7 +1147,7 @@ JAPANEND
    wndClass.style          = 0;  //CS_VREDRAW | CS_HREDRAW;
    wndClass.lpfnWndProc    = DirWndProc;
 // wndClass.cbClsExtra     = 0;
-   wndClass.cbWndExtra     = 7 * sizeof(LONG_PTR);
+   wndClass.cbWndExtra     = 7 * sizeof(LONG);
 // wndClass.hInstance      = hInstance;
    wndClass.hIcon          = NULL;
 // wndClass.hCursor        = hcurArrow;
@@ -1162,7 +1162,7 @@ JAPANEND
    wndClass.style          = 0L;
    wndClass.lpfnWndProc    = SearchWndProc;
 // wndClass.cbClsExtra     = 0;
-   wndClass.cbWndExtra     = 10 * sizeof(LONG_PTR);
+   wndClass.cbWndExtra     = 10 * sizeof(LONG);
 
 // wndClass.hInstance      = hInstance;
    wndClass.hIcon          = LoadIcon(hInstance, (LPTSTR) MAKEINTRESOURCE(DIRICON));

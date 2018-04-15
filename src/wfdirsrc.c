@@ -882,7 +882,7 @@ DSTrackPoint(
    // Wiggle things around.
    hwndDragging = hwndLB;
 
-   dwTemp = DragObject(GetDesktopWindow(), hwnd, (UINT)iSel, (ULONG_PTR)pch, NULL);
+   dwTemp = DragObject(GetDesktopWindow(), hwnd, (UINT)iSel, (DWORD)pch, NULL);
 
    SetWindowDirectory();
 

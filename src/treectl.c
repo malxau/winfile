@@ -2516,7 +2516,7 @@ UpdateSelection:
       //
       CheckEsc(szPath);
 
-      DragObject(hwndFrame, hwnd, (UINT)DOF_DIRECTORY, (ULONG_PTR)szPath, NULL);
+      DragObject(hwndFrame, hwnd, (UINT)DOF_DIRECTORY, (DWORD)szPath, NULL);
 
       hwndDragging = NULL;
       fShowSourceBitmaps = TRUE;

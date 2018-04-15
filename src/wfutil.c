@@ -65,7 +65,7 @@ SetStatusText(int nPane, UINT nFlags, LPCTSTR szFormat, ...)
       return;
 
    if (nFlags & SST_RESOURCE) {
-      if (!LoadString(hAppInstance, (DWORD) (LONG_PTR) szFormat,
+      if (!LoadString(hAppInstance, (DWORD) szFormat,
          szTempFormat, COUNTOF(szTempFormat)))
 
          return;

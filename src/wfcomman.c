@@ -1730,7 +1730,7 @@ CHECK_OPTION:
 
 ACPCallHelp:
    	   SetCurrentDirectory(szOriginalDirPath);
-       if (!WinHelp(hwndFrame, szWinfileHelp, dwFlags, (ULONG_PTR)szNULL))
+       if (!WinHelp(hwndFrame, szWinfileHelp, dwFlags, (DWORD)szNULL))
           MyMessageBox(hwndFrame, IDS_WINFILE, IDS_WINHELPERR, MB_OK | MB_ICONEXCLAMATION | MB_SYSTEMMODAL);
        break;
 

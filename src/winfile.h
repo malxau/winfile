@@ -718,30 +718,30 @@ VOID  GetTreeUNCName(HWND hwndTree, LPTSTR szBuf, INT nBuf);
 //
 
 
-#define GWL_SPLIT         (0*sizeof(LONG_PTR))
-#define GWL_HDTA          (0*sizeof(LONG_PTR))
+#define GWL_SPLIT         (0*sizeof(LONG))
+#define GWL_HDTA          (0*sizeof(LONG))
 
-#define GWL_PATHLEN       (1*sizeof(LONG_PTR))
-#define GWL_TABARRAY      (1*sizeof(LONG_PTR))
+#define GWL_PATHLEN       (1*sizeof(LONG))
+#define GWL_TABARRAY      (1*sizeof(LONG))
 
-#define GWL_VOLNAME       (2*sizeof(LONG_PTR))
-#define GWL_LISTPARMS     (2*sizeof(LONG_PTR))
+#define GWL_VOLNAME       (2*sizeof(LONG))
+#define GWL_LISTPARMS     (2*sizeof(LONG))
 
-#define GWL_NOTIFYPAUSE  (3*sizeof(LONG_PTR))
-#define GWL_IERROR       (3*sizeof(LONG_PTR))
+#define GWL_NOTIFYPAUSE  (3*sizeof(LONG))
+#define GWL_IERROR       (3*sizeof(LONG))
 
-#define GWL_TYPE         (4*sizeof(LONG_PTR))     // > 0 Tree, -1 = search
-#define GWL_HDTAABORT    (4*sizeof(LONG_PTR))
+#define GWL_TYPE         (4*sizeof(LONG))     // > 0 Tree, -1 = search
+#define GWL_HDTAABORT    (4*sizeof(LONG))
 
-#define GWL_VIEW         (5*sizeof(LONG_PTR))
-#define GWL_SELINFO      (5*sizeof(LONG_PTR))
+#define GWL_VIEW         (5*sizeof(LONG))
+#define GWL_SELINFO      (5*sizeof(LONG))
 
-#define GWL_SORT         (6*sizeof(LONG_PTR))
-#define GWL_NEXTHWND     (6*sizeof(LONG_PTR))
+#define GWL_SORT         (6*sizeof(LONG))
+#define GWL_NEXTHWND     (6*sizeof(LONG))
 
-#define GWL_ATTRIBS      (7*sizeof(LONG_PTR))
-#define GWL_FSCFLAG      (8*sizeof(LONG_PTR))
-#define GWL_LASTFOCUS    (9*sizeof(LONG_PTR))
+#define GWL_ATTRIBS      (7*sizeof(LONG))
+#define GWL_FSCFLAG      (8*sizeof(LONG))
+#define GWL_LASTFOCUS    (9*sizeof(LONG))
 
 #ifdef PROGMAN
 #define GWL_PICONBLOCK 40
@@ -749,14 +749,14 @@ VOID  GetTreeUNCName(HWND hwndTree, LPTSTR szBuf, INT nBuf);
 
 // szDrivesClass...
 
-#define GWL_CURDRIVEIND     (0*sizeof(LONG_PTR))   // current selection in drives window
-#define GWL_CURDRIVEFOCUS   (1*sizeof(LONG_PTR))   // current focus in drives window
-#define GWL_LPTSTRVOLUME    (2*sizeof(LONG_PTR))   // LPTSTR to Volume/Share string
+#define GWL_CURDRIVEIND     (0*sizeof(LONG))   // current selection in drives window
+#define GWL_CURDRIVEFOCUS   (1*sizeof(LONG))   // current focus in drives window
+#define GWL_LPTSTRVOLUME    (2*sizeof(LONG))   // LPTSTR to Volume/Share string
 
 // szTreeControlClass
 
-#define GWL_READLEVEL       (0*sizeof(LONG_PTR))   // iReadLevel for each tree control window
-#define GWL_XTREEMAX        (1*sizeof(LONG_PTR))   // max text extent for each tree control window
+#define GWL_READLEVEL       (0*sizeof(LONG))   // iReadLevel for each tree control window
+#define GWL_XTREEMAX        (1*sizeof(LONG))   // max text extent for each tree control window
 
 // GWL_TYPE numbers
 
