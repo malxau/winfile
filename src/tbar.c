@@ -226,7 +226,7 @@ EnableCheckTBButtons(HWND hwndActive)
    // Check or uncheck the sort-by and view-details buttons based
    // on the settings for the active window.
 
-   switch (GetWindowLongPtr(hwndActive, GWL_VIEW) & VIEW_EVERYTHING) {
+   switch (GetWindowLong(hwndActive, GWL_VIEW) & VIEW_EVERYTHING) {
    case VIEW_NAMEONLY:
       CheckTBButton(IDM_VNAME);
       break;
@@ -244,9 +244,9 @@ EnableCheckTBButtons(HWND hwndActive)
    // if the active window is a search window or lacks a directory pane,
    // else enable them all.
 
-   dwSort = GetWindowLongPtr(hwndActive, GWL_SORT) - IDD_NAME + IDM_BYNAME;
+   dwSort = GetWindowLong(hwndActive, GWL_SORT) - IDD_NAME + IDM_BYNAME;
 
-   fEnable = ((int)GetWindowLongPtr(hwndActive, GWL_TYPE) >= 0 &&
+   fEnable = ((int)GetWindowLong(hwndActive, GWL_TYPE) >= 0 &&
       HasDirWindow(hwndActive));
 
    CheckTBButton(dwSort);
@@ -406,7 +406,7 @@ SelectToolbarDrive(DRIVEIND DriveInd)
    //
    // Move focus of drivebar
    //
-   SetWindowLongPtr(hwndDriveBar, GWL_CURDRIVEIND, DriveInd);
+   SetWindowLong(hwndDriveBar, GWL_CURDRIVEIND, DriveInd);
 }
 
 
@@ -636,7 +636,7 @@ LoadDesc(UINT uID, LPTSTR lpDesc)
 
    hwndActive = (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L);
 
-   if (hwndActive && GetWindowLongPtr(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
+   if (hwndActive && GetWindowLong(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
       uMenu++;
 
    GetMenuString(hMenu, uMenu, szMenu, COUNTOF(szMenu), MF_BYPOSITION);

@@ -344,10 +344,10 @@ InsertDirectory(
    x = GetRealExtent(pNode, hwndLB, NULL, &len);
    x = CALC_EXTENT(pNode);
 
-   xTreeMax = GetWindowLongPtr(hwndTreeCtl, GWL_XTREEMAX);
+   xTreeMax = GetWindowLong(hwndTreeCtl, GWL_XTREEMAX);
    if (x > xTreeMax)
    {
-       SetWindowLongPtr(hwndTreeCtl, GWL_XTREEMAX, x);
+       SetWindowLong(hwndTreeCtl, GWL_XTREEMAX, x);
        SendMessage(hwndLB, LB_SETHORIZONTALEXTENT, x, 0L);
    }
 
@@ -533,7 +533,7 @@ ReadDirLevel(
 
    hwndParent = GetParent(hwndTreeCtl);
 
-   dwView = GetWindowLongPtr(hwndParent, GWL_VIEW);
+   dwView = GetWindowLong(hwndParent, GWL_VIEW);
 
    //
    // we optimize the tree read if we are not adding pluses and
@@ -551,7 +551,7 @@ ReadDirLevel(
    if (!(dwView & VIEW_PLUSES)) {
 
       if ((hwndDir = HasDirWindow(hwndParent)) &&
-          (GetWindowLongPtr(hwndParent, GWL_ATTRIBS) & ATTR_DIR)) {
+          (GetWindowLong(hwndParent, GWL_ATTRIBS) & ATTR_DIR)) {
 
          SendMessage(hwndDir, FS_GETDIRECTORY, COUNTOF(szMessage), (LPARAM)szMessage);
          StripBackslash(szMessage);
@@ -561,7 +561,7 @@ ReadDirLevel(
 
             if (!lstrcmp(szMessage, szStarDotStar)) {
 
-               lpStart = (LPXDTALINK)GetWindowLongPtr(hwndDir, GWL_HDTA);
+               lpStart = (LPXDTALINK)GetWindowLong(hwndDir, GWL_HDTA);
 
                if (lpStart) {
 
@@ -593,9 +593,9 @@ ReadDirLevel(
    //
    EnableWindow(hwndDriveList, FALSE);
 
-   SetWindowLongPtr(hwndTreeCtl,
+   SetWindowLong(hwndTreeCtl,
                  GWL_READLEVEL,
-                 GetWindowLongPtr(hwndTreeCtl, GWL_READLEVEL) + 1);
+                 GetWindowLong(hwndTreeCtl, GWL_READLEVEL) + 1);
 
    iReadLevel++;         // global for menu code
 
@@ -699,7 +699,7 @@ ReadDirLevel(
 
       if (bCancelTree) {
 
-         INT iDrive = GetWindowLongPtr(hwndParent, GWL_TYPE);
+         INT iDrive = GetWindowLong(hwndParent, GWL_TYPE);
 
          if (!IsValidDisk(iDrive))
             PostMessage(hwndParent, WM_SYSCOMMAND, SC_CLOSE, 0L);
@@ -848,9 +848,9 @@ DONE:
       WFFindClose(&lfndta);
   }
 
-   SetWindowLongPtr(hwndTreeCtl,
+   SetWindowLong(hwndTreeCtl,
                  GWL_READLEVEL,
-                 GetWindowLongPtr(hwndTreeCtl, GWL_READLEVEL) - 1);
+                 GetWindowLong(hwndTreeCtl, GWL_READLEVEL) - 1);
 
    iReadLevel--;
 
@@ -913,8 +913,8 @@ StealTreeData(
    //
    // we need to match on these attributes as well as the name
    //
-   dwView    = GetWindowLongPtr(GetParent(hwndTC), GWL_VIEW) & VIEW_PLUSES;
-   dwAttribs = GetWindowLongPtr(GetParent(hwndTC), GWL_ATTRIBS) & ATTR_HS;
+   dwView    = GetWindowLong(GetParent(hwndTC), GWL_VIEW) & VIEW_PLUSES;
+   dwAttribs = GetWindowLong(GetParent(hwndTC), GWL_ATTRIBS) & ATTR_HS;
 
    //
    // get the dir of this new window for compare below
@@ -928,9 +928,9 @@ StealTreeData(
       //
       if ((hwndT = HasTreeWindow(hwndSrc)) &&
          (hwndT != hwndTC) &&
-         !GetWindowLongPtr(hwndT, GWL_READLEVEL) &&
-         (dwView  == (DWORD)(GetWindowLongPtr(hwndSrc, GWL_VIEW) & VIEW_PLUSES)) &&
-         (dwAttribs == (DWORD)(GetWindowLongPtr(hwndSrc, GWL_ATTRIBS) & ATTR_HS))) {
+         !GetWindowLong(hwndT, GWL_READLEVEL) &&
+         (dwView  == (DWORD)(GetWindowLong(hwndSrc, GWL_VIEW) & VIEW_PLUSES)) &&
+         (dwAttribs == (DWORD)(GetWindowLong(hwndSrc, GWL_ATTRIBS) & ATTR_HS))) {
 
          SendMessage(hwndSrc, FS_GETDIRECTORY, COUNTOF(szSrc), (LPARAM)szSrc);
          StripBackslash(szSrc);
@@ -1009,7 +1009,7 @@ FreeAllTreeData(HWND hwndLB)
   }
 
   SendMessage(hwndLB, LB_RESETCONTENT, 0, 0L);
-  SetWindowLongPtr(GetParent(hwndLB), GWL_XTREEMAX, 0);
+  SetWindowLong(GetParent(hwndLB), GWL_XTREEMAX, 0);
 }
 
 
@@ -1066,7 +1066,7 @@ FillTreeListbox(HWND hwndTC,
 
       if (pNode) {
 
-         dwAttribs = ATTR_DIR | (GetWindowLongPtr(GetParent(hwndTC), GWL_ATTRIBS) & ATTR_HS);
+         dwAttribs = ATTR_DIR | (GetWindowLong(GetParent(hwndTC), GWL_ATTRIBS) & ATTR_HS);
          cNodes = 0;
          bCancelTree = FALSE;
 
@@ -1319,7 +1319,7 @@ GetDrive(HWND hwnd, POINT pt)
    //
    // make sure we are not sending the FS_GETDRIVE message to other apps
    //
-   if (GetWindowLongPtr(hwnd, GWLP_HINSTANCE) != (LONG_PTR)hAppInstance)
+   if (GetWindowLong(hwnd, GWL_HINSTANCE) != (LONG)hAppInstance)
       return 0;
 
    chDrive = CHAR_NULL;
@@ -1503,7 +1503,7 @@ TCWP_DrawItem(
       {
             // Blt the proper folder bitmap
 
-            view = GetWindowLongPtr(GetParent(hWnd), GWL_VIEW);
+            view = GetWindowLong(GetParent(hWnd), GWL_VIEW);
 
             if (IsNetPath(pNode)) {
                 if (bDrawSelected)
@@ -1564,7 +1564,7 @@ GetTreeUNCName(HWND hwndTree, LPTSTR szBuf, INT nBuf)
    HWND hwndLB;
    DWORD dwError;
 
-   if (GetWindowLongPtr(hwndTree, GWL_READLEVEL))
+   if (GetWindowLong(hwndTree, GWL_READLEVEL))
       goto notshared;
 
    hwndLB = GetDlgItem(hwndTree, IDCW_TREELISTBOX);
@@ -1688,13 +1688,13 @@ CollapseLevel(HWND hwndLB, PDNODE pNode, INT nIndex)
   //
   // Don't do anything while the tree is being built.
   //
-  if (GetWindowLongPtr(GetParent(hwndLB), GWL_READLEVEL))
+  if (GetWindowLong(GetParent(hwndLB), GWL_READLEVEL))
      return;
 
   /* Disable redrawing early. */
   SendMessage(hwndLB, WM_SETREDRAW, FALSE, 0L);
 
-  xTreeMax = GetWindowLongPtr(GetParent(hwndLB), GWL_XTREEMAX);
+  xTreeMax = GetWindowLong(GetParent(hwndLB), GWL_XTREEMAX);
 
   nIndexT++;
 
@@ -1747,7 +1747,7 @@ ExpandLevel(HWND hWnd, WPARAM wParam, INT nIndex, LPTSTR szPath)
   //
   // Don't do anything while the tree is being built.
   //
-  if (GetWindowLongPtr(hWnd, GWL_READLEVEL))
+  if (GetWindowLong(hWnd, GWL_READLEVEL))
      return;
 
   hwndLB = GetDlgItem(hWnd, IDCW_TREELISTBOX);
@@ -1799,7 +1799,7 @@ ExpandLevel(HWND hWnd, WPARAM wParam, INT nIndex, LPTSTR szPath)
   if (IsTheDiskReallyThere(hWnd, szPath, FUNC_EXPAND, FALSE))
   {
      ReadDirLevel(hWnd, pNode, szPath, pNode->nLevels + 1, nIndex,
-        (DWORD)(ATTR_DIR | (GetWindowLongPtr(GetParent(hWnd), GWL_ATTRIBS) & ATTR_HS)),
+        (DWORD)(ATTR_DIR | (GetWindowLong(GetParent(hWnd), GWL_ATTRIBS) & ATTR_HS)),
         (BOOL)wParam, NULL, IS_PARTIALSORT(DRIVEID(szPath)));
   }
 
@@ -1875,7 +1875,7 @@ TreeControlWndProc(
 
    switch (uMsg) {
    case FS_GETDRIVE:
-      return (GetWindowLongPtr(hwndParent, GWL_TYPE) + L'A');
+      return (GetWindowLong(hwndParent, GWL_TYPE) + L'A');
 
    case TC_COLLAPSELEVEL:
    {
@@ -1884,7 +1884,7 @@ TreeControlWndProc(
       //
       // Don't do anything while the tree is being built.
       //
-      if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+      if (GetWindowLong(hwnd, GWL_READLEVEL))
          break;
 
       if (wParam) {
@@ -1913,7 +1913,7 @@ TreeControlWndProc(
       //
       // Don't do anything while the tree is being built.
       //
-      if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+      if (GetWindowLong(hwnd, GWL_READLEVEL))
          break;
 
       ExpandLevel(hwnd, wParam, (INT)-1, szPath);
@@ -1924,7 +1924,7 @@ TreeControlWndProc(
       //
       // Don't do anything while the tree is being built.
       //
-      if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+      if (GetWindowLong(hwnd, GWL_READLEVEL))
          return 1;
 
       SendMessage(hwndLB, LB_GETTEXT, (INT)SendMessage(hwndLB, LB_GETCURSEL, 0, 0L), (LPARAM)&pNode);
@@ -2004,7 +2004,7 @@ TreeControlWndProc(
       //
       // Don't do anything while the tree is being built.
       //
-      if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+      if (GetWindowLong(hwnd, GWL_READLEVEL))
          break;
 
       //
@@ -2023,7 +2023,7 @@ TreeControlWndProc(
 
       CharUpperBuff(szPath, 1);     // make sure
 
-      SetWindowLongPtr(hwndParent, GWL_TYPE, szPath[0] - TEXT('A'));
+      SetWindowLong(hwndParent, GWL_TYPE, szPath[0] - TEXT('A'));
 
       //
       // resize for new vol label
@@ -2126,7 +2126,7 @@ TreeControlWndProc(
          return -1L;
 
       SendMessage(hwndLB, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
-      SetWindowLongPtr(hwnd, GWL_READLEVEL, 0);
+      SetWindowLong(hwnd, GWL_READLEVEL, 0);
 
       break;
 
@@ -2187,13 +2187,13 @@ TreeControlWndProc(
          //
          // Add a plus if necessary
          //
-         if (GetWindowLongPtr(hwndParent, GWL_VIEW) & VIEW_PLUSES) {
+         if (GetWindowLong(hwndParent, GWL_VIEW) & VIEW_PLUSES) {
 
             lstrcpy(szPath, (LPTSTR)lParam);
             ScanDirLevel( (PDNODE)pNodeT,
                           szPath,
                           ATTR_DIR |
-                          (GetWindowLongPtr(hwndParent, GWL_ATTRIBS) & ATTR_HS));
+                          (GetWindowLong(hwndParent, GWL_ATTRIBS) & ATTR_HS));
 
             //
             // Invalidate the window so the plus gets drawn if needed
@@ -2220,7 +2220,7 @@ TreeControlWndProc(
          //
          // Don't do anything while the tree is being built.
          //
-         if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+         if (GetWindowLong(hwnd, GWL_READLEVEL))
             break;
 
          //
@@ -2293,7 +2293,7 @@ TreeControlWndProc(
             }
          }
 
-         if (CALC_EXTENT(pNode) == (ULONG)GetWindowLongPtr(hwnd, GWL_XTREEMAX))
+         if (CALC_EXTENT(pNode) == (ULONG)GetWindowLong(hwnd, GWL_XTREEMAX))
          {
              ResetTreeMax(hwndLB, FALSE);
          }
@@ -2369,7 +2369,7 @@ TreeControlWndProc(
       {
          RECT rect;
 
-         SetWindowLongPtr(hwndParent, GWL_LASTFOCUS, (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
+         SetWindowLong(hwndParent, GWL_LASTFOCUS, (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
          UpdateStatus(hwndParent);  // update the status bar
 UpdateSelection:
 
@@ -2386,8 +2386,8 @@ UpdateSelection:
       }
 
       case LBN_KILLFOCUS:
-         SetWindowLongPtr(hwndParent, GWL_LASTFOCUS, 0L);
-         SetWindowLongPtr(hwndParent, GWL_LASTFOCUS, (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
+         SetWindowLong(hwndParent, GWL_LASTFOCUS, 0L);
+         SetWindowLong(hwndParent, GWL_LASTFOCUS, (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
 
          goto UpdateSelection;
       }
@@ -2418,7 +2418,7 @@ UpdateSelection:
       //
       // Don't do anything while the tree is being built.
       //
-      if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+      if (GetWindowLong(hwnd, GWL_READLEVEL))
          return 1;
 
       //
@@ -2535,7 +2535,7 @@ UpdateSelection:
       //
       // Don't do anything while the tree is being built.
       //
-      if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+      if (GetWindowLong(hwnd, GWL_READLEVEL))
          break;
 
       //
@@ -2563,7 +2563,7 @@ UpdateSelection:
       //
       // Don't do anything while the tree is being built.
       //
-      if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+      if (GetWindowLong(hwnd, GWL_READLEVEL))
          break;
 
       //
@@ -2606,7 +2606,7 @@ UpdateSelection:
       //
       // Don't do anything while the tree is being built.
       //
-      if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+      if (GetWindowLong(hwnd, GWL_READLEVEL))
          break;
 
       //
@@ -2663,7 +2663,7 @@ UpdateSelection:
       //
       // Don't do anything while the tree is being built.
       //
-      if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+      if (GetWindowLong(hwnd, GWL_READLEVEL))
          return FALSE;
 
       //
@@ -2712,7 +2712,7 @@ UpdateSelection:
       //
       // Don't do anything while the tree is being built.
       //
-      if (GetWindowLongPtr(hwnd, GWL_READLEVEL))
+      if (GetWindowLong(hwnd, GWL_READLEVEL))
          return TRUE;
 
       //
@@ -2831,7 +2831,7 @@ SameSelection:
          {
             HWND hwndLB;
 
-            bChangeDisplay = GetWindowLongPtr(hwndDir, GWLP_USERDATA);
+            bChangeDisplay = GetWindowLong(hwndDir, GWL_USERDATA);
 
             hwndLB = GetDlgItem (hwndDir, IDCW_LISTBOX);
             if (hwndLB && !bChangeDisplay)
@@ -2872,7 +2872,7 @@ SameSelection:
          SetFocus(hwndSet);
          if ((hwndSet == hwndDir) && bChangeDisplay)
          {
-             SetWindowLongPtr(hwndDir, GWL_NEXTHWND, (LPARAM)hwndNext);
+             SetWindowLong(hwndDir, GWL_NEXTHWND, (LPARAM)hwndNext);
          }
 
          return -2L;   // I dealt with this!
@@ -3054,7 +3054,7 @@ ResetTreeMax(
         }
     }
 
-    SetWindowLongPtr(GetParent(hwndLB), GWL_XTREEMAX, xTreeMax);
+    SetWindowLong(GetParent(hwndLB), GWL_XTREEMAX, xTreeMax);
     SendMessage(hwndLB, LB_SETHORIZONTALEXTENT, xTreeMax, 0L);
 }
 

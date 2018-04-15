@@ -151,9 +151,9 @@ NoSearchPath:
    // take all the attributes from the current window
    // (except the filespec, we may want to change this)
    //
-   dwNewSort    = GetWindowLongPtr(hwndSrc, GWL_SORT);
-   dwNewView    = GetWindowLongPtr(hwndSrc, GWL_VIEW);
-   dwNewAttribs = GetWindowLongPtr(hwndSrc, GWL_ATTRIBS);
+   dwNewSort    = GetWindowLong(hwndSrc, GWL_SORT);
+   dwNewView    = GetWindowLong(hwndSrc, GWL_VIEW);
+   dwNewAttribs = GetWindowLong(hwndSrc, GWL_ATTRIBS);
 
    hwnd = CreateTreeWindow(szDir, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, dxSplit);
 
@@ -604,7 +604,7 @@ DrivesSetDrive(
    hwndTree = HasTreeWindow(hwndChild);
 
 
-   if (hwndTree && GetWindowLongPtr(hwndTree, GWL_READLEVEL)) {
+   if (hwndTree && GetWindowLong(hwndTree, GWL_READLEVEL)) {
 
       //
       // bounce any clicks on a drive that is currently being read
@@ -631,8 +631,8 @@ DrivesSetDrive(
    //
    // set the drives window parameters and repaint
    //
-   SetWindowLongPtr(hWnd, GWL_CURDRIVEIND, driveInd);
-   SetWindowLongPtr(hWnd, GWL_CURDRIVEFOCUS, driveInd);
+   SetWindowLong(hWnd, GWL_CURDRIVEIND, driveInd);
+   SetWindowLong(hWnd, GWL_CURDRIVEFOCUS, driveInd);
 
    //
    // this is set in TC_SETDRIVE as well but the FS_CHANGEDISPLAY
@@ -704,8 +704,8 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
 
   hwndChild = (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L);
 
-  nDriveCurrent = GetWindowLongPtr(hWnd, GWL_CURDRIVEIND);
-  nDriveFocus = GetWindowLongPtr(hWnd, GWL_CURDRIVEFOCUS);
+  nDriveCurrent = GetWindowLong(hWnd, GWL_CURDRIVEIND);
+  nDriveFocus = GetWindowLong(hWnd, GWL_CURDRIVEFOCUS);
 
   switch (wMsg) {
       case WM_CREATE:
@@ -717,7 +717,7 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
           if (hwndChild == 0)
              nDrive = 0;
           else
-             nDrive = GetWindowLongPtr(hwndChild, GWL_TYPE);
+             nDrive = GetWindowLong(hwndChild, GWL_TYPE);
 
 
 
@@ -725,8 +725,8 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
           for (i=0; i < cDrives; i++) {
 
               if (rgiDrive[i] == nDrive) {
-                  SetWindowLongPtr(hWnd, GWL_CURDRIVEIND, i);
-                  SetWindowLongPtr(hWnd, GWL_CURDRIVEFOCUS, i);
+                  SetWindowLong(hWnd, GWL_CURDRIVEIND, i);
+                  SetWindowLong(hWnd, GWL_CURDRIVEFOCUS, i);
               }
 
           }
@@ -761,7 +761,7 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
                    {
                       HWND hwndLB;
 
-                      bChangeDisplay = GetWindowLongPtr(hwndDir, GWLP_USERDATA);
+                      bChangeDisplay = GetWindowLong(hwndDir, GWL_USERDATA);
 
                       hwndLB = GetDlgItem (hwndDir, IDCW_LISTBOX);
                       if (hwndLB && !bChangeDisplay)
@@ -795,7 +795,7 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
                    SetFocus(hwndSet);
                    if ((hwndSet == hwndDir) && bChangeDisplay)
                    {
-                       SetWindowLongPtr(hwndDir, GWL_NEXTHWND, (LPARAM)hwndNext);
+                       SetWindowLong(hwndDir, GWL_NEXTHWND, (LPARAM)hwndNext);
                    }
 
                    break;
@@ -822,7 +822,7 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
 
           if ((wParam == VK_LEFT) || (wParam == VK_RIGHT)) {
 
-                SetWindowLongPtr(hWnd, GWL_CURDRIVEFOCUS, nDrive);
+                SetWindowLong(hWnd, GWL_CURDRIVEFOCUS, nDrive);
 
                 GetDriveRect(nDriveFocus, &rc);
                 InvalidateRect(hWnd, &rc, TRUE);
@@ -968,7 +968,7 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
           return TRUE;
 
       case WM_SETFOCUS:
-          SetWindowLongPtr(hwndChild, GWL_LASTFOCUS, (LPARAM)hWnd);
+          SetWindowLong(hwndChild, GWL_LASTFOCUS, (LPARAM)hWnd);
           // fall through
 
       case WM_KILLFOCUS:
@@ -1021,7 +1021,7 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
            //
            hwndTreeCtl = HasTreeWindow(hwndChild);
            if ( (!hwndTreeCtl) ||
-                (GetWindowLongPtr(hwndTreeCtl, GWL_READLEVEL) == 0) )
+                (GetWindowLong(hwndTreeCtl, GWL_READLEVEL) == 0) )
            {
                EnableWindow(hwndDriveList, TRUE);
            }

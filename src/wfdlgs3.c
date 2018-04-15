@@ -248,7 +248,7 @@ DiskLabelDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 
                // refresh windows on this drive
 
-               if (GetSelectedDrive() == (INT)GetWindowLongPtr(hwnd, GWL_TYPE))
+               if (GetSelectedDrive() == (INT)GetWindowLong(hwnd, GWL_TYPE))
                   SendMessage(hwnd, FS_CHANGEDRIVES, 0, 0L);
 
             }
@@ -1282,7 +1282,7 @@ UpdateConnections(BOOL bUpdateDriveList)
       if (GetWindow(hwnd, GW_OWNER) || hwnd == hwndSearch)
          continue;
 
-      drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+      drive = GetWindowLong(hwnd, GWL_TYPE);
 
       //
       // IsValidDisk uses GetDriveType which was updated if
@@ -1309,7 +1309,7 @@ UpdateConnections(BOOL bUpdateDriveList)
             R_NetCon(drive);
 
             if (!WFGetConnection(drive, &lpszVol, FALSE, ALTNAME_REG)) {
-               lpszOldVol = (LPTSTR) GetWindowLongPtr(hwnd, GWL_VOLNAME);
+               lpszOldVol = (LPTSTR) GetWindowLong(hwnd, GWL_VOLNAME);
 
                if (lpszOldVol && lpszVol) {
 
@@ -1341,7 +1341,7 @@ UpdateConnections(BOOL bUpdateDriveList)
                }
             }
          } else if ((hwndTree = HasTreeWindow(hwnd)) &&
-            GetWindowLongPtr(hwndTree, GWL_READLEVEL)) {
+            GetWindowLong(hwndTree, GWL_READLEVEL)) {
 
             //
             // abort tree walk
@@ -1359,7 +1359,7 @@ UpdateConnections(BOOL bUpdateDriveList)
 
    hwndDrive = (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L);
 
-   i = (INT) GetWindowLongPtr(hwndDrive, GWL_TYPE);
+   i = (INT) GetWindowLong(hwndDrive, GWL_TYPE);
 
    if (TYPE_SEARCH == i) {
       i = DRIVEID(SearchInfo.szSearch);
@@ -1576,7 +1576,7 @@ FormatEnd()
 
          // refresh windows on this drive
 
-         if (CancelInfo.Info.Format.iFormatDrive == (INT)GetWindowLongPtr(hwnd, GWL_TYPE))
+         if (CancelInfo.Info.Format.iFormatDrive == (INT)GetWindowLong(hwnd, GWL_TYPE))
             RefreshWindow(hwnd, FALSE, FALSE);
 
       }

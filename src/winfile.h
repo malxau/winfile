@@ -897,7 +897,7 @@ VOID  GetTreeUNCName(HWND hwndTree, LPTSTR szBuf, INT nBuf);
 
 #define HasDirWindow(hwnd)      GetDlgItem(hwnd, IDCW_DIR)
 #define HasTreeWindow(hwnd)     GetDlgItem(hwnd, IDCW_TREECONTROL)
-#define GetSplit(hwnd)          ((int)GetWindowLongPtr(hwnd, GWL_SPLIT))
+#define GetSplit(hwnd)          ((int)GetWindowLong(hwnd, GWL_SPLIT))
 
 
 /* Menu Command Defines */

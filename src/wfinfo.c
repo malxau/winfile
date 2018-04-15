@@ -1514,7 +1514,7 @@ UpdateDriveListComplete(VOID)
       if (GetWindow(hwnd, GW_OWNER) || hwnd == hwndSearch)
          continue;
 
-      drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+      drive = GetWindowLong(hwnd, GWL_TYPE);
 
       //
       // Invalidate cache to get real one in case the user reconnected
@@ -1532,7 +1532,7 @@ UpdateDriveListComplete(VOID)
       if (IsRemoteDrive(drive)) {
 
          if (!WFGetConnection(drive, &lpszVol, FALSE, ALTNAME_REG)) {
-            lpszOldVol = (LPTSTR) GetWindowLongPtr(hwnd, GWL_VOLNAME);
+            lpszOldVol = (LPTSTR) GetWindowLong(hwnd, GWL_VOLNAME);
 
             if (lpszOldVol && lpszVol) {
 
@@ -1786,7 +1786,7 @@ Fail:
 	  INT iMax;
 	  HWND hwndActive;
 	  hwndActive = (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L);
-	  if (hwndActive && GetWindowLongPtr(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
+	  if (hwndActive && GetWindowLong(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
 	     iMax = 1;
 	  else
 	     iMax = 0;
@@ -1815,7 +1815,7 @@ Fail:
 
          if (hwnd != hwndSearch && !GetWindow(hwnd, GW_OWNER)) {
 
-            drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+            drive = GetWindowLong(hwnd, GWL_TYPE);
             DRIVESET(szPath, drive);
 
             if (!aDriveInfo[drive].bShareChkTried  &&

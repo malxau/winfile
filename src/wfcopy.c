@@ -974,7 +974,7 @@ ReplaceDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
             SetDlgItemText(hDlg, IDD_DATE1, szMessage);
          }
 
-         SetWindowLongPtr(hDlg, GWLP_USERDATA, (LPARAM)lpdlgparams);
+         SetWindowLong(hDlg, GWL_USERDATA, (LPARAM)lpdlgparams);
 
          #undef lpdlgparams
          break;
@@ -996,7 +996,7 @@ ReplaceDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
          case IDD_YESALL:
             *pbConfirmAll = TRUE;
 
-            if (((LPPARAM_REPLACEDLG)GetWindowLongPtr(hDlg, GWLP_USERDATA))->bWriteProtect) {
+            if (((LPPARAM_REPLACEDLG)GetWindowLong(hDlg, GWL_USERDATA))->bWriteProtect) {
                *pbConfirmReadOnlyAll = TRUE;
             }
             id = IDYES;

@@ -67,7 +67,7 @@ RedoDriveWindows(HWND hwndActive)
    if (hwndActive == NULL)
       hwndActive = (HWND) SendMessage(hwndMDIClient, WM_MDIGETACTIVE,0,0L);
 
-   iCurDrive = (INT)GetWindowLongPtr(hwndActive, GWL_TYPE);
+   iCurDrive = (INT)GetWindowLong(hwndActive, GWL_TYPE);
 
    if (iCurDrive >= 0) {
       for (iDriveInd=0; iDriveInd<cDrives; iDriveInd++) {
@@ -468,7 +468,7 @@ CreateTreeWindow(
    MDICS.lParam = dxSplit;
 
    hwnd = (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L);
-   if (hwnd && GetWindowLongPtr(hwnd, GWL_STYLE) & WS_MAXIMIZE)
+   if (hwnd && GetWindowLong(hwnd, GWL_STYLE) & WS_MAXIMIZE)
       MDICS.style |= WS_MAXIMIZE;
 
    hwnd = (HWND)SendMessage(hwndMDIClient,
@@ -480,9 +480,9 @@ CreateTreeWindow(
    // sure these values get initialized in the case when there is
    // no directory window.
    //
-   SetWindowLongPtr(hwnd, GWL_VIEW, dwNewView);
-   SetWindowLongPtr(hwnd, GWL_SORT, dwNewSort);
-   SetWindowLongPtr(hwnd, GWL_ATTRIBS, dwNewAttribs);
+   SetWindowLong(hwnd, GWL_VIEW, dwNewView);
+   SetWindowLong(hwnd, GWL_SORT, dwNewSort);
+   SetWindowLong(hwnd, GWL_ATTRIBS, dwNewAttribs);
 
    return hwnd;
 }
@@ -770,7 +770,7 @@ AppCommandProc(register DWORD id)
    INT           ret;
 
    hwndActive = (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L);
-   if (hwndActive && GetWindowLongPtr(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
+   if (hwndActive && GetWindowLong(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
       bMaxed = 1;
    else
       bMaxed = 0;
@@ -1060,7 +1060,7 @@ AppCommandProc(register DWORD id)
          //
          // Is the first item the [..] directory?
          //
-         lpStart = (LPXDTALINK)GetWindowLongPtr(hwndDir, GWL_HDTA);
+         lpStart = (LPXDTALINK)GetWindowLong(hwndDir, GWL_HDTA);
 
          if (lpStart) {
 
@@ -1460,7 +1460,7 @@ DealWithNetError_NotifyResume:
     case IDM_VNAME:
        CheckTBButton(id);
 
-       dwFlags = VIEW_NAMEONLY | (GetWindowLongPtr(hwndActive, GWL_VIEW) & VIEW_NOCHANGE);
+       dwFlags = VIEW_NAMEONLY | (GetWindowLong(hwndActive, GWL_VIEW) & VIEW_NOCHANGE);
        id = CD_VIEW;
        goto ChangeDisplay;
 
@@ -1468,14 +1468,14 @@ DealWithNetError_NotifyResume:
 
        CheckTBButton(id);
 
-       dwFlags = VIEW_EVERYTHING | (GetWindowLongPtr(hwndActive, GWL_VIEW) & VIEW_NOCHANGE);
+       dwFlags = VIEW_EVERYTHING | (GetWindowLong(hwndActive, GWL_VIEW) & VIEW_NOCHANGE);
        id = CD_VIEW;
        goto ChangeDisplay;
 
     case IDM_VOTHER:
        DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(OTHERDLG), hwndFrame, (DLGPROC)OtherDlgProc);
 
-       dwFlags = GetWindowLongPtr(hwndActive, GWL_VIEW) & VIEW_EVERYTHING;
+       dwFlags = GetWindowLong(hwndActive, GWL_VIEW) & VIEW_EVERYTHING;
        if (dwFlags != VIEW_NAMEONLY && dwFlags != VIEW_EVERYTHING)
           CheckTBButton(id);
 
@@ -1512,7 +1512,7 @@ ChangeDisplay:
        if (hwndT = HasDirWindow(hwndActive)) {
           SendMessage(hwndT, FS_CHANGEDISPLAY, id, MAKELONG(LOWORD(dwFlags), 0));
        } else if (hwndActive == hwndSearch) {
-          SetWindowLongPtr(hwndActive, GWL_VIEW, dwFlags);
+          SetWindowLong(hwndActive, GWL_VIEW, dwFlags);
           SendMessage(hwndSearch, FS_CHANGEDISPLAY, CD_VIEW, 0L);
 //        InvalidateRect(hwndActive, NULL, TRUE);
        }
@@ -1601,9 +1601,9 @@ ChangeDisplay:
 
        // toggle pluses view bit
 
-       dwFlags = GetWindowLongPtr(hwndActive, GWL_VIEW) ^ VIEW_PLUSES;
+       dwFlags = GetWindowLong(hwndActive, GWL_VIEW) ^ VIEW_PLUSES;
 
-       SetWindowLongPtr(hwndActive, GWL_VIEW, dwFlags);
+       SetWindowLong(hwndActive, GWL_VIEW, dwFlags);
 
        if (dwFlags & VIEW_PLUSES) {
           // need to reread the tree to do this
@@ -1809,7 +1809,7 @@ InitNetMenuItems(VOID)
 
 
    hwndActive = (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L);
-   if (hwndActive && GetWindowLongPtr(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
+   if (hwndActive && GetWindowLong(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
       iMax = 1;
    else
       iMax = 0;

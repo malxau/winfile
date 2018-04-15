@@ -1584,31 +1584,31 @@ FullPath:
    //
    if (ATTR_READONLY & dwAttribs3State)
    {
-      SetWindowLongPtr( GetDlgItem(hDlg, IDD_READONLY),
+      SetWindowLong( GetDlgItem(hDlg, IDD_READONLY),
                      GWL_STYLE,
                      WS_VISIBLE | WS_GROUP | WS_TABSTOP | BS_AUTO3STATE | WS_CHILD );
    }
    if (ATTR_HIDDEN & dwAttribs3State)
    {
-      SetWindowLongPtr( GetDlgItem(hDlg, IDD_HIDDEN),
+      SetWindowLong( GetDlgItem(hDlg, IDD_HIDDEN),
                      GWL_STYLE,
                      WS_VISIBLE | BS_AUTO3STATE | WS_CHILD);
    }
    if (ATTR_ARCHIVE & dwAttribs3State)
    {
-      SetWindowLongPtr( GetDlgItem(hDlg, IDD_ARCHIVE),
+      SetWindowLong( GetDlgItem(hDlg, IDD_ARCHIVE),
                      GWL_STYLE,
                      WS_VISIBLE | BS_AUTO3STATE | WS_CHILD);
    }
    if (ATTR_SYSTEM & dwAttribs3State)
    {
-      SetWindowLongPtr( GetDlgItem(hDlg, IDD_SYSTEM),
+      SetWindowLong( GetDlgItem(hDlg, IDD_SYSTEM),
                      GWL_STYLE,
                      WS_VISIBLE | BS_AUTO3STATE | WS_CHILD);
    }
    if (ATTR_COMPRESSED & dwAttribs3State)
    {
-      SetWindowLongPtr( GetDlgItem(hDlg, IDD_COMPRESSED),
+      SetWindowLong( GetDlgItem(hDlg, IDD_COMPRESSED),
                      GWL_STYLE,
                      WS_VISIBLE | BS_AUTO3STATE | WS_CHILD);
    }

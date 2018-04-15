@@ -161,8 +161,8 @@ InitPopupMenus(UINT uMenus, HMENU hMenu, HWND hwndActive)
 
    hwndTree = HasTreeWindow(hwndActive);
    hwndDir = HasDirWindow(hwndActive);
-   dwSort = GetWindowLongPtr(hwndActive, GWL_SORT);
-   dwView = GetWindowLongPtr(hwndActive, GWL_VIEW);
+   dwSort = GetWindowLong(hwndActive, GWL_SORT);
+   dwView = GetWindowLong(hwndActive, GWL_VIEW);
 
    uMenuFlags = MF_BYCOMMAND | MF_ENABLED;
 
@@ -184,7 +184,7 @@ InitPopupMenus(UINT uMenus, HMENU hMenu, HWND hwndActive)
       // yield, the ReadDirLevel function will be accessing freed memory
       // when it continues from the yield.
       //
-      if ((hwndTree) && GetWindowLongPtr(hwndTree, GWL_READLEVEL))
+      if ((hwndTree) && GetWindowLong(hwndTree, GWL_READLEVEL))
       {
           uMenuFlags = MF_BYCOMMAND | MF_GRAYED;
       }
@@ -364,7 +364,7 @@ InitPopupMenus(UINT uMenus, HMENU hMenu, HWND hwndActive)
       EnableMenuItem(hMenu, IDM_ADDPLUSES,  uMenuFlags);
 
       if (hwndTree)
-         CheckMenuItem(hMenu, IDM_ADDPLUSES, GetWindowLongPtr(hwndActive, GWL_VIEW) & VIEW_PLUSES ? MF_CHECKED | MF_BYCOMMAND : MF_UNCHECKED | MF_BYCOMMAND);
+         CheckMenuItem(hMenu, IDM_ADDPLUSES, GetWindowLong(hwndActive, GWL_VIEW) & VIEW_PLUSES ? MF_CHECKED | MF_BYCOMMAND : MF_UNCHECKED | MF_BYCOMMAND);
 
    }
 
@@ -476,7 +476,7 @@ FrameWndProc(HWND hwnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
          // a tree or search window
          //
          if (!GetWindow(hwndTree, GW_OWNER) &&
-            GetWindowLongPtr(hwndTree,GWL_FSCFLAG)) {
+            GetWindowLong(hwndTree,GWL_FSCFLAG)) {
 
             SendMessage(hwndTree, WM_FSC, FSC_REFRESH, 0L);
          }
@@ -768,7 +768,7 @@ FrameWndProc(HWND hwnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
          BOOL      bMaxed;
 
          hwndActive = (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L);
-         if (hwndActive && GetWindowLongPtr(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
+         if (hwndActive && GetWindowLong(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
             bMaxed = 1;
          else
             bMaxed = 0;
@@ -850,7 +850,7 @@ FrameWndProc(HWND hwnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
                dwFlags = GetWindowLong(hwnd, GWL_VIEW) &
                                (VIEW_EVERYTHING | VIEW_PLUSES | VIEW_ICON));
 #else
-               dwFlags = GetWindowLongPtr(hwnd, GWL_VIEW) &
+               dwFlags = GetWindowLong(hwnd, GWL_VIEW) &
                                (VIEW_EVERYTHING | VIEW_PLUSES);
 #endif
 
@@ -858,7 +858,7 @@ FrameWndProc(HWND hwnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
                   SendMessage(hwndT, FS_CHANGEDISPLAY, CD_VIEW,
                      MAKELONG(dwFlags, TRUE));
                } else if (hwnd == hwndSearch) {
-                  SetWindowLongPtr(hwnd, GWL_VIEW, dwFlags);
+                  SetWindowLong(hwnd, GWL_VIEW, dwFlags);
                   SendMessage(hwndSearch, FS_CHANGEDISPLAY, CD_VIEW, 0L);
                }
             }
@@ -1190,7 +1190,7 @@ EnablePropertiesMenu(
    if (!pSel || (lstrlen (pSel) == 3 && pSel[2] == CHAR_BACKSLASH))
       return (FALSE);
 
-   hwndLB = (HWND)GetWindowLongPtr(hwndActive, GWL_LASTFOCUS);
+   hwndLB = (HWND)GetWindowLong(hwndActive, GWL_LASTFOCUS);
 
    if (!hwndLB)
       return (FALSE);
@@ -1212,7 +1212,7 @@ EnablePropertiesMenu(
       //
       // Lock down DTA data
       //
-      if (!(lpStart = (LPXDTALINK)GetWindowLongPtr(GetParent(hwndLB), GWL_HDTA)))
+      if (!(lpStart = (LPXDTALINK)GetWindowLong(GetParent(hwndLB), GWL_HDTA)))
          return (FALSE);
 
       if (dwHilight <= 0)
@@ -1256,7 +1256,7 @@ ReturnFalse:
    //
    if (hwndParent == hwndTree) {
       if (SendMessage(hwndLB, LB_GETCURSEL, 0, 0L) > 0L &&
-         !GetWindowLongPtr(hwndTree, GWL_READLEVEL))
+         !GetWindowLong(hwndTree, GWL_READLEVEL))
 
       return(TRUE);
    }

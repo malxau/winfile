@@ -242,7 +242,7 @@ RefreshWindow(
    //
    // make sure the thing is still there (floppy drive, net drive)
    //
-   drive = (DRIVE)GetWindowLongPtr(hwndActive, GWL_TYPE);
+   drive = (DRIVE)GetWindowLong(hwndActive, GWL_TYPE);
 
    if ((drive >= 0) && !CheckDrive(hwndActive, drive, FUNC_SETDRIVE))
       return;
@@ -337,8 +337,8 @@ GetRealParent(HWND hwnd)
    // run up the parent chain until you find a hwnd
    // that doesn't have WS_CHILD set
 
-   while (GetWindowLongPtr(hwnd, GWL_STYLE) & WS_CHILD)
-      hwnd = (HWND)GetWindowLongPtr(hwnd, GWLP_HWNDPARENT);
+   while (GetWindowLong(hwnd, GWL_STYLE) & WS_CHILD)
+      hwnd = (HWND)GetWindowLong(hwnd, GWL_HWNDPARENT);
 
    return hwnd;
 }
@@ -412,7 +412,7 @@ IsLastWindow()
    // count all non title/search windows to see if close is allowed
 
    for (hwnd = GetWindow(hwndMDIClient, GW_CHILD); hwnd; hwnd = GetWindow(hwnd, GW_HWNDNEXT))
-      if (!GetWindow(hwnd, GW_OWNER) && ((INT)GetWindowLongPtr(hwnd, GWL_TYPE) >= 0))
+      if (!GetWindow(hwnd, GW_OWNER) && ((INT)GetWindowLong(hwnd, GWL_TYPE) >= 0))
          count++;
 
    return count == 1;
@@ -459,10 +459,10 @@ GetMDIWindowText(HWND hwnd, LPWSTR szTitle, INT size)
    InternalGetWindowText(hwnd, szTemp, COUNTOF(szTemp));
 
    if (GetWindow(hwnd, GW_OWNER) ||
-      GetWindowLongPtr(hwnd, GWL_TYPE) == -1L)
+      GetWindowLong(hwnd, GWL_TYPE) == -1L)
       lpLast = NULL;
    else {
-      lpLast = szTemp + GetWindowLongPtr(hwnd, GWL_PATHLEN);
+      lpLast = szTemp + GetWindowLong(hwnd, GWL_PATHLEN);
       if (lpLast == szTemp || !*lpLast)
          lpLast = NULL;
    }
@@ -568,7 +568,7 @@ SetMDIWindowText(
             // if (wTextAttribs & TA_LOWERCASE)
             //    CharLower(szTemp);
 
-            drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+            drive = GetWindowLong(hwnd, GWL_TYPE);
             if (drive != -1) {     /* if not a search window */
                lstrcat(szTemp, SZ_SPACEDASHSPACE);
 
@@ -585,14 +585,14 @@ SetMDIWindowText(
 
             SetWindowText(hwndT, szTemp);
             max_num = 1;
-            SetWindowLongPtr(hwndT, GWL_PATHLEN, Length);
+            SetWindowLong(hwndT, GWL_PATHLEN, Length);
          }
          max_num = max(max_num, num);
       }
    }
 
 
-   drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+   drive = GetWindowLong(hwnd, GWL_TYPE);
 
    uTitleLen = lstrlen(szTitle);
 
@@ -618,7 +618,7 @@ SetMDIWindowText(
       // Must store realname in GWL_VOLNAME
       // But only for remote drives
 
-      lpszVolName = (LPTSTR)GetWindowLongPtr(hwnd, GWL_VOLNAME);
+      lpszVolName = (LPTSTR)GetWindowLong(hwnd, GWL_VOLNAME);
 
       if (lpszVolName)
          LocalFree(lpszVolName);
@@ -639,7 +639,7 @@ SetMDIWindowText(
          }
       }
 
-      SetWindowLongPtr(hwnd, GWL_VOLNAME, (LONG_PTR)lpszVolName);
+      SetWindowLong(hwnd, GWL_VOLNAME, (LONG)lpszVolName);
 
       //
       // Use short name in window title
@@ -657,7 +657,7 @@ SetMDIWindowText(
 
       EnterCriticalSection(&CriticalSectionPath);
 
-      SetWindowLongPtr(hwnd, GWL_PATHLEN, uTitleLen);
+      SetWindowLong(hwnd, GWL_PATHLEN, uTitleLen);
       //
       // c:\foo\*.*:1 - [VOL LABEL]
       // h:\foo\*.foo - \\server\share

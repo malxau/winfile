@@ -70,17 +70,17 @@ DrawItem(
 #endif
 
    LPXDTA lpxdta  = (LPXDTA)lpLBItem->itemData;
-   LPXDTALINK lpStart = (LPXDTALINK)GetWindowLongPtr(hwnd, GWL_HDTA);
+   LPXDTALINK lpStart = (LPXDTALINK)GetWindowLong(hwnd, GWL_HDTA);
 
    HDC hDC = lpLBItem->hDC;
 
-   HWND hwndListParms = (HWND)GetWindowLongPtr(hwnd, GWL_LISTPARMS);
+   HWND hwndListParms = (HWND)GetWindowLong(hwnd, GWL_LISTPARMS);
    BOOL bLower;
 
    //
    // Print out any errors
    //
-   iError = (INT)GetWindowLongPtr(hwnd, GWL_IERROR);
+   iError = (INT)GetWindowLong(hwnd, GWL_IERROR);
 
    if (iError) {
 
@@ -234,7 +234,7 @@ DrawItem(
                          x,
                          y-(dyText/2),
                          szBuf,
-                         (WORD *)GetWindowLongPtr(hwnd, GWL_TABARRAY),
+                         (WORD *)GetWindowLong(hwnd, GWL_TABARRAY),
                          x,
                          dwViewOpts & VIEW_DOSNAMES ?
                             MemLinkToHead(lpStart)->dwAlternateFileNameExtent :
@@ -465,12 +465,12 @@ DirWndProc(
          //
          // Now set the selections
          //
-         pSelInfo = (PSELINFO)GetWindowLongPtr(hwnd, GWL_SELINFO);
+         pSelInfo = (PSELINFO)GetWindowLong(hwnd, GWL_SELINFO);
 
          SetSelInfo(hwndLB, lpStart, pSelInfo);
 
          FreeSelInfo(pSelInfo);
-         SetWindowLongPtr(hwnd, GWL_SELINFO, 0L);
+         SetWindowLong(hwnd, GWL_SELINFO, 0L);
 
 #ifdef PROGMAN
          IconPreload(hwndParent, lpStart);
@@ -517,7 +517,7 @@ DirWndProc(
       //
       // Returns the letter of the corresponding directory
       //
-      return (LRESULT) CHAR_A + GetWindowLongPtr(hwndParent, GWL_TYPE);
+      return (LRESULT) CHAR_A + GetWindowLong(hwndParent, GWL_TYPE);
 
    case FS_GETFILESPEC:
 
@@ -600,10 +600,10 @@ DirWndProc(
          if (hwndTree = HasTreeWindow(hwndParent))
             SetFocus(hwndTree);
 
-      if (hMem = (HANDLE)GetWindowLongPtr(hwnd, GWL_TABARRAY))
+      if (hMem = (HANDLE)GetWindowLong(hwnd, GWL_TABARRAY))
          LocalFree(hMem);
 
-      FreeSelInfo((PSELINFO)GetWindowLongPtr(hwnd, GWL_SELINFO));
+      FreeSelInfo((PSELINFO)GetWindowLong(hwnd, GWL_SELINFO));
 
       break;
    }
@@ -613,7 +613,7 @@ DirWndProc(
       WCHAR ch, ch2;
       UINT  cItems;
 
-      if ((ch = LOWORD(wParam)) <= CHAR_SPACE || !GetWindowLongPtr(hwnd, GWL_HDTA))
+      if ((ch = LOWORD(wParam)) <= CHAR_SPACE || !GetWindowLong(hwnd, GWL_HDTA))
          return(-1L);
 
       i = GET_WM_CHARTOITEM_POS(wParam, lParam);
@@ -649,7 +649,7 @@ DirWndProc(
 
       return (LONG)CompareDTA((LPXDTA)lpci->itemData1,
                               (LPXDTA)lpci->itemData2,
-                              GetWindowLongPtr(hwndParent, GWL_SORT));
+                              GetWindowLong(hwndParent, GWL_SORT));
 #undef lpci
 
    case WM_NCDESTROY:
@@ -741,7 +741,7 @@ DirWndProc(
    case WM_DRAWITEM:
 
       DrawItem(hwnd,
-               GetWindowLongPtr(hwndParent, GWL_VIEW),
+               GetWindowLong(hwndParent, GWL_VIEW),
                (LPDRAWITEMSTRUCT)lParam,
                ((LPDRAWITEMSTRUCT)lParam)->hwndItem == GetFocus());
       break;
@@ -810,7 +810,7 @@ DirWndProc(
       {
          UpdateStatus(hwndParent);
 
-         SetWindowLongPtr(hwnd, GWL_NEXTHWND, 0L);
+         SetWindowLong(hwnd, GWL_NEXTHWND, 0L);
       }
 
       //
@@ -849,16 +849,16 @@ DirWndProc(
          // routine that was losing the focus.
          //
          if (SetDirFocus(hwnd)) {
-            SetWindowLongPtr(hwndParent, GWL_LASTFOCUS, (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
+            SetWindowLong(hwndParent, GWL_LASTFOCUS, (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
             UpdateSelection(GET_WM_COMMAND_HWND(wParam, lParam));
          }
          UpdateStatus(hwndParent);
          break;
 
       case LBN_KILLFOCUS:
-         SetWindowLongPtr(hwndParent, GWL_LASTFOCUS, 0L);
+         SetWindowLong(hwndParent, GWL_LASTFOCUS, 0L);
          UpdateSelection(GET_WM_COMMAND_HWND(wParam, lParam));
-         SetWindowLongPtr(hwndParent,
+         SetWindowLong(hwndParent,
                        GWL_LASTFOCUS,
                        (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
          break;
@@ -982,7 +982,7 @@ ChangeDisplay(
    pSelInfo->pSel = NULL;
    pSelInfo->bSelOnly = FALSE;
 
-   hwndListParms = (HWND)GetWindowLongPtr(hwnd, GWL_LISTPARMS);
+   hwndListParms = (HWND)GetWindowLong(hwnd, GWL_LISTPARMS);
    hwndLB = GetDlgItem(hwnd, IDCW_LISTBOX);
 
    switch (uMsg) {
@@ -999,7 +999,7 @@ ChangeDisplay(
          //
          // I need to be updated
          //
-         SetWindowLongPtr(hwndListParms, GWL_FSCFLAG, TRUE);
+         SetWindowLong(hwndListParms, GWL_FSCFLAG, TRUE);
          break;
       }
       wParam = CD_PATH;
@@ -1015,21 +1015,21 @@ ChangeDisplay(
 
    case FS_CHANGEDISPLAY:
 
-      if (GetWindowLongPtr(hwndListParms, GWL_FSCFLAG)) {
+      if (GetWindowLong(hwndListParms, GWL_FSCFLAG)) {
          if (wParam == CD_PATH) {
             wParam = CD_PATH_FORCE;
             bDontSteal = TRUE;
          }
       }
 
-      SetWindowLongPtr(hwndListParms, GWL_FSCFLAG, FALSE);
+      SetWindowLong(hwndListParms, GWL_FSCFLAG, FALSE);
 
       hCursor = SetCursor(LoadCursor(NULL, IDC_WAIT));
       ShowCursor(TRUE);
 
       bResetFocus = (GetFocus() == hwndLB);
 
-      lpStart = (LPXDTALINK)GetWindowLongPtr(hwnd, GWL_HDTA);
+      lpStart = (LPXDTALINK)GetWindowLong(hwnd, GWL_HDTA);
 
       //
       // parse wParam immediately since CD_DONTSTEAL added
@@ -1061,7 +1061,7 @@ ChangeDisplay(
 
          DirGetAnchorFocus(hwndLB, lpStart, pSelInfo);
 
-         SetWindowLongPtr(hwndListParms, GWL_SORT, LOWORD(lParam));
+         SetWindowLong(hwndListParms, GWL_SORT, LOWORD(lParam));
          SendMessage(hwndLB, LB_RESETCONTENT, 0, 0L);
 
          SendMessage(hwndLB, WM_SETREDRAW, FALSE, 0L);
@@ -1080,7 +1080,7 @@ ChangeDisplay(
          // and Details view.
          //
          dwNewView = LOWORD(lParam);
-         dwCurView = GetWindowLongPtr(hwndListParms, GWL_VIEW);
+         dwCurView = GetWindowLong(hwndListParms, GWL_VIEW);
 
          //
          // hiword lParam == TRUE means always refresh
@@ -1094,10 +1094,10 @@ ChangeDisplay(
          //
          if ((VIEW_EVERYTHING & dwNewView) && (VIEW_EVERYTHING & dwCurView)) {
 
-            SetWindowLongPtr(hwndListParms, GWL_VIEW, dwNewView);
+            SetWindowLong(hwndListParms, GWL_VIEW, dwNewView);
 
             FixTabsAndThings(hwndLB,
-                             (WORD *)GetWindowLongPtr(hwnd, GWL_TABARRAY),
+                             (WORD *)GetWindowLong(hwnd, GWL_TABARRAY),
                              GetMaxExtent(hwndLB, lpStart, FALSE),
                              GetMaxExtent(hwndLB, lpStart, TRUE),
                              dwNewView);
@@ -1137,20 +1137,20 @@ ChangeDisplay(
 
          lstrcpy(pSelInfo->szTopIndex, pSelInfo->szCaret);
 
-         bDirFocus = (HWND)GetWindowLongPtr(hwndListParms,
+         bDirFocus = (HWND)GetWindowLong(hwndListParms,
                                          GWL_LASTFOCUS) == hwndLB;
 
          DestroyWindow(hwndLB);
 
          if (bDirFocus)
-            SetWindowLongPtr(hwndListParms, GWL_LASTFOCUS, 0L);
+            SetWindowLong(hwndListParms, GWL_LASTFOCUS, 0L);
 
          //
          // Create a new one (preserving the Sort setting).
          //
-         dwNewSort = GetWindowLongPtr(hwndListParms, GWL_SORT);
-         dwNewAttribs = GetWindowLongPtr(hwndListParms, GWL_ATTRIBS);
-         SetWindowLongPtr(hwndListParms, GWL_VIEW, dwNewView);
+         dwNewSort = GetWindowLong(hwndListParms, GWL_SORT);
+         dwNewAttribs = GetWindowLong(hwndListParms, GWL_ATTRIBS);
+         SetWindowLong(hwndListParms, GWL_VIEW, dwNewView);
 
          bCreateDTABlock = FALSE;
 
@@ -1170,8 +1170,8 @@ ChangeDisplay(
          // (very bad thing)
          //
          hwndT = HasTreeWindow(hwndListParms);
-         if (hwndT && GetWindowLongPtr(hwndT, GWL_READLEVEL)) {
-            SetWindowLongPtr(hwndListParms, GWL_FSCFLAG, TRUE);
+         if (hwndT && GetWindowLong(hwndT, GWL_READLEVEL)) {
+            SetWindowLong(hwndListParms, GWL_FSCFLAG, TRUE);
             break;
          }
 
@@ -1226,9 +1226,9 @@ ChangeDisplay(
             // We are changing selections,
             // Free GWL_SELINFO.
             //
-            FreeSelInfo((PSELINFO)GetWindowLongPtr(hwnd, GWL_SELINFO));
+            FreeSelInfo((PSELINFO)GetWindowLong(hwnd, GWL_SELINFO));
 
-            SetWindowLongPtr(hwnd, GWL_SELINFO, 0L);
+            SetWindowLong(hwnd, GWL_SELINFO, 0L);
 
          } else {
 
@@ -1242,7 +1242,7 @@ ChangeDisplay(
             // of refreshing already.  So don't try and read an empty
             // listbox, just use GWL_SELINFO
             //
-            pSelInfoOld = (PSELINFO)GetWindowLongPtr(hwnd, GWL_SELINFO);
+            pSelInfoOld = (PSELINFO)GetWindowLong(hwnd, GWL_SELINFO);
 
             if (!pSelInfoOld) {
 
@@ -1270,7 +1270,7 @@ ChangeDisplay(
                // and replace the "new" pSelInfo with the
                // old one.
                //
-               SetWindowLongPtr(hwnd, GWL_SELINFO, 0L);
+               SetWindowLong(hwnd, GWL_SELINFO, 0L);
 
                LocalFree(pSelInfo);
                pSelInfo = pSelInfoOld;
@@ -1280,11 +1280,11 @@ ChangeDisplay(
          //
          // Create a new one (preserving the Sort setting)
          //
-         dwNewSort = GetWindowLongPtr(hwndListParms, GWL_SORT);
-         dwNewView = GetWindowLongPtr(hwndListParms, GWL_VIEW);
-         dwNewAttribs = GetWindowLongPtr(hwndListParms, GWL_ATTRIBS);
+         dwNewSort = GetWindowLong(hwndListParms, GWL_SORT);
+         dwNewView = GetWindowLong(hwndListParms, GWL_VIEW);
+         dwNewAttribs = GetWindowLong(hwndListParms, GWL_ATTRIBS);
 
-         SetWindowLongPtr(hwnd, GWLP_USERDATA, 1);
+         SetWindowLong(hwnd, GWL_USERDATA, 1);
          SendMessage(hwndLB, LB_RESETCONTENT, 0, 0L);
 
          goto CreateNewPath;
@@ -1318,9 +1318,9 @@ ChangeDisplay(
          goto Done;
       }
 
-      SetWindowLongPtr(hwnd, GWL_LISTPARMS, (LPARAM)hwndListParms);
-      SetWindowLongPtr(hwnd, GWL_TABARRAY, (LPARAM)pwTabs);
-      SetWindowLongPtr(hwnd, GWL_SELINFO, 0L);
+      SetWindowLong(hwnd, GWL_LISTPARMS, (LPARAM)hwndListParms);
+      SetWindowLong(hwnd, GWL_TABARRAY, (LPARAM)pwTabs);
+      SetWindowLong(hwnd, GWL_SELINFO, 0L);
 
       //
       // get the dir to open from our parent window text
@@ -1377,18 +1377,18 @@ CreateLB:
       //  NOTE: A value of 0 in GWL_SORT is invalid, so check this
       //        to see if the values have been initialized yet.
       //
-      if (!GetWindowLongPtr(hwndListParms, GWL_SORT))
+      if (!GetWindowLong(hwndListParms, GWL_SORT))
       {
-         SetWindowLongPtr(hwndListParms, GWL_VIEW, dwNewView);
-         SetWindowLongPtr(hwndListParms, GWL_SORT, dwNewSort);
-         SetWindowLongPtr(hwndListParms, GWL_ATTRIBS, dwNewAttribs);
+         SetWindowLong(hwndListParms, GWL_VIEW, dwNewView);
+         SetWindowLong(hwndListParms, GWL_SORT, dwNewSort);
+         SetWindowLong(hwndListParms, GWL_ATTRIBS, dwNewAttribs);
       }
 
       //
       // restore the last focus stuff if we are recreating here
       //
-      if (!GetWindowLongPtr(hwndListParms, GWL_LASTFOCUS)) {
-         SetWindowLongPtr(hwndListParms, GWL_LASTFOCUS, (LPARAM)hwndLB);
+      if (!GetWindowLong(hwndListParms, GWL_LASTFOCUS)) {
+         SetWindowLong(hwndListParms, GWL_LASTFOCUS, (LPARAM)hwndLB);
       }
 
       if (bCreateDTABlock) {
@@ -1445,7 +1445,7 @@ CreateNewPath:
       SetLBFont(hwnd,
                 hwndLB,
                 hFont,
-                GetWindowLongPtr(hwndListParms, GWL_VIEW),
+                GetWindowLong(hwndListParms, GWL_VIEW),
                 lpStart);
 
 
@@ -1472,12 +1472,12 @@ ResetSelection:
          //
          // Wasn't used immediately; save it.
          //
-         pSelInfoOld = (PSELINFO)GetWindowLongPtr(hwnd, GWL_SELINFO);
+         pSelInfoOld = (PSELINFO)GetWindowLong(hwnd, GWL_SELINFO);
 
          if (pSelInfoOld != pSelInfo) {
 
             FreeSelInfo(pSelInfoOld);
-            SetWindowLongPtr(hwnd, GWL_SELINFO, (LPARAM)pSelInfo);
+            SetWindowLong(hwnd, GWL_SELINFO, (LPARAM)pSelInfo);
          }
          pSelInfo = NULL;
       }
@@ -2309,7 +2309,7 @@ SetLBFont(
                                                        TRUE);
 
       FixTabsAndThings(hwndLB,
-                       (WORD *)GetWindowLongPtr(hwnd, GWL_TABARRAY),
+                       (WORD *)GetWindowLong(hwnd, GWL_TABARRAY),
                        dxMaxExtent,
                        lpHead->dwAlternateFileNameExtent,
                        dwViewFlags);
@@ -2417,7 +2417,7 @@ FillDirList(
    //
    ExtSelItemsInvalidate();
 
-   iError = (INT)GetWindowLongPtr(hwndDir, GWL_IERROR);
+   iError = (INT)GetWindowLong(hwndDir, GWL_IERROR);
 
    lpHead = MemLinkToHead(lpStart);
 
@@ -2717,7 +2717,7 @@ DirGetSelection(
       *p = CHAR_NULL;
    }
 
-   lpStart = (LPXDTALINK)GetWindowLongPtr(hwndView, GWL_HDTA);
+   lpStart = (LPXDTALINK)GetWindowLong(hwndView, GWL_HDTA);
    if (!lpStart) {
 
 Fail:
@@ -3102,7 +3102,7 @@ UpdateStatus(HWND hwnd)
 
    if (HasTreeWindow(hwnd)) {
 
-      drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+      drive = GetWindowLong(hwnd, GWL_TYPE);
 
       if (SPC_IS_NOTREE(qFreeSpace)) {
 
@@ -3182,7 +3182,7 @@ GetDirSelData(
    LARGE_INTEGER_NULL(*pqSelSize);
    *piSelCount = 0;
 
-   lpStart = (LPXDTALINK)GetWindowLongPtr(hwnd, GWL_HDTA);
+   lpStart = (LPXDTALINK)GetWindowLong(hwnd, GWL_HDTA);
 
    if (!lpStart) {
 
@@ -3254,8 +3254,8 @@ GetDirStatus(
    BOOL isDir, isNet;
    WCHAR szName[MAXPATHLEN];
 
-   if (!GetWindowLongPtr(hwnd, GWL_HDTA) &&
-      !GetWindowLongPtr(hwnd, GWL_IERROR)) {
+   if (!GetWindowLong(hwnd, GWL_HDTA) &&
+      !GetWindowLong(hwnd, GWL_IERROR)) {
 
       SetStatusText(1,
                     SST_RESOURCE,
@@ -3279,7 +3279,7 @@ GetDirStatus(
                  iCount,
                  ShortSizeFormatInternal(szNumBuf, qSize));
 
-   if (hwndLB == (HWND)GetWindowLongPtr((HWND)GetWindowLongPtr(hwnd,
+   if (hwndLB == (HWND)GetWindowLong((HWND)GetWindowLong(hwnd,
                                                          GWL_LISTPARMS),
                                      GWL_LASTFOCUS)) {
 
@@ -3384,7 +3384,7 @@ SortDirList(
    INT iMax, iMin, iMid;
    LPXDTA lpxdta;
 
-   dwSort = GetWindowLongPtr((HWND)GetWindowLongPtr(hwndDir,
+   dwSort = GetWindowLong((HWND)GetWindowLong(hwndDir,
                                                    GWL_LISTPARMS),
                                GWL_SORT);
 
@@ -3462,7 +3462,7 @@ SetDirFocus(HWND hwndDir)
    // We want to bounce the focus if there is an error case in
    // the directory side (No files\access denied).
    //
-   if (GetWindowLongPtr(hwndDir, GWL_IERROR)) {
+   if (GetWindowLong(hwndDir, GWL_IERROR)) {
 
       GetTreeWindows(hwndParent, &hwndTree, NULL);
 

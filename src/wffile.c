@@ -223,7 +223,7 @@ VOID CentreWindow(
     //
     //  Get parent rect.
     //
-    Style = GetWindowLongPtr(hwnd, GWL_STYLE);
+    Style = GetWindowLong(hwnd, GWL_STYLE);
     if ((Style & WS_CHILD) == 0)
     {
         hwndParent = GetDesktopWindow();

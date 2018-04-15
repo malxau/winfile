@@ -63,7 +63,7 @@ GetExtSelection(
       hwnd :
       HasDirWindow(hwnd);
 
-   lpStart = (LPXDTALINK)GetWindowLongPtr(hwndView, GWL_HDTA);
+   lpStart = (LPXDTALINK)GetWindowLong(hwndView, GWL_HDTA);
    hwndLB = GetDlgItem(hwndView, IDCW_LISTBOX);
 
    if (uExtSelItems == (UINT)-1) {
@@ -369,7 +369,7 @@ FreeExtensions()
 
    hMenuFrame = GetMenu(hwndFrame);
    hwndActive = (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L);
-   if (hwndActive && GetWindowLongPtr(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
+   if (hwndActive && GetWindowLong(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
       iMax = 1;
    else
       iMax = 0;

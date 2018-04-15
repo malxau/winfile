@@ -60,13 +60,13 @@ DO_AGAIN:
 
    for (hwnd = GetWindow(hwndMDIClient, GW_CHILD); hwnd; hwnd = GetWindow(hwnd, GW_HWNDNEXT)) {
       HWND ht = HasTreeWindow(hwnd);
-      INT nReadLevel = ht ? GetWindowLongPtr(ht, GWL_READLEVEL) : 0;
+      INT nReadLevel = ht ? GetWindowLong(ht, GWL_READLEVEL) : 0;
 
       // don't save MDI icon title windows or search windows,
       // or any dir window which is currently recursing
 
       if ((GetWindow(hwnd, GW_OWNER) == NULL) &&
-         GetWindowLongPtr(hwnd, GWL_TYPE) != TYPE_SEARCH) /* nReadLevel == 0) */ {
+         GetWindowLong(hwnd, GWL_TYPE) != TYPE_SEARCH) /* nReadLevel == 0) */ {
 
          if (bCounting) {
             dir_num++;
@@ -76,9 +76,9 @@ DO_AGAIN:
          wp.length = sizeof(WINDOWPLACEMENT);
          if (!GetWindowPlacement(hwnd, &wp))
              continue;
-         view = GetWindowLongPtr(hwnd, GWL_VIEW);
-         sort = GetWindowLongPtr(hwnd, GWL_SORT);
-         attribs = GetWindowLongPtr(hwnd, GWL_ATTRIBS);
+         view = GetWindowLong(hwnd, GWL_VIEW);
+         sort = GetWindowLong(hwnd, GWL_SORT);
+         attribs = GetWindowLong(hwnd, GWL_ATTRIBS);
 
          GetMDIWindowText(hwnd, szPath, COUNTOF(szPath));
 
@@ -140,7 +140,7 @@ OtherDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
     {
       case WM_INITDIALOG:
 
-          dwView = GetWindowLongPtr(hwndActive, GWL_VIEW);
+          dwView = GetWindowLong(hwndActive, GWL_VIEW);
           CheckDlgButton(hDlg, IDD_SIZE,  dwView & VIEW_SIZE);
           CheckDlgButton(hDlg, IDD_DATE,  dwView & VIEW_DATE);
           CheckDlgButton(hDlg, IDD_TIME,  dwView & VIEW_TIME);
@@ -164,7 +164,7 @@ OtherDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
                   {
                   HWND hwnd;
 
-                  dwView = GetWindowLongPtr(hwndActive, GWL_VIEW) & VIEW_PLUSES;
+                  dwView = GetWindowLong(hwndActive, GWL_VIEW) & VIEW_PLUSES;
 
                   if (IsDlgButtonChecked(hDlg, IDD_SIZE))
                         dwView |= VIEW_SIZE;
@@ -183,7 +183,7 @@ OtherDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
                   if (hwnd = HasDirWindow(hwndActive))
                       SendMessage(hwnd, FS_CHANGEDISPLAY, CD_VIEW, dwView);
                   else if (hwndActive == hwndSearch) {
-                      SetWindowLongPtr(hwndActive, GWL_VIEW, dwView);
+                      SetWindowLong(hwndActive, GWL_VIEW, dwView);
 
                   SendMessage(hwndActive, FS_CHANGEDISPLAY, CD_VIEW, 0L);
                   }
@@ -240,7 +240,7 @@ IncludeDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
           SetDlgItemText(hDlg, IDD_NAME, szTemp);
           SendDlgItemMessage(hDlg, IDD_NAME, EM_LIMITTEXT, MAXFILENAMELEN-1, 0L);
 
-          dwAttribs = (DWORD)GetWindowLongPtr(hwndActive, GWL_ATTRIBS);
+          dwAttribs = (DWORD)GetWindowLong(hwndActive, GWL_ATTRIBS);
 
           CheckDlgButton(hDlg, IDD_DIR,        dwAttribs & ATTR_DIR);
           CheckDlgButton(hDlg, IDD_PROGRAMS,   dwAttribs & ATTR_PROGRAMS);
@@ -295,7 +295,7 @@ IncludeDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
                       lstrcat(szTemp, szInclude);
                       SetMDIWindowText(hwndActive, szTemp);
 
-                      SetWindowLongPtr(hwndActive, GWL_ATTRIBS, dwAttribs);
+                      SetWindowLong(hwndActive, GWL_ATTRIBS, dwAttribs);
                       SendMessage(hwndDir, FS_CHANGEDISPLAY, CD_PATH, 0L);
                   }
 
@@ -579,7 +579,7 @@ NewFont()
       if (GetWindow(hwnd, GW_OWNER))
          continue;
 
-      if ((INT)GetWindowLongPtr(hwnd, GWL_TYPE) == TYPE_SEARCH) {
+      if ((INT)GetWindowLong(hwnd, GWL_TYPE) == TYPE_SEARCH) {
          SendMessage((HWND)GetDlgItem(hwnd, IDCW_LISTBOX), WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
          SendMessage((HWND)GetDlgItem(hwnd, IDCW_LISTBOX), LB_SETITEMHEIGHT, 0, (LONG)dyFileName);
 
@@ -596,8 +596,8 @@ NewFont()
             SetLBFont(hwndT,
                       hwndT2,
                       hFont,
-                      GetWindowLongPtr(hwnd, GWL_VIEW),
-                      (LPXDTALINK)GetWindowLongPtr(hwndT, GWL_HDTA));
+                      GetWindowLong(hwnd, GWL_VIEW),
+                      (LPXDTALINK)GetWindowLong(hwndT, GWL_HDTA));
 
             InvalidateRect(hwndT2, NULL, TRUE);
          }

@@ -153,7 +153,7 @@ CreateDTABlock(
    LPXDTALINK lpStart;
    MSG msg;
 
-   SetWindowLongPtr(hwnd, GWL_IERROR, ERROR_SUCCESS);
+   SetWindowLong(hwnd, GWL_IERROR, ERROR_SUCCESS);
 
    if (!bDontSteal && (lpStart = StealDTABlock(hwnd, pPath, dwAttribs))) {
 
@@ -200,8 +200,8 @@ DirReadAbort(
 
    FreeDTA(hwnd);
 
-   SetWindowLongPtr(hwnd, GWL_HDTA, (LPARAM)lpStart);
-   SetWindowLongPtr(hwnd, GWL_HDTAABORT, eDirAbort);
+   SetWindowLong(hwnd, GWL_HDTA, (LPARAM)lpStart);
+   SetWindowLong(hwnd, GWL_HDTAABORT, eDirAbort);
    bDirReadAbort = TRUE;
 
    SetEvent(hEventDirRead);
@@ -255,11 +255,11 @@ StealDTABlock(
 
          GetMDIWindowText(hwnd, szPath, COUNTOF(szPath));
 
-         if ((dwAttribs == (DWORD)GetWindowLongPtr(hwnd, GWL_ATTRIBS)) &&
+         if ((dwAttribs == (DWORD)GetWindowLong(hwnd, GWL_ATTRIBS)) &&
             !lstrcmpi(pPath, szPath) &&
-            (lpStart = (LPXDTALINK)GetWindowLongPtr(hwndDir, GWL_HDTA))) {
+            (lpStart = (LPXDTALINK)GetWindowLong(hwndDir, GWL_HDTA))) {
 
-            iError = (INT)GetWindowLongPtr(hwndDir, GWL_IERROR);
+            iError = (INT)GetWindowLong(hwndDir, GWL_IERROR);
             if (!iError || IDS_NOFILES == iError) {
 
                lpStartCopy = MemClone(lpStart);
@@ -318,9 +318,9 @@ FreeDTA(HWND hwnd)
       IconDTADestroy(GetParent(hwnd));
 #endif
 
-   lpxdtaLink = (LPXDTALINK)GetWindowLongPtr(hwnd, GWL_HDTA);
+   lpxdtaLink = (LPXDTALINK)GetWindowLong(hwnd, GWL_HDTA);
 
-   SetWindowLongPtr(hwnd, GWL_HDTA, 0L);
+   SetWindowLong(hwnd, GWL_HDTA, 0L);
 
    //
    // Only delete it if it's not in use.
@@ -378,13 +378,13 @@ DirReadDone(
 
    EDIRABORT eDirAbort;
 
-   eDirAbort = (EDIRABORT)GetWindowLongPtr(hwndDir, GWL_HDTAABORT);
+   eDirAbort = (EDIRABORT)GetWindowLong(hwndDir, GWL_HDTAABORT);
 
    //
    // Last chance check for abort
    //
    if ((eDirAbort & (EDIRABORT_READREQUEST|EDIRABORT_WINDOWCLOSE)) ||
-      GetWindowLongPtr(hwndDir, GWL_HDTA)) {
+      GetWindowLong(hwndDir, GWL_HDTA)) {
 
       //
       // We don't want it
@@ -399,8 +399,8 @@ DirReadDone(
                    szPath,
                    FILE_NOTIFY_CHANGE_FLAGS);
 
-   SetWindowLongPtr(hwndDir, GWL_IERROR, iError);
-   SetWindowLongPtr(hwndDir, GWL_HDTA, (LPARAM)lpStart);
+   SetWindowLong(hwndDir, GWL_IERROR, iError);
+   SetWindowLong(hwndDir, GWL_HDTA, (LPARAM)lpStart);
 
    //
    // Remove the "reading" token
@@ -409,14 +409,14 @@ DirReadDone(
 
    FillDirList(hwndDir, lpStart);
 
-   SetWindowLongPtr(hwndDir, GWLP_USERDATA, 0);
+   SetWindowLong(hwndDir, GWL_USERDATA, 0);
 
-   hwndNext = (HWND)GetWindowLongPtr(hwndDir, GWL_NEXTHWND);
+   hwndNext = (HWND)GetWindowLong(hwndDir, GWL_NEXTHWND);
    if (hwndNext)
    {
        SendMessage(hwndDir, FS_TESTEMPTY, 0L, (LPARAM)hwndNext);
    }
-   SetWindowLongPtr(hwndDir, GWL_NEXTHWND, 0L);
+   SetWindowLong(hwndDir, GWL_NEXTHWND, 0L);
 
    //
    // Refresh display, but don't hit disk
@@ -653,9 +653,9 @@ Restart:
             //
             EnterCriticalSection(&CriticalSectionDirRead);
 
-            bRead = !GetWindowLongPtr(hwndDir, GWL_HDTA) &&
+            bRead = !GetWindowLong(hwndDir, GWL_HDTA) &&
                        EDIRABORT_READREQUEST ==
-                          (EDIRABORT)GetWindowLongPtr(hwndDir, GWL_HDTAABORT);
+                          (EDIRABORT)GetWindowLong(hwndDir, GWL_HDTAABORT);
 
             LeaveCriticalSection(&CriticalSectionDirRead);
 
@@ -663,7 +663,7 @@ Restart:
                CreateDTABlockWorker(hwnd, hwndDir);
                goto Restart;
             }
-            SetWindowLongPtr(hwndDir, GWLP_USERDATA, 0);
+            SetWindowLong(hwndDir, GWL_USERDATA, 0);
          }
       }
 #ifdef PROGMAN
@@ -723,11 +723,11 @@ CreateDTABlockWorker(
    EnterCriticalSection(&CriticalSectionDirRead);
 
    GetMDIWindowText(hwnd, szPath, COUNTOF(szPath));
-   SetWindowLongPtr(hwndDir, GWL_HDTAABORT, EDIRABORT_NULL);
+   SetWindowLong(hwndDir, GWL_HDTAABORT, EDIRABORT_NULL);
 
    LeaveCriticalSection(&CriticalSectionDirRead);
 
-   dwAttribs = GetWindowLongPtr(hwnd, GWL_ATTRIBS);
+   dwAttribs = GetWindowLong(hwnd, GWL_ATTRIBS);
 
    //
    // get the drive index assuming path is
@@ -1018,10 +1018,10 @@ Abort:
 
          EnterCriticalSection(&CriticalSectionDirRead);
 
-         bAbort = ((GetWindowLongPtr(hwndDir,
+         bAbort = ((GetWindowLong(hwndDir,
                                   GWL_HDTAABORT) & (EDIRABORT_WINDOWCLOSE|
                                                     EDIRABORT_READREQUEST)) ||
-                   GetWindowLongPtr(hwndDir, GWL_HDTA));
+                   GetWindowLong(hwndDir, GWL_HDTA));
 
          LeaveCriticalSection(&CriticalSectionDirRead);
 
@@ -1076,7 +1076,7 @@ Done:
    SetLBFont(hwndDir,
              GetDlgItem(hwndDir, IDCW_LISTBOX),
              hFont,
-             GetWindowLongPtr(hwnd, GWL_VIEW),
+             GetWindowLong(hwnd, GWL_VIEW),
              lpStart);
 
    R_Space(drive);

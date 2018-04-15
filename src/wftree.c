@@ -65,7 +65,7 @@ GetTreeFocus(HWND hwndTree)
    if (bDriveBar && GetFocus() == hwndDriveBar)
       return hwndDriveBar;
 
-   hwndLast = hwnd = (HWND)GetWindowLongPtr(hwndTree, GWL_LASTFOCUS);
+   hwndLast = hwnd = (HWND)GetWindowLong(hwndTree, GWL_LASTFOCUS);
 
    while (hwnd && hwnd != hwndTree) {
       hwndLast = hwnd;
@@ -186,7 +186,7 @@ ResizeSplit(HWND hwnd, INT dxSplit)
 
    GetTreeWindows(hwnd, &hwndTree, &hwndDir);
 
-   if (hwndTree && GetWindowLongPtr(hwndTree, GWL_READLEVEL))
+   if (hwndTree && GetWindowLong(hwndTree, GWL_READLEVEL))
       return FALSE;
 
    GetClientRect(hwnd, &rc);
@@ -274,7 +274,7 @@ ResizeSplit(HWND hwnd, INT dxSplit)
    }
 
 
-   SetWindowLongPtr(hwnd, GWL_SPLIT, dxSplit);
+   SetWindowLong(hwnd, GWL_SPLIT, dxSplit);
 
    UpdateStatus(hwnd);
    EnableCheckTBButtons(hwnd);
@@ -290,7 +290,7 @@ SwitchDriveSelection(HWND hwndChild, BOOL bSelectToolbarDrive)
    DRIVEIND i, driveIndOld, driveIndOldFocus;
    RECT rc;
 
-   drive = GetWindowLongPtr(hwndChild, GWL_TYPE);
+   drive = GetWindowLong(hwndChild, GWL_TYPE);
 
    if (TYPE_SEARCH == drive) {
 
@@ -298,13 +298,13 @@ SwitchDriveSelection(HWND hwndChild, BOOL bSelectToolbarDrive)
    }
 
 
-   driveIndOld      = GetWindowLongPtr(hwndDriveBar, GWL_CURDRIVEIND);
-   driveIndOldFocus = GetWindowLongPtr(hwndDriveBar, GWL_CURDRIVEFOCUS);
+   driveIndOld      = GetWindowLong(hwndDriveBar, GWL_CURDRIVEIND);
+   driveIndOldFocus = GetWindowLong(hwndDriveBar, GWL_CURDRIVEFOCUS);
 
    for (i=0; i < cDrives; i++) {
       if (rgiDrive[i] == drive) {
-         SetWindowLongPtr(hwndDriveBar, GWL_CURDRIVEIND, i);
-         SetWindowLongPtr(hwndDriveBar, GWL_CURDRIVEFOCUS, i);
+         SetWindowLong(hwndDriveBar, GWL_CURDRIVEIND, i);
+         SetWindowLong(hwndDriveBar, GWL_CURDRIVEFOCUS, i);
 
          break;
       }
@@ -537,7 +537,7 @@ TreeWndProc(
             //
             drive = DRIVEID(lpcs->lpszName);
 
-            SetWindowLongPtr(hwnd, GWL_TYPE, drive);
+            SetWindowLong(hwnd, GWL_TYPE, drive);
 
             //
             // if dxSplit is negative we split in the middle
@@ -550,13 +550,13 @@ TreeWndProc(
             if (dxSplit < 0)
                dxSplit = lpcs->cx / 2;
 
-            SetWindowLongPtr(hwnd, GWL_NOTIFYPAUSE, 0L);
-            SetWindowLongPtr(hwnd, GWL_SPLIT, dxSplit);
-            SetWindowLongPtr(hwnd, GWL_LASTFOCUS, 0L);
-            SetWindowLongPtr(hwnd, GWL_FSCFLAG, FALSE);
+            SetWindowLong(hwnd, GWL_NOTIFYPAUSE, 0L);
+            SetWindowLong(hwnd, GWL_SPLIT, dxSplit);
+            SetWindowLong(hwnd, GWL_LASTFOCUS, 0L);
+            SetWindowLong(hwnd, GWL_FSCFLAG, FALSE);
 
-            SetWindowLongPtr(hwnd, GWL_VOLNAME, 0L);
-            SetWindowLongPtr(hwnd, GWL_PATHLEN, 0L);
+            SetWindowLong(hwnd, GWL_VOLNAME, 0L);
+            SetWindowLong(hwnd, GWL_PATHLEN, 0L);
 
 #ifdef PROGMAN
             SetWindowLong(hwnd, GWL_PICONBLOCK, 0L);
@@ -566,7 +566,7 @@ TreeWndProc(
                return -1;
 
             GetTreeWindows(hwnd, &hwndTree, &hwndDir);
-            SetWindowLongPtr(hwnd, GWL_LASTFOCUS, (LPARAM)(hwndTree ? hwndTree : hwndDir));
+            SetWindowLong(hwnd, GWL_LASTFOCUS, (LPARAM)(hwndTree ? hwndTree : hwndDir));
 
             iNumWindows++;
 
@@ -585,7 +585,7 @@ TreeWndProc(
             //
             // don't close if we are reading the tree
             //
-            if (GetWindowLongPtr(hwndTree, GWL_READLEVEL))
+            if (GetWindowLong(hwndTree, GWL_READLEVEL))
                break;
          }
 
@@ -614,7 +614,7 @@ TreeWndProc(
          //
          // Free GWL_VOLNAME
          //
-         lpszVolName = (LPTSTR)GetWindowLongPtr(hwnd, GWL_VOLNAME);
+         lpszVolName = (LPTSTR)GetWindowLong(hwnd, GWL_VOLNAME);
 
          if (lpszVolName)
             LocalFree(lpszVolName);
@@ -643,7 +643,7 @@ TreeWndProc(
 
             UpdateStatus(hwnd);
 
-            hwndFocus = (HWND)GetWindowLongPtr(hwnd, GWL_LASTFOCUS);
+            hwndFocus = (HWND)GetWindowLong(hwnd, GWL_LASTFOCUS);
             SetFocus(hwndFocus);
 
             SwitchDriveSelection(hwnd, TRUE);
@@ -654,7 +654,7 @@ TreeWndProc(
 
       case WM_SETFOCUS:
 
-          hwndFocus = (HWND)GetWindowLongPtr(hwnd, GWL_LASTFOCUS);
+          hwndFocus = (HWND)GetWindowLong(hwnd, GWL_LASTFOCUS);
           SetFocus(hwndFocus);
           break;
 

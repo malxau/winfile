@@ -193,7 +193,7 @@ MemoryError:
       //
       MemLinkToHead(*plpStart)->dwAlternateFileNameExtent = 0;
 
-      SetWindowLongPtr(GetParent(hwndLB), GWL_HDTA, (LPARAM)*plpStart);
+      SetWindowLong(GetParent(hwndLB), GWL_HDTA, (LPARAM)*plpStart);
       SearchInfo.lpStart = *plpStart;
    }
 
@@ -681,11 +681,11 @@ SearchWndProc(
          (hwnd != (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L)) ||
          (GetActiveWindow() != hwndFrame)) {
 
-         SetWindowLongPtr(hwnd, GWL_FSCFLAG, TRUE);
+         SetWindowLong(hwnd, GWL_FSCFLAG, TRUE);
          break;
       }
 
-      SetWindowLongPtr(hwnd, GWL_FSCFLAG, FALSE);
+      SetWindowLong(hwnd, GWL_FSCFLAG, FALSE);
       SendMessage(hwnd, FS_CHANGEDISPLAY, CD_SEARCHUPDATE, 0L);
 
       break;
@@ -699,7 +699,7 @@ SearchWndProc(
       wParam &= ~CD_DONTSTEAL;
 
       if (wParam == CD_VIEW || wParam == CD_SEARCHFONT) {
-         dwNewView = GetWindowLongPtr(hwnd, GWL_VIEW);
+         dwNewView = GetWindowLong(hwnd, GWL_VIEW);
 
          //
          // in case font changed, update maxExt
@@ -717,7 +717,7 @@ SearchWndProc(
          }
 
          FixTabsAndThings(hwndLB,
-                          (WORD *)GetWindowLongPtr(hwnd, GWL_TABARRAY),
+                          (WORD *)GetWindowLong(hwnd, GWL_TABARRAY),
                           maxExt + dxText,
                           0,
                           dwNewView);
@@ -812,7 +812,7 @@ SearchWndProc(
       ClearSearchLB(FALSE);
       SearchInfo.hwndLB = NULL;
 
-      if (hMem = (HANDLE)GetWindowLongPtr(hwnd, GWL_TABARRAY))
+      if (hMem = (HANDLE)GetWindowLong(hwnd, GWL_TABARRAY))
          LocalFree(hMem);
 
       break;
@@ -843,17 +843,17 @@ SearchWndProc(
          return -1L;
 
       hwndSearch = hwnd;
-      SetWindowLongPtr(hwnd, GWL_TYPE,   TYPE_SEARCH);
-      SetWindowLongPtr(hwnd, GWL_VIEW,   dwNewView);
-      SetWindowLongPtr(hwnd, GWL_SORT,   IDD_NAME);
-      SetWindowLongPtr(hwnd, GWL_ATTRIBS,ATTR_DEFAULT);
-      SetWindowLongPtr(hwnd, GWL_FSCFLAG,   FALSE);
-      SetWindowLongPtr(hwnd, GWL_HDTA, 0L);
-      SetWindowLongPtr(hwnd, GWL_TABARRAY, (LPARAM)pwTabs);
-      SetWindowLongPtr(hwnd, GWL_LASTFOCUS, (LPARAM)hwndLB);
+      SetWindowLong(hwnd, GWL_TYPE,   TYPE_SEARCH);
+      SetWindowLong(hwnd, GWL_VIEW,   dwNewView);
+      SetWindowLong(hwnd, GWL_SORT,   IDD_NAME);
+      SetWindowLong(hwnd, GWL_ATTRIBS,ATTR_DEFAULT);
+      SetWindowLong(hwnd, GWL_FSCFLAG,   FALSE);
+      SetWindowLong(hwnd, GWL_HDTA, 0L);
+      SetWindowLong(hwnd, GWL_TABARRAY, (LPARAM)pwTabs);
+      SetWindowLong(hwnd, GWL_LASTFOCUS, (LPARAM)hwndLB);
 
-      SetWindowLongPtr(hwnd, GWL_LISTPARMS, (LPARAM)hwnd);
-      SetWindowLongPtr(hwnd, GWL_IERROR, 0);
+      SetWindowLong(hwnd, GWL_LISTPARMS, (LPARAM)hwnd);
+      SetWindowLong(hwnd, GWL_IERROR, 0);
 
       //
       // Fill the listbox
@@ -960,7 +960,7 @@ SearchWndProc(
    {
       LPDRAWITEMSTRUCT lpLBItem;
       PWORD pwTabs;
-      DWORD dwView = GetWindowLongPtr(hwnd, GWL_VIEW);
+      DWORD dwView = GetWindowLong(hwnd, GWL_VIEW);
 
       lpLBItem = (LPDRAWITEMSTRUCT)lParam;
       iSel = lpLBItem->itemID;
@@ -970,7 +970,7 @@ SearchWndProc(
 
       if (maxExt > maxExtLast) {
 
-         pwTabs = (WORD *)GetWindowLongPtr(hwndSearch, GWL_TABARRAY);
+         pwTabs = (WORD *)GetWindowLong(hwndSearch, GWL_TABARRAY);
 
          //
          // Need to update tabs
@@ -996,7 +996,7 @@ SearchWndProc(
       }
 
       DrawItem(hwnd,
-               GetWindowLongPtr(hwnd, GWL_VIEW),
+               GetWindowLong(hwnd, GWL_VIEW),
                (LPDRAWITEMSTRUCT)lParam,
                TRUE);
       break;
@@ -1058,11 +1058,11 @@ SearchWndProc(
 VOID
 UpdateIfDirty(HWND hwnd)
 {
-   if (GetWindowLongPtr(hwnd, GWL_FSCFLAG)) {
+   if (GetWindowLong(hwnd, GWL_FSCFLAG)) {
       //
       // I am clean
       //
-      SetWindowLongPtr(hwnd, GWL_FSCFLAG, FALSE);
+      SetWindowLong(hwnd, GWL_FSCFLAG, FALSE);
       SendMessage(hwnd, FS_CHANGEDISPLAY, CD_SEARCHUPDATE, 0L);
    }
 }
@@ -1127,8 +1127,8 @@ SearchProgDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
          if (i != cDrives) {
 
-            SetWindowLongPtr(hwndDriveBar, GWL_CURDRIVEIND, i);
-            SetWindowLongPtr(hwndDriveBar, GWL_CURDRIVEFOCUS, i);
+            SetWindowLong(hwndDriveBar, GWL_CURDRIVEIND, i);
+            SetWindowLong(hwndDriveBar, GWL_CURDRIVEFOCUS, i);
 
             UpdateStatus(hwndSearch);
 
@@ -1256,7 +1256,7 @@ CloseWindow:
 
       if (hwndMDIChild) {
          ShowWindow(hwndSearch,
-            GetWindowLongPtr(hwndMDIChild, GWL_STYLE) & WS_MAXIMIZE ?
+            GetWindowLong(hwndMDIChild, GWL_STYLE) & WS_MAXIMIZE ?
                SW_SHOWMAXIMIZED :
                SW_SHOWNORMAL);
       }
@@ -1273,10 +1273,10 @@ SearchDrive()
    maxExtLast = SEARCH_FILE_WIDTH_DEFAULT;
 
    FixTabsAndThings(SearchInfo.hwndLB,
-                    (WORD *)GetWindowLongPtr(hwndSearch, GWL_TABARRAY),
+                    (WORD *)GetWindowLong(hwndSearch, GWL_TABARRAY),
                     maxExtLast,
                     0,
-                    GetWindowLongPtr(hwndSearch, GWL_VIEW));
+                    GetWindowLong(hwndSearch, GWL_VIEW));
 
    SearchInfo.iRet = FillSearchLB(SearchInfo.hwndLB,
                                   SearchInfo.szSearch,

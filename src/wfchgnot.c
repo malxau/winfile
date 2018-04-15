@@ -65,7 +65,7 @@ vWaitMessage()
          // open on the same path).  This clears out any extra notifications
          // caused by fileman's move/copy etc.
          //
-         SetWindowLongPtr(ahwndWindows[dwEvent], GWL_FSCFLAG, TRUE);
+         SetWindowLong(ahwndWindows[dwEvent], GWL_FSCFLAG, TRUE);
          PostMessage(hwndFrame, FS_FSCREQUEST, 0, 0L);
 
          if (FindNextChangeNotification(ahEvents[dwEvent]) == FALSE) {
@@ -216,7 +216,7 @@ NotifyPause(DRIVE drive, UINT uType)
           ((UINT)-1 == uType || aDriveInfo[driveCurrent].uType == uType))) {
 
          if (-2 != drive)
-            SetWindowLongPtr(ahwndWindows[i], GWL_NOTIFYPAUSE, 1L);
+            SetWindowLong(ahwndWindows[i], GWL_NOTIFYPAUSE, 1L);
 
          NotifyDeleteHandle(i);
 
@@ -273,7 +273,7 @@ NotifyResume(DRIVE drive, UINT uType)
       hwnd;
       hwnd = GetWindow(hwnd, GW_HWNDNEXT)) {
 
-      driveCurrent = GetWindowLongPtr(hwnd, GWL_TYPE);
+      driveCurrent = GetWindowLong(hwnd, GWL_TYPE);
 
       //
       // Skip search window
@@ -288,14 +288,14 @@ NotifyResume(DRIVE drive, UINT uType)
       if (-2 == drive ||
           ((-1 == drive || drive == driveCurrent) &&
           ((UINT)-1 == uType || aDriveInfo[driveCurrent].uType == uType) &&
-          GetWindowLongPtr(hwnd, GWL_NOTIFYPAUSE))) {
+          GetWindowLong(hwnd, GWL_NOTIFYPAUSE))) {
 
          //
          // Restart notifications on this window
          //
 
          SendMessage(hwnd, FS_NOTIFYRESUME, 0, 0L);
-         SetWindowLongPtr(hwnd, GWL_NOTIFYPAUSE, 0L);
+         SetWindowLong(hwnd, GWL_NOTIFYPAUSE, 0L);
       }
    }
 }
