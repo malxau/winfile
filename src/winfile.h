@@ -77,6 +77,9 @@ typedef unsigned char TUCHAR, *PTUCHAR;
 #define WNPS_MULT   2
 #define WNTYPE_FILE 2
 
+// constants from winnt
+#define FILE_ATTRIBUTE_NOT_CONTENT_INDEXED 0x00002000
+
 ////////////////////////////////////////////////////////////////////////////
 //
 //  File Compression stuff
