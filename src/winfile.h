@@ -20,7 +20,6 @@
 #include <string.h>
 #include <memory.h>
 #include "mpr.h"
-#include <npapi.h>
 #include <wfext.h>
 #include <commdlg.h>
 #include <commctrl.h>
@@ -71,6 +70,11 @@ typedef WCHAR TUCHAR, *PTUCHAR;
 typedef unsigned char TUCHAR, *PTUCHAR;
 #endif /* UNICODE */                // r_winnt
 
+// constants from npapi
+#define WNPS_FILE   0
+#define WNPS_DIR    1
+#define WNPS_MULT   2
+#define WNTYPE_FILE 2
 
 ////////////////////////////////////////////////////////////////////////////
 //
