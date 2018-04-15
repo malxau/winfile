@@ -783,7 +783,7 @@ FrameWndProc(HWND hwnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
          } else if ((uMenu >= IDM_EXTENSIONS) && (uMenu < ((UINT)iNumExtensions + IDM_EXTENSIONS))) {
 
             index = uMenu - IDM_EXTENSIONS;
-            (extensions[index].ExtProc)(hwndFrame, FMEVENT_INITMENU, (HMENU)wParam);
+            (extensions[index].ExtProc)(hwndFrame, FMEVENT_INITMENU, (LPARAM)wParam);
 
          } else {
 

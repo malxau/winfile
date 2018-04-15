@@ -715,7 +715,7 @@ UnlockAndReturn:
          tbl.szHelp[0] = TEXT('\0');
 
          extensions[iExt].ExtProc(hwndFrame, FMEVENT_HELPSTRING,
-             (LPFMS_HELPSTRING)&tbl);
+             (LPARAM)&tbl);
 
          if (extensions[iExt].bUnicode == FALSE) {
             CHAR   szAnsi[MAXDESCLEN];
@@ -774,7 +774,7 @@ ExtensionHelp:
                tbl.szHelp[0] = TEXT('\0');
 
                extensions[iExt].ExtProc(hwndFrame, FMEVENT_HELPSTRING,
-                   (LPFMS_HELPSTRING)&tbl);
+                   (LPARAM)&tbl);
 
                if (extensions[iExt].bUnicode == FALSE)
                {
@@ -940,7 +940,7 @@ NormalHelp:
                tbl.szHelp[0] = TEXT('\0');
 
                extensions[iExt].ExtProc(hwndFrame, FMEVENT_HELPSTRING,
-                   (LPFMS_HELPSTRING)&tbl);
+                   (LPARAM)&tbl);
 
                if (extensions[iExt].bUnicode == FALSE) {
                   CHAR   szAnsi[MAXDESCLEN];
@@ -1225,7 +1225,7 @@ InitToolbarExtension(INT iExt)
 
 
    if (!extensions[iExt].ExtProc(hwndFrame, FMEVENT_TOOLBARLOAD,
-       (LPFMS_TOOLBARLOAD)&tbl))
+       (LPARAM)&tbl))
 
       return FALSE;
 
