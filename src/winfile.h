@@ -1902,7 +1902,7 @@ Extern WCHAR wszWinfileHelp[] EQ( L"WINFILE.HLP" );
 Extern INT iNumExtensions     EQ( 0 );
 Extern EXTENSION extensions[MAX_EXTENSIONS];
 
-Extern DWORD (*lpfpUndelete)(HWND, LPTSTR) EQ( NULL );
+Extern DWORD (APIENTRY *lpfpUndelete)(HWND, LPTSTR) EQ( NULL );
 
 #ifdef UNICODE
 Extern BOOL  bUndeleteUnicode EQ( FALSE );
