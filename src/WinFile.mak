@@ -122,8 +122,8 @@ CLEAN :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x0400 /D WINVER=0x0400 /FR /YX /c
-CPP_PROJ=/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D\
+# ADD CPP /nologo /Gz /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x0400 /D WINVER=0x0400 /FR /YX /c
+CPP_PROJ=/nologo /Gz /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D\
  "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D\
  "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x0400 /D WINVER=0x0400\
  /FR"$(INTDIR)/" /Fp"$(INTDIR)/WinFile.pch" /YX /Fo"$(INTDIR)/" /c 
@@ -281,10 +281,10 @@ CLEAN :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x0400 /D WINVER=0x0400 /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS"\
- /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D\
- "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x0400 /D WINVER=0x0400\
+# ADD CPP /nologo /Gz /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x0400 /D WINVER=0x0400 /YX /c
+CPP_PROJ=/nologo /Gz /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D\
+ "_WINDOWS" /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D\
+ "UNICODE" /D "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x0400 /D WINVER=0x0400\
  /Fp"$(INTDIR)/WinFile.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
@@ -1235,6 +1235,9 @@ NODEP_CPP_WFFIL=\
 # Begin Source File
 
 SOURCE=.\wfinfo.c
+
+!IF  "$(CFG)" == "WinFile - Win32 Release"
+
 DEP_CPP_WFINF=\
 	".\fmifs.h"\
 	".\mpr.h"\
@@ -1254,9 +1257,6 @@ NODEP_CPP_WFINF=\
 	".\machine.h"\
 	
 
-!IF  "$(CFG)" == "WinFile - Win32 Release"
-
-
 "$(INTDIR)\wfinfo.obj" : $(SOURCE) $(DEP_CPP_WFINF) "$(INTDIR)"
 
 "$(INTDIR)\wfinfo.sbr" : $(SOURCE) $(DEP_CPP_WFINF) "$(INTDIR)"
@@ -1264,6 +1264,24 @@ NODEP_CPP_WFINF=\
 
 !ELSEIF  "$(CFG)" == "WinFile - Win32 Debug"
 
+DEP_CPP_WFINF=\
+	".\fmifs.h"\
+	".\mpr.h"\
+	".\numfmt.h"\
+	".\suggest.h"\
+	".\wfdlgs.h"\
+	".\wfexti.h"\
+	".\wfhelp.h"\
+	".\wfinfo.h"\
+	".\wfmem.h"\
+	".\winfile.h"\
+	".\wnetcaps.h"\
+	{$(INCLUDE)}"\wfext.h"\
+	
+NODEP_CPP_WFINF=\
+	".\heap.h"\
+	".\machine.h"\
+	
 
 "$(INTDIR)\wfinfo.obj" : $(SOURCE) $(DEP_CPP_WFINF) "$(INTDIR)"
 
@@ -1615,6 +1633,7 @@ DEP_RSC_RES_R=\
 	{$(INCLUDE)}"\wfext.h"\
 	
 NODEP_RSC_RES_R=\
+	".\heap.h"\
 	".\machine.h"\
 	
 
