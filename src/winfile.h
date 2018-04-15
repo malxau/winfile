@@ -359,13 +359,13 @@ typedef struct _SELINFO *PSELINFO;
 
 // Prototypes for shlwapi functions
 
-PSTR WINAPI StrChrA(PSTR pszStart, WORD wMatch);
-PWSTR WINAPI StrChrW(PWSTR pszStart, WCHAR wMatch);
+WINSHELLAPI PSTR APIENTRY StrChrA(PSTR pszStart, WORD wMatch);
+WINSHELLAPI PWSTR APIENTRY StrChrW(PWSTR pszStart, WCHAR wMatch);
 
-PSTR WINAPI StrRChrA(PSTR pszStart, PSTR pszEnd, WORD wMatch);
-PWSTR WINAPI StrRChrW(PWSTR pszStart, PWSTR pszEnd, WCHAR wMatch);
+WINSHELLAPI PSTR APIENTRY StrRChrA(PSTR pszStart, PSTR pszEnd, WORD wMatch);
+WINSHELLAPI PWSTR APIENTRY StrRChrW(PWSTR pszStart, PWSTR pszEnd, WCHAR wMatch);
 
-PWSTR WINAPI StrCpyNW(PWSTR pszDst, PCWSTR pszSrc, int cchMax);
+WINSHELLAPI PWSTR APIENTRY StrCpyNW(PWSTR pszDst, PCWSTR pszSrc, int cchMax);
 
 #define StrNCpy StrCpyN
 
