@@ -359,10 +359,6 @@ typedef struct _SELINFO *PSELINFO;
 
 // Prototypes for shlwapi functions
 
-BOOL WINAPI IsLFNDrive(LPTSTR szDrive);
-
-BOOL WINAPI IsNetDrive(int iDrive);
-
 PSTR WINAPI StrChrA(PSTR pszStart, WORD wMatch);
 PWSTR WINAPI StrChrW(PWSTR pszStart, WCHAR wMatch);
 
@@ -584,7 +580,7 @@ VOID  GetTextStuff(HDC hdc);
 INT   GetHeightFromPointsString(LPTSTR szPoints);
 INT   GetDrive(HWND hwnd, POINT pt);
 VOID  CheckSlashies(LPTSTR);
-// DWORD IsNetDrive(DRIVE drive);
+DWORD IsNetDrive(DRIVE drive);
 BOOL  IsCDRomDrive(DRIVE drive);
 BOOL  IsRamDrive(DRIVE drive);
 VOID  CleanupMessages();
@@ -671,6 +667,7 @@ VOID  BuildDriveLine(LPTSTR* lpszTemp, INT i, BOOL fGetFloppyLabel, DWORD dwType
 
 // LFN.C
 
+BOOL IsLFNDrive(LPTSTR szDrive);
 DWORD WFCopy(LPTSTR,LPTSTR);
 DWORD WFRemove(LPTSTR pszFile);
 DWORD WFMove(LPTSTR pszFrom, LPTSTR pszTo, PBOOL pbErrorOnDest, BOOL bSilent);

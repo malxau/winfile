@@ -201,7 +201,6 @@ GetNameType(LPTSTR lpName)
    return(FILE_LONG);
 }
 
-#if 0
 BOOL
 IsLFNDrive(LPTSTR szDrive)
 {
@@ -284,7 +283,6 @@ IsLFNDrive(LPTSTR szDrive)
       return FALSE;
    }
 }
-#endif
 
 BOOL
 IsFATName(
