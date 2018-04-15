@@ -26,7 +26,6 @@
 #include <commctrl.h>
 #include "fmifs.h"
 #include <shellapi.h>
-#include <shlwapi.h>
 #include "suggest.h"
 #include "numfmt.h"
 
@@ -350,6 +349,31 @@ typedef struct _SELINFO *PSELINFO;
 //
 //--------------------------------------------------------------------------
 
+// Prototypes for shlwapi functions
+
+BOOL WINAPI IsLFNDrive(LPTSTR szDrive);
+
+BOOL WINAPI IsNetDrive(int iDrive);
+
+PSTR WINAPI StrChrA(PSTR pszStart, WORD wMatch);
+PWSTR WINAPI StrChrW(PWSTR pszStart, WCHAR wMatch);
+
+PSTR WINAPI StrRChrA(PSTR pszStart, PSTR pszEnd, WORD wMatch);
+PWSTR WINAPI StrRChrW(PWSTR pszStart, PWSTR pszEnd, WCHAR wMatch);
+
+PWSTR WINAPI StrCpyNW(PWSTR pszDst, PCWSTR pszSrc, int cchMax);
+
+#define StrNCpy StrCpyN
+
+#ifdef UNICODE
+  #define StrChr     StrChrW
+  #define StrRChr    StrRChrW
+  #define StrCpyN    StrCpyNW
+#else
+  #define StrChr     StrChrA
+  #define StrRChr    StrRChrA
+  #define StrCpyN    lstrcpynA
+#endif
 
 // WFDLGS3.C
 
