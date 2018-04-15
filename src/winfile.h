@@ -16,6 +16,7 @@
 
 #include <windows.h>
 #include <windowsX.h>
+#include <winioctl.h>
 #include <setjmp.h>
 #include <string.h>
 #include <memory.h>
