@@ -379,6 +379,10 @@ PWSTR WINAPI StrCpyNW(PWSTR pszDst, PCWSTR pszSrc, int cchMax);
   #define StrCpyN    lstrcpynA
 #endif
 
+// "InternalGetWindowText" is exported from "user32.dll" but isn't in the import library
+typedef int (WINAPI *fnWindowText)(HWND, LPWSTR, int);
+Extern fnWindowText InternalGetWindowText;
+
 // WFDLGS3.C
 
 VOID FormatDiskette(HWND hwnd, BOOL bModal);

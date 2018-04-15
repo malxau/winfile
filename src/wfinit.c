@@ -19,6 +19,10 @@
 #include "wficon.h"
 #endif
 
+// Dynamic loading of "InternalGetWindowText" from "user32.dll"
+fnWindowText InternalGetWindowText;
+TCHAR szUser32[] = TEXT("user32");
+CHAR szWindowTextFunc[] = "InternalGetWindowText";
 
 typedef VOID (APIENTRY *FNPENAPP)(WORD, BOOL);
 
@@ -927,6 +931,7 @@ InitFileManager(
 
    HANDLE        hThread;
    DWORD         dwRetval;
+   HMODULE       hUser32;
 
    hThread = GetCurrentThread();
 
@@ -971,6 +976,13 @@ JAPANEND
    for (i=0; i<26;i++) {
       I_Space(i);
    }
+
+   // Dynamic loading of "InternalGetWindowText" from "user32.dll"
+   hUser32 = GetModuleHandle(szUser32);
+   InternalGetWindowText = (fnWindowText)GetProcAddress(hUser32, szWindowTextFunc);
+
+   if (!InternalGetWindowText)
+      return FALSE;
 
    if (lpfnRegisterPenApp = (FNPENAPP)GetProcAddress((HANDLE)GetSystemMetrics(SM_PENWINDOWS), chPenReg))
       (*lpfnRegisterPenApp)(1, TRUE);
