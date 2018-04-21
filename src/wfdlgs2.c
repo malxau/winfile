@@ -14,6 +14,7 @@
 #include "wfcopy.h"
 #include "wnetcaps.h"         // WNetGetCaps()
 #include "commdlg.h"
+#include "resize.h"
 
 
 
@@ -95,6 +96,7 @@ StarFilename(LPTSTR pszPath)
    }
 }
 
+PVOID pSearchDlgResizeState = NULL;
 
 /*--------------------------------------------------------------------------*/
 /*                                                                          */
@@ -108,6 +110,10 @@ SearchDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
   LPTSTR     p;
   MDICREATESTRUCT   MDICS;
   TCHAR szStart[MAXFILENAMELEN];
+
+  if (ResizeDialogProc(hDlg, wMsg, wParam, lParam, &pSearchDlgResizeState)) {
+      return TRUE;
+  }
 
   UNREFERENCED_PARAMETER(lParam);
 
@@ -260,6 +266,7 @@ DoHelp:
   return TRUE;
 }
 
+PVOID pRunDlgResizeState = NULL;
 
 #define RUN_LENGTH      MAXPATHLEN
 
@@ -279,12 +286,14 @@ RunDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
   TCHAR szTemp2[MAXPATHLEN];
   TCHAR sz3[RUN_LENGTH];
 
-  UNREFERENCED_PARAMETER(lParam);
+  if (ResizeDialogProc(hDlg, wMsg, wParam, lParam, &pRunDlgResizeState)) {
+      return TRUE;
+  }
 
   switch (wMsg)
     {
       case WM_INITDIALOG:
-      SetDlgDirectory(hDlg, NULL);
+          SetDlgDirectory(hDlg, NULL);
           SetWindowDirectory();          // and really set the DOS current directory
 
           SendDlgItemMessage(hDlg, IDD_NAME, EM_LIMITTEXT, COUNTOF(szTemp)-1, 0L);
@@ -296,6 +305,10 @@ RunDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
               LocalFree((HANDLE)p);
           }
           break;
+
+      case WM_SIZE:
+          SetDlgDirectory(hDlg, NULL);
+	  break;
 
       case WM_COMMAND:
           switch (GET_WM_COMMAND_ID(wParam, lParam))
@@ -417,6 +430,7 @@ MessWithRenameDirPath(LPTSTR pszPath)
    lstrcpy(pszPath, szPath);
 }
 
+PVOID pSuperDlgResizeState = NULL;
 
 //--------------------------------------------------------------------------*/
 //                                                                          */
@@ -446,7 +460,10 @@ JAPANEND
 
    static PCOPYINFO pCopyInfo;
 
-   UNREFERENCED_PARAMETER(lParam);
+
+   if (ResizeDialogProc(hDlg, wMsg, wParam, lParam, &pSuperDlgResizeState)) {
+      return TRUE;
+   }
 
    switch (wMsg) {
    case WM_INITDIALOG:
@@ -565,6 +582,12 @@ JAPANEND
          SendDlgItemMessage(hDlg, wParam, EM_LIMITTEXT, COUNTOF(szTo) - 1, 0L);
          LocalFree((HANDLE)p);
          break;
+      }
+
+   case WM_SIZE:
+      {
+         SetDlgDirectory(hDlg, NULL);
+	 break;
       }
 
    case WM_NCACTIVATE:
@@ -1836,6 +1859,7 @@ DoHelp:
 }
 
 
+PVOID pMakeDirDlgResizeState = NULL;
 
 /*--------------------------------------------------------------------------*/
 /*                                                                          */
@@ -1852,12 +1876,18 @@ MakeDirDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
    TCHAR szPath[MAXPATHLEN*2];
    INT ret;
 
-   UNREFERENCED_PARAMETER(lParam);
+   if (ResizeDialogProc(hDlg, wMsg, wParam, lParam, &pMakeDirDlgResizeState)) {
+      return TRUE;
+   }
 
    switch (wMsg) {
    case WM_INITDIALOG:
       SetDlgDirectory(hDlg, NULL);
       SendDlgItemMessage(hDlg, IDD_NAME, EM_LIMITTEXT, MAXPATHLEN-1, 0L);
+      break;
+
+   case WM_SIZE:
+      SetDlgDirectory(hDlg, NULL);
       break;
 
    case WM_COMMAND:
