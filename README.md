@@ -11,10 +11,10 @@
 This is a fork of [Microsoft's Windows File Manager](https://github.com/Microsoft/winfile). It is an attempt to get the
 application running on older versions of Windows such as Windows NT 3.x and Windows 9x.
 
-Currently the Unicode build successfully builds with Visual C++ 4.2, and the application runs under Windows NT 4. There
-is an error on application startup under Windows NT 3.51, but I'll be looking at Windows NT 3.x support next. Windows 9x
-support will be trickier, because there are lots of compiler errors in the ANSI build. If Windows 9x is possible, who
-knows? Could it run under [Win32s](https://en.wikipedia.org/wiki/Win32s)?
+Currently the Unicode build successfully builds with Visual C++ 4.2, and the application runs under Windows NT 3.51 and
+Windows NT 4. Windows NT 3.1 is not yet supported because the application uses functions which didn't exist back then.
+Windows 9x support will also be tricky because there are lots of compiler errors in the ANSI build. If Windows 9x is
+possible though, who knows? Could it run under [Win32s](https://en.wikipedia.org/wiki/Win32s)?
 
 ## History
 
