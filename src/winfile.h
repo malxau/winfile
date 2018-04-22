@@ -55,6 +55,10 @@
 #undef atoi
 #endif
 
+#define atoi atoiW
+INT atoiW(LPWSTR sz);
+#endif //UNICODE
+
 // old winuserp.h
 #define WM_DROPOBJECT                   0x022A
 #define WM_QUERYDROPOBJECT              0x022B
@@ -91,11 +95,6 @@ typedef unsigned char TUCHAR, *PTUCHAR;
 #ifndef FS_FILE_COMPRESSION
 #define FS_FILE_COMPRESSION 0x0010
 #endif  //  FS_FILE_COMPRESSION
-
-
-#define atoi atoiW
-INT atoiW(LPWSTR sz);
-#endif //UNICODE
 
 #define SIZENOMDICRAP       944
 #define MAX_TAB_COLUMNS     10
