@@ -1610,6 +1610,7 @@ Extern DWORD (*lpfnWNetDirectoryNotifyW)(HWND, LPWSTR, DWORD);
 #define NETWORK_WNetGetPropertyTextW   "WNetGetPropertyTextW"
 #define NETWORK_WNetOpenEnumW          "WNetOpenEnumW"
 #define NETWORK_WNetPropertyDialogW    "WNetPropertyDialogW"
+#define NETWORK_WNetRestoreConnection  "WNetRestoreConnection"
 #define NETWORK_WNetRestoreConnectionW "WNetRestoreConnectionW"
 #define NETWORK_WNetRestoreSingleConnectionW "WNetRestoreSingleConnectionW"
 #define NETWORK_WNetFormatNetworkNameW "WNetFormatNetworkNameW"

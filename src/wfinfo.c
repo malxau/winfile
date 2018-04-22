@@ -1700,7 +1700,12 @@ NetLoad(VOID)
 
       if ((lpfnWNetRestoreSingleConnectionW = (PVOID) GetProcAddress(hMPR,"WNetRestoreSingleConnectionW")) == NULL)
       {
-         GET_PROC(WNetRestoreConnectionW);
+         // Windows NT >= 4 exports "WNetRestoreConnectionW" but NT 3 exports it as "WNetRestoreConnection"
+         if ((lpfnWNetRestoreConnectionW = (PVOID) GetProcAddress(hMPR, NETWORK_WNetRestoreConnectionW)) == NULL &&
+             (lpfnWNetRestoreConnectionW = (PVOID) GetProcAddress(hMPR, NETWORK_WNetRestoreConnection)) == NULL)
+         {
+            return FALSE;
+         }
       }
 
 #ifdef NETCHECK
