@@ -19,6 +19,24 @@
 #include "wficon.h"
 #endif
 
+// Dynamic loading of Shlwapi functions
+fnStrChr StrChr;
+fnStrRChr StrRChr;
+fnStrCpyN StrCpyN;
+TCHAR szShlwapi[] = TEXT("shlwapi");
+TCHAR szShell32[] = TEXT("shell32");
+TCHAR szKernel32[] = TEXT("kernel32");
+
+#ifdef UNICODE
+  CHAR szStrChr[] = "StrChrW";
+  CHAR szStrRChr[] = "StrRChrW";
+  CHAR szStrCpyN[] = "StrCpyNW";
+#else
+  CHAR szStrChr[] = "StrChrA";
+  CHAR szStrRChr[] = "StrRChrA";
+  CHAR szStrCpyN[] = "lstrcpynA";
+#endif
+
 // Dynamic loading of "InternalGetWindowText" from "user32.dll"
 fnWindowText InternalGetWindowText;
 TCHAR szUser32[] = TEXT("user32");
@@ -932,6 +950,7 @@ InitFileManager(
    HANDLE        hThread;
    DWORD         dwRetval;
    HMODULE       hUser32;
+   HMODULE       hShell;
 
    hThread = GetCurrentThread();
 
@@ -976,6 +995,27 @@ JAPANEND
    for (i=0; i<26;i++) {
       I_Space(i);
    }
+
+   // Dynamic loading of Shlwapi functions
+   hShell = LoadLibrary(szShlwapi);
+
+   // If "shlwapi.dll" doesn't exist, functions will be in "shell32.dll"
+   if (!hShell)
+      hShell = GetModuleHandle(szShell32);
+
+   StrChr = (fnStrChr)GetProcAddress(hShell, szStrChr);
+   StrRChr = (fnStrRChr)GetProcAddress(hShell, szStrRChr);
+
+#ifdef UNICODE
+   // For Unicode, function is named "StrCpyN" and is in "shlwapi.dll" or "shell32.dll"
+   StrCpyN = (fnStrCpyN)GetProcAddress(hShell, szStrCpyN);
+#else
+   // For ANSI, function is named "lstrcpynA" and is in "kernel32.dll"
+   StrCpyN = &lstrcpynA;
+#endif
+
+   if (!StrChr || !StrRChr || !StrCpyN)
+      return FALSE;
 
    // Dynamic loading of "InternalGetWindowText" from "user32.dll"
    hUser32 = GetModuleHandle(szUser32);

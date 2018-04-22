@@ -357,27 +357,16 @@ typedef struct _SELINFO *PSELINFO;
 //
 //--------------------------------------------------------------------------
 
-// Prototypes for shlwapi functions
+// Functions which are either in "shell32.dll" or "shlwapi.dll", depending on version
+typedef PTSTR (WINAPI *fnStrChr)(LPTSTR pszStart, WORD wMatch);
+typedef PTSTR (WINAPI *fnStrRChr)(LPTSTR pszStart, LPTSTR pszEnd, WORD wMatch);
+typedef PTSTR (WINAPI *fnStrCpyN)(LPTSTR pszDst, LPCTSTR pszSrc, int cchMax);
 
-WINSHELLAPI PSTR APIENTRY StrChrA(PSTR pszStart, WORD wMatch);
-WINSHELLAPI PWSTR APIENTRY StrChrW(PWSTR pszStart, WCHAR wMatch);
-
-WINSHELLAPI PSTR APIENTRY StrRChrA(PSTR pszStart, PSTR pszEnd, WORD wMatch);
-WINSHELLAPI PWSTR APIENTRY StrRChrW(PWSTR pszStart, PWSTR pszEnd, WCHAR wMatch);
-
-WINSHELLAPI PWSTR APIENTRY StrCpyNW(PWSTR pszDst, PCWSTR pszSrc, int cchMax);
+Extern fnStrChr StrChr;
+Extern fnStrRChr StrRChr;
+Extern fnStrCpyN StrCpyN;
 
 #define StrNCpy StrCpyN
-
-#ifdef UNICODE
-  #define StrChr     StrChrW
-  #define StrRChr    StrRChrW
-  #define StrCpyN    StrCpyNW
-#else
-  #define StrChr     StrChrA
-  #define StrRChr    StrRChrA
-  #define StrCpyN    lstrcpynA
-#endif
 
 // "InternalGetWindowText" is exported from "user32.dll" but isn't in the import library
 typedef int (WINAPI *fnWindowText)(HWND, LPWSTR, int);
