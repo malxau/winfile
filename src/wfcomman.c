@@ -789,7 +789,7 @@ AppCommandProc(register DWORD id)
       if (!lpfnAcledit)
          break;
 
-      (*lpfnAcledit)(hwndFrame, (WPARAM)(id % 100), 0L);
+      (*lpfnAcledit)(hwndFrame, (WORD)(id % 100), 0L);
       break;
 
    case IDM_SPLIT:
