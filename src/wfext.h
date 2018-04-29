@@ -183,4 +183,3 @@ LONG WINAPI FMExtensionProc(HWND hwnd, WPARAM wEvent, LPARAM lParam);
 #endif             /* __cplusplus */
 
 #endif             /* _INC_WFEXT */
-

@@ -1209,5 +1209,3 @@ DirMoveCopy:
 
    return TRUE;
 }
-
-

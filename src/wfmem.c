@@ -299,5 +299,3 @@ MemNext(register LPXDTALINK* plpLink, register LPXDTA lpxdta)
       return (LPXDTA)((PBYTE)lpxdta + lpxdta->dwSize);
    }
 }
-
-

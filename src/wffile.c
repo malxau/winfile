@@ -2003,4 +2003,3 @@ BOOL OpenFileForCompress(
     //
     return (TRUE);
 }
-

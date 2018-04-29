@@ -1938,5 +1938,3 @@ Extern INT nCopyMaxQueue;
 
 #undef Extern
 #undef EQ
-
-

@@ -311,4 +311,3 @@ WORD I_LFNEditName( LPTSTR lpSrc, LPTSTR lpEd, LPTSTR lpRes, INT iResBufSize )
    else
       return ERROR_INVALID_PARAMETER ;
 }
-

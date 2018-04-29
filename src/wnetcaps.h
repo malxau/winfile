@@ -29,4 +29,3 @@ BOOL WNetStat(INT nIndex);
 
 
 #endif // ndef _WNETCAPS_H
-

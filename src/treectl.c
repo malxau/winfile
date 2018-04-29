@@ -3057,5 +3057,3 @@ ResetTreeMax(
     SetWindowLong(GetParent(hwndLB), GWL_XTREEMAX, xTreeMax);
     SendMessage(hwndLB, LB_SETHORIZONTALEXTENT, xTreeMax, 0L);
 }
-
-

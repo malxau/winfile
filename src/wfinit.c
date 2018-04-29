@@ -1629,6 +1629,3 @@ LoadFailMessage(VOID)
 
    return;
 }
-
-
-

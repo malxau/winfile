@@ -32,4 +32,3 @@ typedef struct tagDNODE
     TCHAR    szName[1];      // variable length field
   } DNODE;
 typedef DNODE *PDNODE;
-

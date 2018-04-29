@@ -55,4 +55,3 @@ typedef struct {
     HWND  hwndLB;
     LPTREEDATA lptreed;
 } SEARCHDATA, FAR *LPSEARCHDATA;
-

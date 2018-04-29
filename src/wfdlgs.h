@@ -203,5 +203,3 @@
 
 #define IDD_KK_TEXTTO         2001
 #define IDD_KK_TEXTFROM       2002
-
-

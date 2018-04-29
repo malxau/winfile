@@ -1915,5 +1915,3 @@ UpdateConnectionsOnConnect(VOID)
       return -1;
    }
 }
-
-

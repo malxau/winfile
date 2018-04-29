@@ -57,4 +57,3 @@ UINT RemoveLast(LPTSTR pFile);
 VOID Notify(HWND,WORD,LPTSTR,LPTSTR);
 
 LPTSTR FindFileName(register LPTSTR pPath);
-

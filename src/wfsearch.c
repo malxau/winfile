@@ -1344,5 +1344,3 @@ ClearSearchLB(BOOL bWorkerCall)
       SendMessage(SearchInfo.hwndLB, LB_RESETCONTENT, 0, 0);
    }
 }
-
-

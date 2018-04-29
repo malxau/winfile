@@ -1998,7 +1998,3 @@ NoQuotes(LPTSTR szT)
 
    return TRUE;
 }
-
-
-
-

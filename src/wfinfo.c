@@ -2076,6 +2076,3 @@ WaitLoadEvent(BOOL bNet)
       ShowCursor(FALSE);
    }
 }
-
-
-

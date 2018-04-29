@@ -503,4 +503,3 @@ NotifyAddHandle(INT i, HWND hwnd, LPTSTR lpPath, DWORD fdwFilter)
       NotifyDeleteHandle(i);
    }
 }
-

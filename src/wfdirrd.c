@@ -1159,5 +1159,3 @@ IsNetDir(LPWSTR pPath, LPWSTR pName)
    aDriveInfo[drive].bShareChkTried = TRUE;
    return dwType;
 }
-
-

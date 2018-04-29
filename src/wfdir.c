@@ -3482,4 +3482,3 @@ SetDirFocus(HWND hwndDir)
    else
       return TRUE;
 }
-

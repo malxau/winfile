@@ -730,5 +730,3 @@ KillQuoteTrailSpace( LPTSTR szFile )
    if (pcLastSpace)
       *pcLastSpace = CHAR_NULL;
 }
-
-

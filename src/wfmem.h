@@ -84,4 +84,3 @@ LPXDTA MemNext(LPXDTALINK* plpLink, LPXDTA lpxdta);
 
 
 #endif // ndef _WFMEM_H
-

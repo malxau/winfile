@@ -50,6 +50,3 @@ BOOL  WFIsDir(LPTSTR);
 BOOL  LFNMergePath(LPTSTR,LPTSTR);
 
 BOOL  IsLFNSelected(VOID);
-
-
-

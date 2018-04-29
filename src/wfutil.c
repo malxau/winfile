@@ -1464,4 +1464,3 @@ IsBucketFile(LPTSTR lpszPath, PPDOCBUCKET ppBucket)
 
   return DocFind(ppBucket, szExt);
 }
-
