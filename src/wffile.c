@@ -379,10 +379,10 @@ VOID DisplayUncompressProgress(
 //
 /////////////////////////////////////////////////////////////////////////////
 
-BOOL APIENTRY UncompressProgDlg(
+BOOL CALLBACK UncompressProgDlg(
     HWND hDlg,
     UINT nMsg,
-    DWORD wParam,
+    WPARAM wParam,
     LPARAM lParam)
 {
     TCHAR szTemp[120];
@@ -598,10 +598,10 @@ void DisplayCompressProgress(
 //
 /////////////////////////////////////////////////////////////////////////////
 
-BOOL APIENTRY CompressProgDlg(
+BOOL CALLBACK CompressProgDlg(
     HWND hDlg,
     UINT nMsg,
-    DWORD wParam,
+    WPARAM wParam,
     LPARAM lParam)
 {
     TCHAR szTemp[120];

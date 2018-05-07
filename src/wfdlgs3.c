@@ -41,6 +41,7 @@ typedef enum {
 /*--------------------------------------------------------------------------*/
 
 BOOL
+CALLBACK
 ChooseDriveDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    TCHAR szDrive[5];
@@ -149,6 +150,7 @@ DoHelp:
 /*--------------------------------------------------------------------------*/
 
 BOOL
+CALLBACK
 DiskLabelDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    TCHAR szNewVol[MAXPATHLEN];
@@ -504,6 +506,7 @@ FillDriveCapacity(HWND hDlg, INT nDrive, FMIFS_MEDIA_TYPE fmSelect, BOOL fDoPopu
 /*--------------------------------------------------------------------------*/
 
 BOOL
+CALLBACK
 FormatDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    TCHAR szBuf[128];
@@ -957,6 +960,7 @@ Callback_Function(FMIFS_PACKET_TYPE   PacketType,
  */
 
 BOOL
+CALLBACK
 CancelDlgProc(HWND hDlg,
    UINT message,
    WPARAM wParam,
@@ -1167,6 +1171,7 @@ CancelDlgProc(HWND hDlg,
 /////////////////////////////////////////////////////////////////////
 
 BOOL
+CALLBACK
 ProgressDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    static PCOPYINFO pCopyInfo;
@@ -1394,6 +1399,7 @@ UpdateConnections(BOOL bUpdateDriveList)
 }
 
 BOOL
+CALLBACK
 DrivesDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    DRIVEIND driveInd;

@@ -1105,9 +1105,12 @@ DoDefault:
 }
 
 
-INT
-MessageFilter(INT nCode, WPARAM wParam, LPMSG lpMsg)
+LRESULT
+CALLBACK 
+MessageFilter(INT nCode, WPARAM wParam, LPARAM lParam)
 {
+   LPMSG lpMsg = (LPMSG)lParam;
+
    if (nCode < 0)
       goto DefHook;
 

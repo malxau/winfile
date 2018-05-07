@@ -516,7 +516,7 @@ DWORD  WFPrint(LPTSTR szFile);
 // WINFILE.C
 
 BOOL InitPopupMenus(UINT uMenus, HMENU hMenu, HWND hwndActive);
-INT  MessageFilter(INT nCode, WPARAM wParam, LPMSG lParam);
+LRESULT CALLBACK MessageFilter(INT nCode, WPARAM wParam, LPARAM lParam);
 
 
 // WFTREE.C
@@ -592,10 +592,10 @@ VOID  GetDriveRect(DRIVEIND driveInd, PRECT prc);
 LRESULT CALLBACK FrameWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 BOOL  AppCommandProc(DWORD id);
 LRESULT CALLBACK TreeWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
-LRESULT DriveWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK DriveWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
-LRESULT VolumeWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
-LRESULT TreeChildWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK VolumeWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK TreeChildWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK TreeControlWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK DirWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 
@@ -606,29 +606,28 @@ BOOLEAN (*lpfnSetLabel)(PWSTR,PWSTR);
 BOOLEAN (*lpfnQuerySupportedMedia)(PWSTR,PFMIFS_MEDIA_TYPE,DWORD,PDWORD);
 BOOL Callback_Function(FMIFS_PACKET_TYPE PacketType, DWORD PacketLength, PVOID PacketData);
 
-BOOL CancelDlgProc  (HWND, UINT, WPARAM, LPARAM);
-BOOL  DrivesDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  AssociateDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  SearchDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  RunDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  SelectDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  SuperDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  AttribsDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  MakeDirDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  DiskLabelDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  ChooseDriveDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  FormatDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  OtherDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK CancelDlgProc  (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK DrivesDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK AssociateDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK SearchDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK RunDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK SelectDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK SuperDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK AttribsDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK MakeDirDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK DiskLabelDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK ChooseDriveDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK FormatDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK OtherDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
 
-BOOL  ProgressDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  IncludeDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL  ConfirmDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-
+BOOL CALLBACK ProgressDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK IncludeDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK ConfirmDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
 
 // WFSEARCH.C
 
 VOID GetSearchPath(HWND hwnd, LPWSTR szTemp);
-LRESULT CALLBACK SearchProgDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK SearchProgDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 VOID UpdateSearchStatus(HWND hwndLB, INT nCount);
 VOID SearchEnd(VOID);
 

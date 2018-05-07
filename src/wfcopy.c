@@ -39,7 +39,7 @@ VOID DialogEnterFileStuff(register HWND hwnd);
 DWORD SafeFileRemove(LPTSTR szFileOEM);
 BOOL IsWindowsFile(LPTSTR szFileOEM);
 
-BOOL ReplaceDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK ReplaceDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
 
 
 BOOL
@@ -939,6 +939,7 @@ SetDlgItemPath(HWND hDlg, INT id, LPTSTR pszPath)
 
 
 BOOL
+CALLBACK
 ReplaceDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    WCHAR szMessage[MAXMESSAGELEN];

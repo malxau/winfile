@@ -127,6 +127,7 @@ DO_AGAIN:
 /*--------------------------------------------------------------------------*/
 
 BOOL
+CALLBACK
 OtherDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   DWORD          dwView;
@@ -218,6 +219,7 @@ DoHelp:
 /*--------------------------------------------------------------------------*/
 
 BOOL
+CALLBACK
 IncludeDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   DWORD dwAttribs;
@@ -320,6 +322,7 @@ DoHelp:
 
 
 BOOL
+CALLBACK
 SelectDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
         HWND hwndActive, hwnd;
@@ -395,7 +398,8 @@ DoHelp:
 
 
 BOOL
-FontHookProc(HWND hDlg, WORD wMsg, WPARAM wParam, LPARAM lParam)
+CALLBACK
+FontHookProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
 KOREAJAPANBEGIN
    // Steal from PBrush source to remove @font in the list - SangilJ
@@ -630,6 +634,7 @@ NewFont()
 /*--------------------------------------------------------------------------*/
 
 BOOL
+CALLBACK
 ConfirmDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
   UNREFERENCED_PARAMETER(lParam);
@@ -691,7 +696,6 @@ DoHelp:
      }
   return TRUE;
 }
-
 
 VOID
 KillQuoteTrailSpace( LPTSTR szFile )

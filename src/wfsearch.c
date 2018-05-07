@@ -1081,7 +1081,7 @@ UnlockSearchFile()
 }
 
 
-LRESULT CALLBACK
+BOOL CALLBACK
 SearchProgDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
    DWORD dwIgnore;
