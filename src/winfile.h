@@ -550,7 +550,7 @@ BOOL  CheckDirExists(LPWSTR szDir);
 
 DWORD  DMMoveCopyHelper(LPTSTR pFrom, LPTSTR pTo, BOOL bCopy);
 DWORD  WFMoveCopyDriver(PCOPYINFO pCopyInfo);
-VOID   WFMoveCopyDriverThread(PCOPYINFO pCopyInfo);
+DWORD WINAPI WFMoveCopyDriverThread(LPVOID lpParameter);
 
 BOOL  IsDirectory(LPTSTR pPath);
 DWORD IsTheDiskReallyThere(HWND hwnd, register LPTSTR pPath, DWORD wFunc, BOOL bModal);

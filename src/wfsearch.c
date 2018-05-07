@@ -101,7 +101,7 @@ INT  SearchList(
    INT iFileCount,
    BOOL bRoot);
 VOID ClearSearchLB(BOOL bWorkerCall);
-INT SearchDrive();
+DWORD WINAPI SearchDrive(LPVOID lpParameter);
 
 #define SEARCH_FILE_WIDTH_DEFAULT 50
 
@@ -1267,8 +1267,9 @@ CloseWindow:
    }
 }
 
-INT
-SearchDrive()
+DWORD
+WINAPI
+SearchDrive(LPVOID lpParameter)
 {
    maxExtLast = SEARCH_FILE_WIDTH_DEFAULT;
 

@@ -930,7 +930,8 @@ DocCloseEnum(PDOCENUM pDocEnum)
 //
 /////////////////////////////////////////////////////////////////////
 
-VOID
+DWORD
+WINAPI
 UpdateInit(PVOID ThreadParameter)
 {
    INT cDrivesTmp;
@@ -988,6 +989,8 @@ UpdateInit(PVOID ThreadParameter)
       LeaveCriticalSection(&CriticalSectionUpdate);
 
    }
+
+   return  0;
 }
 
 

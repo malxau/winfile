@@ -16,8 +16,8 @@
 #define LABEL_NTFS_MAX 32
 #define LABEL_FAT_MAX  11
 
-VOID FormatDrive( IN PVOID ThreadParameter );
-VOID CopyDiskette( IN PVOID ThreadParameter );
+DWORD WINAPI FormatDrive( IN PVOID ThreadParameter );
+DWORD WINAPI CopyDiskette( IN PVOID ThreadParameter );
 VOID SwitchToSafeDrive(VOID);
 VOID MDIClientSizeChange(HWND hwndActive, INT iFlags);
 
@@ -724,7 +724,8 @@ DoHelp:
   return TRUE;
 }
 
-VOID
+DWORD
+WINAPI
 FormatDrive( IN PVOID ThreadParameter )
 {
    WCHAR wszDrive[3];
@@ -748,9 +749,12 @@ FormatDrive( IN PVOID ThreadParameter )
    } while (CancelInfo.Info.Format.fFlags & FF_RETRY);
 
    CancelDlgQuit();
+
+   return 0;
 }
 
-VOID
+DWORD
+WINAPI
 CopyDiskette( IN PVOID ThreadParameter )
 {
   BOOL fVerify = FALSE;
@@ -772,6 +776,8 @@ CopyDiskette( IN PVOID ThreadParameter )
                   (FMIFS_CALLBACK)&Callback_Function);
 
    CancelDlgQuit();
+
+   return 0;
 }
 
 
