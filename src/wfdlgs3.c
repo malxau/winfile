@@ -113,7 +113,7 @@ ChooseDriveDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 
                EndDialog(hDlg, TRUE);
 
-               CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, (DLGPROC) CancelDlgProc);
+               CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, CancelDlgProc);
             } else {
                EndDialog(hDlg, TRUE);
             }
@@ -292,7 +292,7 @@ FormatDiskette(HWND hwnd, BOOL bModal)
 
     CancelInfo.bModal = bModal;
 
-    res = DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(FORMATDLG), hwnd, (DLGPROC) FormatDlgProc);
+    res = DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(FORMATDLG), hwnd, FormatDlgProc);
 
     dwContext = dwSave;
 }
@@ -703,9 +703,9 @@ FormatDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
          // use a modal box.
 
          if (CancelInfo.bModal) {
-            DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, (DLGPROC) CancelDlgProc);
+            DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, CancelDlgProc);
          } else {
-            CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, (DLGPROC) CancelDlgProc);
+            CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, CancelDlgProc);
          }
 
          break;
@@ -1027,7 +1027,7 @@ CancelDlgProc(HWND hDlg,
             case CANCEL_FORMAT:
                CancelInfo.hThread = CreateThread( NULL,      // Security
                   0L,                                        // Stack Size
-                  (LPTHREAD_START_ROUTINE)FormatDrive,
+                  FormatDrive,
                   NULL,
                   0L,
                   &Ignore );
@@ -1035,7 +1035,7 @@ CancelDlgProc(HWND hDlg,
             case CANCEL_COPY:
               CancelInfo.hThread = CreateThread( NULL,      // Security
                   0L,                                        // Stack Size
-                  (LPTHREAD_START_ROUTINE)CopyDiskette,
+                  CopyDiskette,
                   NULL,
                   0L,
                   &Ignore );

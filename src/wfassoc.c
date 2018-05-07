@@ -605,7 +605,7 @@ DoConfigWinIni:
 
             DialogBoxParam(hAppInstance,
                (LPTSTR) MAKEINTRESOURCE(ASSOCIATEFILEDLG),
-               hDlg, (DLGPROC) AssociateFileDlgProc,
+               hDlg, AssociateFileDlgProc,
                (LPARAM) &AssociateFileDlgInfo);
 
             ValidateClass(hDlg);

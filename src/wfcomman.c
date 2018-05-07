@@ -843,7 +843,7 @@ AppCommandProc(register DWORD id)
 
    case IDM_ASSOCIATE:
 
-      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(ASSOCIATEDLG), hwndFrame, (DLGPROC)AssociateDlgProc);
+      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(ASSOCIATEDLG), hwndFrame, AssociateDlgProc);
       break;
 
    case IDM_SEARCH:
@@ -861,18 +861,18 @@ AppCommandProc(register DWORD id)
          // Just create old dialog
          //
 
-         CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(SEARCHPROGDLG), hwndFrame, (DLGPROC)SearchProgDlgProc);
+         CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(SEARCHPROGDLG), hwndFrame, SearchProgDlgProc);
          break;
       }
 
       dwSuperDlgMode = IDM_SEARCH;
 
-      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(SEARCHDLG), hwndFrame, (DLGPROC)SearchDlgProc);
+      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(SEARCHDLG), hwndFrame, SearchDlgProc);
       break;
 
    case IDM_RUN:
 
-      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(RUNDLG), hwndFrame, (DLGPROC)RunDlgProc);
+      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(RUNDLG), hwndFrame, RunDlgProc);
       break;
 
    case IDM_SELECT:
@@ -884,7 +884,7 @@ AppCommandProc(register DWORD id)
       if (hwndT = HasDirWindow(hwndActive))
          SetFocus(hwndT);
 
-      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(SELECTDLG), hwndFrame, (DLGPROC)SelectDlgProc);
+      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(SELECTDLG), hwndFrame, SelectDlgProc);
       break;
 
    case IDM_MOVE:
@@ -892,25 +892,25 @@ AppCommandProc(register DWORD id)
    case IDM_RENAME:
       dwSuperDlgMode = id;
 
-      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(MOVECOPYDLG), hwndFrame, (DLGPROC)SuperDlgProc);
+      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(MOVECOPYDLG), hwndFrame, SuperDlgProc);
       break;
 
    case IDM_PRINT:
       dwSuperDlgMode = id;
 
-      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(MYPRINTDLG), hwndFrame, (DLGPROC)SuperDlgProc);
+      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(MYPRINTDLG), hwndFrame, SuperDlgProc);
       break;
 
    case IDM_DELETE:
       dwSuperDlgMode = id;
 
-      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(DELETEDLG), hwndFrame, (DLGPROC)SuperDlgProc);
+      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(DELETEDLG), hwndFrame, SuperDlgProc);
       break;
 
    case IDM_COPYTOCLIPBOARD:
       dwSuperDlgMode = id;
 
-      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(COPYTOCLIPBOARDDLG), hwndFrame, (DLGPROC)SuperDlgProc);
+      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(COPYTOCLIPBOARDDLG), hwndFrame, SuperDlgProc);
       break;
 
    case IDM_UNDELETE:
@@ -964,13 +964,13 @@ AppCommandProc(register DWORD id)
             break;          // nothing selected
 
          if (count > 1)
-            DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(MULTIPLEATTRIBSDLG), hwndFrame, (DLGPROC) AttribsDlgProc);
+            DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(MULTIPLEATTRIBSDLG), hwndFrame, AttribsDlgProc);
 
          else if (bDir)
-            DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(ATTRIBSDLGDIR), hwndFrame, (DLGPROC) AttribsDlgProc);
+            DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(ATTRIBSDLGDIR), hwndFrame, AttribsDlgProc);
 
          else
-            DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(ATTRIBSDLG), hwndFrame, (DLGPROC) AttribsDlgProc);
+            DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(ATTRIBSDLG), hwndFrame, AttribsDlgProc);
 
          break;
       }
@@ -1024,7 +1024,7 @@ AppCommandProc(register DWORD id)
       }
 
    case IDM_MAKEDIR:
-      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(MAKEDIRDLG), hwndFrame, (DLGPROC)MakeDirDlgProc);
+      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(MAKEDIRDLG), hwndFrame, MakeDirDlgProc);
       break;
 
    case IDM_SELALL:
@@ -1155,7 +1155,7 @@ AppCommandProc(register DWORD id)
       if (!FmifsLoaded())
          break;
 
-      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(DISKLABELDLG), hwndFrame, (DLGPROC)DiskLabelDlgProc);
+      DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(DISKLABELDLG), hwndFrame, DiskLabelDlgProc);
       break;
 
    case IDM_DISKCOPY:
@@ -1171,7 +1171,7 @@ AppCommandProc(register DWORD id)
          // Just create old dialog
          //
 
-         CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, (DLGPROC) CancelDlgProc);
+         CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, CancelDlgProc);
 
          break;
       }
@@ -1219,11 +1219,11 @@ AppCommandProc(register DWORD id)
 
          LockFormatDisk(i,i,IDS_DRIVEBUSY_COPY, IDM_FORMAT, TRUE);
 
-         CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, (DLGPROC) CancelDlgProc);
+         CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, CancelDlgProc);
 
       } else {
          dwSuperDlgMode = id;
-         ret = DialogBox(hAppInstance, MAKEINTRESOURCE(CHOOSEDRIVEDLG), hwndFrame, (DLGPROC)ChooseDriveDlgProc);
+         ret = DialogBox(hAppInstance, MAKEINTRESOURCE(CHOOSEDRIVEDLG), hwndFrame, ChooseDriveDlgProc);
       }
 
       break;
@@ -1241,7 +1241,7 @@ AppCommandProc(register DWORD id)
          // Just create old dialog
          //
 
-         CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, (DLGPROC) CancelDlgProc);
+         CreateDialog(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CANCELDLG), hwndFrame, CancelDlgProc);
 
          return TRUE;
       }
@@ -1473,7 +1473,7 @@ DealWithNetError_NotifyResume:
        goto ChangeDisplay;
 
     case IDM_VOTHER:
-       DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(OTHERDLG), hwndFrame, (DLGPROC)OtherDlgProc);
+       DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(OTHERDLG), hwndFrame, OtherDlgProc);
 
        dwFlags = GetWindowLong(hwndActive, GWL_VIEW) & VIEW_EVERYTHING;
        if (dwFlags != VIEW_NAMEONLY && dwFlags != VIEW_EVERYTHING)
@@ -1520,11 +1520,11 @@ ChangeDisplay:
           break;
 
     case IDM_VINCLUDE:
-       DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(INCLUDEDLG), hwndFrame, (DLGPROC)IncludeDlgProc);
+       DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(INCLUDEDLG), hwndFrame, IncludeDlgProc);
        break;
 
     case IDM_CONFIRM:
-       DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CONFIRMDLG), hwndFrame, (DLGPROC)ConfirmDlgProc);
+       DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(CONFIRMDLG), hwndFrame, ConfirmDlgProc);
        break;
 
     case IDM_STATUSBAR:
@@ -1740,7 +1740,7 @@ ACPCallHelp:
        break;
 
     case IDM_DRIVESMORE:
-       DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(DRIVEDLG), hwndFrame, (DLGPROC)DrivesDlgProc);
+       DialogBox(hAppInstance, (LPTSTR) MAKEINTRESOURCE(DRIVEDLG), hwndFrame, DrivesDlgProc);
        break;
 
     default:
