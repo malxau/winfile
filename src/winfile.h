@@ -367,9 +367,9 @@ Extern fnStrCpyN StrCpyN;
 
 #define StrNCpy StrCpyN
 
-// "InternalGetWindowText" is exported from "user32.dll" but isn't in the import library
+// "InternalGetWindowText" is exported from "user32.dll" but isn't in older MSVC import libraries
 typedef int (WINAPI *fnWindowText)(HWND, LPWSTR, int);
-Extern fnWindowText InternalGetWindowText;
+Extern fnWindowText WF_InternalGetWindowText;
 
 // WFDLGS3.C
 
@@ -572,7 +572,7 @@ VOID  GetTextStuff(HDC hdc);
 INT   GetHeightFromPointsString(LPTSTR szPoints);
 INT   GetDrive(HWND hwnd, POINT pt);
 VOID  CheckSlashies(LPTSTR);
-DWORD IsNetDrive(DRIVE drive);
+DWORD WF_IsNetDrive(DRIVE drive);
 BOOL  IsCDRomDrive(DRIVE drive);
 BOOL  IsRamDrive(DRIVE drive);
 VOID  CleanupMessages();
@@ -658,7 +658,7 @@ VOID  BuildDriveLine(LPTSTR* lpszTemp, INT i, BOOL fGetFloppyLabel, DWORD dwType
 
 // LFN.C
 
-BOOL IsLFNDrive(LPTSTR szDrive);
+BOOL WF_IsLFNDrive(LPTSTR szDrive);
 DWORD WFCopy(LPTSTR,LPTSTR);
 DWORD WFRemove(LPTSTR pszFile);
 DWORD WFMove(LPTSTR pszFrom, LPTSTR pszTo, PBOOL pbErrorOnDest, BOOL bSilent);

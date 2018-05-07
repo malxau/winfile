@@ -383,7 +383,7 @@ CheckDrive(HWND hwnd, DRIVE drive, DWORD dwFunc)
    while ((driveInd < cDrives) && (rgiDrive[driveInd] != drive))
        driveInd++;
 
-   switch (IsNetDrive(drive)) {
+   switch (WF_IsNetDrive(drive)) {
 
    case 2:
 

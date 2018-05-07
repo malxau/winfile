@@ -38,7 +38,7 @@ TCHAR szKernel32[] = TEXT("kernel32");
 #endif
 
 // Dynamic loading of "InternalGetWindowText" from "user32.dll"
-fnWindowText InternalGetWindowText;
+fnWindowText WF_InternalGetWindowText;
 TCHAR szUser32[] = TEXT("user32");
 CHAR szWindowTextFunc[] = "InternalGetWindowText";
 
@@ -711,7 +711,7 @@ CheckDirExists(
 {
    BOOL bRet = FALSE;
 
-   if (IsNetDrive(DRIVEID(szDir)) == 2) {
+   if (WF_IsNetDrive(DRIVEID(szDir)) == 2) {
 
       CheckDrive(hwndFrame, DRIVEID(szDir), FUNC_SETDRIVE);
       return TRUE;
@@ -1019,9 +1019,9 @@ JAPANEND
 
    // Dynamic loading of "InternalGetWindowText" from "user32.dll"
    hUser32 = GetModuleHandle(szUser32);
-   InternalGetWindowText = (fnWindowText)GetProcAddress(hUser32, szWindowTextFunc);
+   WF_InternalGetWindowText = (fnWindowText)GetProcAddress(hUser32, szWindowTextFunc);
 
-   if (!InternalGetWindowText)
+   if (!WF_InternalGetWindowText)
       return FALSE;
 
    if (lpfnRegisterPenApp = (FNPENAPP)GetProcAddress((HANDLE)GetSystemMetrics(SM_PENWINDOWS), chPenReg))

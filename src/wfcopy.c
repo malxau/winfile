@@ -311,7 +311,7 @@ JAPANEND
           return FALSE;
 
 
-       flfn = IsLFNDrive(lpszPath);
+       flfn = WF_IsLFNDrive(lpszPath);
 
        //
        // If i == 2, then we found the trailing \, axe it off
@@ -357,7 +357,7 @@ JAPANEND
 
     DRIVESET(szDrive,drive);
 
-    flfn = IsLFNDrive(szDrive);
+    flfn = WF_IsLFNDrive(szDrive);
 
     //
     // on FAT _AND_ lfn devices, replace any illegal chars with underscores
@@ -2314,7 +2314,7 @@ WFMoveCopyDriverThread(LPVOID lpParameter)
 
       pSpec = szDest + lstrlen(szDest);
 
-      bIsLFNDriveDest = IsLFNDrive(pCopyInfo->pTo);
+      bIsLFNDriveDest = WF_IsLFNDrive(pCopyInfo->pTo);
    }
    pcr->pSource = pCopyInfo->pFrom;
 

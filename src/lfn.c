@@ -193,7 +193,7 @@ DWORD
 GetNameType(LPTSTR lpName)
 {
    if (CHAR_COLON == *(lpName+1)) {
-      if (!IsLFNDrive(lpName))
+      if (!WF_IsLFNDrive(lpName))
          return FILE_83_CI;
    } else if(IsFATName(lpName))
       return FILE_83_CI;
@@ -202,7 +202,7 @@ GetNameType(LPTSTR lpName)
 }
 
 BOOL
-IsLFNDrive(LPTSTR szDrive)
+WF_IsLFNDrive(LPTSTR szDrive)
 {
    DRIVE drive = DRIVEID(szDrive);
 

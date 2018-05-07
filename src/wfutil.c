@@ -456,7 +456,7 @@ GetMDIWindowText(HWND hwnd, LPWSTR szTitle, INT size)
 
    EnterCriticalSection(&CriticalSectionPath);
 
-   InternalGetWindowText(hwnd, szTemp, COUNTOF(szTemp));
+   WF_InternalGetWindowText(hwnd, szTemp, COUNTOF(szTemp));
 
    if (GetWindow(hwnd, GW_OWNER) ||
       GetWindowLong(hwnd, GWL_TYPE) == -1L)
@@ -721,7 +721,7 @@ IsCDRomDrive(DRIVE drive)
 // drive is a zero based drive number (0 = A, 1 = B)
 
 DWORD
-IsNetDrive(INT drive)
+WF_IsNetDrive(INT drive)
 {
    INT err;
 
