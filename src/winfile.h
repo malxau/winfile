@@ -1531,8 +1531,8 @@ typedef struct _DRIVE_INFO {
 #define COMDLG_DLL TEXT("comdlg32.dll")
 Extern HANDLE hComdlg            EQ( NULL );
 
-Extern DWORD (*lpfnChooseFontW)(LPCHOOSEFONTW);
-Extern DWORD (*lpfnGetOpenFileNameW)(LPOPENFILENAMEW);
+Extern BOOL (WINAPI *lpfnChooseFontW)(LPCHOOSEFONTW);
+Extern BOOL (WINAPI *lpfnGetOpenFileNameW)(LPOPENFILENAMEW);
 
 #define COMDLG_ChooseFontW                "ChooseFontW"
 #define COMDLG_GetOpenFileNameW           "GetOpenFileNameW"
@@ -1560,19 +1560,19 @@ Extern DWORD (*lpfnGetOpenFileNameW)(LPOPENFILENAMEW);
 #define WAITNET_TYPELOADED  bNetTypeLoad
 #define WAITNET_SHARELOADED bNetShareLoad
 
-Extern DWORD (*lpfnWNetCloseEnum)(HANDLE);
-Extern DWORD (*lpfnWNetConnectionDialog2)(HWND, DWORD, LPWSTR, UINT);
-Extern DWORD (*lpfnWNetDisconnectDialog2)(HWND, UINT, LPWSTR, UINT);
-Extern DWORD (*lpfnWNetEnumResourceW)(HANDLE, LPDWORD, LPVOID, LPDWORD);
-Extern DWORD (*lpfnWNetGetConnection2W)(LPWSTR, WNET_CONNECTIONINFO *, LPDWORD);
-Extern DWORD (*lpfnWNetGetDirectoryTypeW)(LPWSTR, LPDWORD, BOOL);
-Extern DWORD (*lpfnWNetGetLastErrorW)(LPDWORD, LPWSTR, DWORD, LPWSTR, DWORD);
-Extern DWORD (*lpfnWNetGetPropertyTextW)(WORD, WORD, LPWSTR, LPWSTR, WORD, WORD);
-Extern DWORD (*lpfnWNetOpenEnumW)(DWORD, DWORD, DWORD, LPNETRESOURCE, LPHANDLE);
-Extern DWORD (*lpfnWNetPropertyDialogW)(HWND, WORD, WORD, LPWSTR, WORD);
-Extern DWORD (*lpfnWNetRestoreConnectionW)(HWND, LPWSTR);
-Extern DWORD (*lpfnWNetRestoreSingleConnectionW)(HWND, LPWSTR, BOOL);
-Extern DWORD (*lpfnWNetFormatNetworkNameW)(
+Extern DWORD (APIENTRY *lpfnWNetCloseEnum)(HANDLE);
+Extern DWORD (APIENTRY *lpfnWNetConnectionDialog2)(HWND, DWORD, LPWSTR, UINT);
+Extern DWORD (APIENTRY *lpfnWNetDisconnectDialog2)(HWND, UINT, LPWSTR, UINT);
+Extern DWORD (APIENTRY *lpfnWNetEnumResourceW)(HANDLE, LPDWORD, LPVOID, LPDWORD);
+Extern DWORD (APIENTRY *lpfnWNetGetConnection2W)(LPWSTR, WNET_CONNECTIONINFO *, LPDWORD);
+Extern DWORD (APIENTRY *lpfnWNetGetDirectoryTypeW)(LPWSTR, LPDWORD, BOOL);
+Extern DWORD (APIENTRY *lpfnWNetGetLastErrorW)(LPDWORD, LPWSTR, DWORD, LPWSTR, DWORD);
+Extern DWORD (APIENTRY *lpfnWNetGetPropertyTextW)(WORD, WORD, LPWSTR, LPWSTR, WORD, WORD);
+Extern DWORD (APIENTRY *lpfnWNetOpenEnumW)(DWORD, DWORD, DWORD, LPNETRESOURCE, LPHANDLE);
+Extern DWORD (APIENTRY *lpfnWNetPropertyDialogW)(HWND, WORD, WORD, LPWSTR, WORD);
+Extern DWORD (APIENTRY *lpfnWNetRestoreConnectionW)(HWND, LPWSTR);
+Extern DWORD (APIENTRY *lpfnWNetRestoreSingleConnectionW)(HWND, LPWSTR, BOOL);
+Extern DWORD (APIENTRY *lpfnWNetFormatNetworkNameW)(
                     LPCWSTR  lpProvider,
                     LPCWSTR  lpRemoteName,
                     LPWSTR   lpFormattedName,
@@ -1580,11 +1580,11 @@ Extern DWORD (*lpfnWNetFormatNetworkNameW)(
                     DWORD    dwFlags,
                     DWORD    dwAveCharPerLine
                     );
-Extern DWORD (*lpfnShareCreate)(HWND);
-Extern DWORD (*lpfnShareStop)(HWND);
+Extern DWORD (APIENTRY *lpfnShareCreate)(HWND);
+Extern DWORD (APIENTRY *lpfnShareStop)(HWND);
 
 #ifdef NETCHECK
-Extern DWORD (*lpfnWNetDirectoryNotifyW)(HWND, LPWSTR, DWORD);
+Extern DWORD (APIENTRY *lpfnWNetDirectoryNotifyW)(HWND, LPWSTR, DWORD);
 #endif
 
 #define NETWORK_WNetCloseEnum          "WNetCloseEnum"
