@@ -799,7 +799,3 @@ BEGIN
     PUSHBUTTON      "Cancel", IDCANCEL, 244, 23, 40, 14
     PUSHBUTTON      "&Help", IDD_HELP, 244, 40, 40, 14
 END
-
-
-
-
