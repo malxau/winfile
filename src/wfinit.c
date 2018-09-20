@@ -1246,6 +1246,7 @@ JAPANEND
    if (!IntersectRect(&rcS, &rcT, &win.rc))
    {
       rcT.right = rcT.bottom = (LONG)CW_USEDEFAULT;
+      rcT.left = rcT.top = (LONG)CW_USEDEFAULT;
       win.rc = rcT;
    }
 

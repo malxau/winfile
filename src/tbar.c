@@ -1160,7 +1160,7 @@ CreateFMToolbar(void)
       WS_CHILD|WS_BORDER|CCS_ADJUSTABLE|WS_CLIPSIBLINGS|
       (bToolbar ? WS_VISIBLE : 0),
       IDC_TOOLBAR, TBAR_BITMAP_COUNT, hAppInstance, IDB_TOOLBAR,
-      tbButtons, 0);
+      (LPTBBUTTON)tbButtons, 0);
 
    if (!hwndToolbar)
       return;
@@ -1313,7 +1313,7 @@ InitToolbarExtension(INT iExt)
          goto AddSep;
    } else {
       hwndExtensions = CreateToolbar(hwndFrame, WS_CHILD,
-         IDC_EXTENSIONS, 0, hAppInstance, IDB_TOOLBAR, tbButtons, 0);
+         IDC_EXTENSIONS, 0, hAppInstance, IDB_TOOLBAR, (LPTBBUTTON)tbButtons, 0);
 
       if (!hwndExtensions)
          return FALSE;
@@ -1461,7 +1461,8 @@ SaveRestoreToolbar(BOOL bSave)
       tbSave.hkr = HKEY_CURRENT_USER;
       tbSave.pszSubKey = szSubKey;
       tbSave.pszValueName = szValueName;
-      bRestored = (BOOL)SendMessage(hwndToolbar, TB_SAVERESTORE, 0, (LPARAM)&tbSave);
+      //bRestored = (BOOL)SendMessage(hwndToolbar, TB_SAVERESTORE, 0, (LPARAM)&tbSave);
+      bRestored = FALSE;
 
 
       for ( ; iExt<iNumExtensions; ++iExt)

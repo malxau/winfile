@@ -21,7 +21,7 @@
 #include <string.h>
 #include <memory.h>
 #include "mpr.h"
-#include <wfext.h>
+#include "wfext.h"
 #include <commdlg.h>
 #include <commctrl.h>
 #include "fmifs.h"
@@ -87,6 +87,9 @@ typedef unsigned char TUCHAR, *PTUCHAR;
 
 // constants from winnt
 #define FILE_ATTRIBUTE_NOT_CONTENT_INDEXED 0x00002000
+#ifndef FILE_ATTRIBUTE_COMPRESSED
+#define FILE_ATTRIBUTE_COMPRESSED          0x00000800
+#endif
 
 ////////////////////////////////////////////////////////////////////////////
 //
@@ -279,6 +282,16 @@ typedef struct tagDROPSTRUCT
 
 #define SPI_GETWORKAREA     48
 #define WM_NOTIFY           0x004E
+
+#ifndef DRIVE_UNKNOWN
+#define DRIVE_UNKNOWN     0
+#define DRIVE_NO_ROOT_DIR 1
+#define DRIVE_REMOVABLE   2
+#define DRIVE_FIXED       3
+#define DRIVE_REMOTE      4
+#define DRIVE_CDROM       5
+#define DRIVE_RAMDISK     6
+#endif
 
 #include "wfinfo.h"
 

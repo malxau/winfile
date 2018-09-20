@@ -1811,37 +1811,12 @@ PutSize(
     PLARGE_INTEGER pqSize,
     LPWSTR szOutStr)
 {
-    INT Size;
     WCHAR szBuffer[MAXFILENAMELEN];
-    NUMBERFMT NumFmt;
 
     /*
      *  Convert it into a string.
      */
     wsprintf(szBuffer, TEXT("%I64u"), pqSize->QuadPart);
-
-    /*
-     *  Format the string.
-     */
-    NumFmt.NumDigits = 0;
-    NumFmt.LeadingZero = 0;
-    NumFmt.Grouping = 3;
-    NumFmt.lpDecimalSep = szDecimal;
-    NumFmt.lpThousandSep = szComma;
-    NumFmt.NegativeOrder = 1;
-
-    if ( Size = GetNumberFormatW( GetUserDefaultLCID(),
-                                  0,
-                                  szBuffer,
-                                  &NumFmt,
-                                  szOutStr,
-                                  MAXFILENAMELEN ) )
-    {
-        /*
-         *  Return the size (without the null terminator).
-         */
-        return (Size - 1);
-    }
 
     /*
      *  GetNumberFormat call failed, so just return the number string

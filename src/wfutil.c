@@ -12,7 +12,12 @@
 #include "winfile.h"
 #include "lfn.h"
 #include <commctrl.h>
+#undef atoi
+#undef abs
 #include <stdlib.h>
+#ifdef UNICODE
+#define atoi atoiW
+#endif
 
 LPTSTR CurDirCache[26];
 
@@ -1463,5 +1468,27 @@ IsBucketFile(LPTSTR lpszPath, PPDOCBUCKET ppBucket)
   }
 
   return DocFind(ppBucket, szExt);
+}
+
+DWORD
+GetCompressedFileSize(LPCTSTR lpFileName, LPDWORD lpFileSizeHigh)
+{
+    if (lpFileSizeHigh != NULL) {
+        *lpFileSizeHigh = 0;
+    }
+    return 0;
+}
+
+DWORD
+GetShortPathName(LPCTSTR lpszLongPath, LPTSTR lpszShortPath, DWORD cchBuffer)
+{
+    lstrcpy(lpszShortPath, lpszLongPath);
+    return lstrlen(lpszLongPath);
+}
+
+DWORDLONG
+UInt32x32To64(DWORD Multiplier, DWORD Multiplicand)
+{
+    return Multiplier * Multiplicand;
 }
 

@@ -121,9 +121,9 @@ CLEAN :
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /Gz /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x030A /D WINVER=0x030A /FR /YX /c
-CPP_PROJ=/nologo /Gz /MD /W3 /GX /O2 /Zp4 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D\
+# ADD BASE CPP /nologo /W3 /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
+# ADD CPP /nologo /Gz /MD /W3 /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x030A /D WINVER=0x030A /FR /YX /c
+CPP_PROJ=/nologo /Gz /MD /W3 /O2 /Zp4 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D\
  "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D\
  "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x030A /D WINVER=0x030A\
  /FR"$(INTDIR)/" /Fp"$(INTDIR)/WinFile.pch" /YX /Fo"$(INTDIR)/" /c 
@@ -177,13 +177,13 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib uuid.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib comctl32.lib comdlg32.lib advapi32.lib shell32.lib uuid.lib /nologo /subsystem:windows /machine:I386
-# SUBTRACT LINK32 /pdb:none
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /machine:I386
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib comctl32.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /machine:I386
+# SUBTRACT LINK32 
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib comctl32.lib\
- comdlg32.lib advapi32.lib shell32.lib uuid.lib\
+ comdlg32.lib advapi32.lib shell32.lib \
  /nologo /subsystem:windows \
- /pdb:"$(OUTDIR)\WinFile.pdb" /machine:I386 /out:"$(OUTDIR)\WinFile.exe" 
+ /machine:I386 /out:"$(OUTDIR)\WinFile.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\dbg.obj" \
 	"$(INTDIR)\lfn.obj" \
@@ -248,8 +248,6 @@ CLEAN :
 	-@erase "$(INTDIR)\suggest.obj"
 	-@erase "$(INTDIR)\tbar.obj"
 	-@erase "$(INTDIR)\treectl.obj"
-	-@erase "$(INTDIR)\vc40.idb"
-	-@erase "$(INTDIR)\vc40.pdb"
 	-@erase "$(INTDIR)\wfassoc.obj"
 	-@erase "$(INTDIR)\wfchgnot.obj"
 	-@erase "$(INTDIR)\wfcomman.obj"
@@ -274,15 +272,13 @@ CLEAN :
 	-@erase "$(INTDIR)\winfile.obj"
 	-@erase "$(INTDIR)\wnetcaps.obj"
 	-@erase "$(OUTDIR)\WinFile.exe"
-	-@erase "$(OUTDIR)\WinFile.ilk"
-	-@erase "$(OUTDIR)\WinFile.pdb"
 
 "$(OUTDIR)" :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
-# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /Gz /MD /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x030A /D WINVER=0x030A /YX /c
-CPP_PROJ=/nologo /Gz /MD /W3 /GX /Z7 /Od /Zp4 /D "WIN32" /D "_DEBUG" /D\
+# ADD BASE CPP /nologo /W3 /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
+# ADD CPP /nologo /Gz /MD /W3 /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D "UNICODE" /D "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x030A /D WINVER=0x030A /YX /c
+CPP_PROJ=/nologo /Gz /MD /W3 /Z7 /Od /Zp4 /D "WIN32" /D "_DEBUG" /D\
  "_WINDOWS" /D "FASTMOVE" /D "LFNCLIPBOARD" /D "MEMDOUBLE" /D "STRICT" /D\
  "UNICODE" /D "_UNICODE" /D "USELASTDOT" /D _WIN32_WINNT=0x030A /D WINVER=0x030A\
  /Fp"$(INTDIR)/WinFile.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
@@ -301,13 +297,13 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)/WinFile.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib uuid.lib /nologo /subsystem:windows /debug /debugtype:both /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib comctl32.lib comdlg32.lib advapi32.lib shell32.lib uuid.lib /nologo /subsystem:windows /debug /debugtype:both /machine:I386
-# SUBTRACT LINK32 /pdb:none
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /debug:full /debugtype:both /machine:I386
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib comctl32.lib comdlg32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /debug:full /debugtype:both /machine:I386
+# SUBTRACT LINK32 
 LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib comctl32.lib\
- comdlg32.lib advapi32.lib shell32.lib uuid.lib\
+ comdlg32.lib advapi32.lib shell32.lib \
  /nologo /subsystem:windows \
- /pdb:"$(OUTDIR)\WinFile.pdb" /debug /debugtype:both /machine:I386 /out:"$(OUTDIR)\WinFile.exe" 
+ /debug:full /debugtype:both /machine:I386 /out:"$(OUTDIR)\WinFile.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\dbg.obj" \
 	"$(INTDIR)\lfn.obj" \

@@ -17,6 +17,12 @@
 #define WNFMT_ABBREVIATED       0x02
 
 
+#ifndef FS_VOL_IS_COMPRESSED
+#define FS_VOL_IS_COMPRESSED 0x00008000  
+#endif
+
+
+
 #define U_HEAD(type) \
    VOID \
    U_##type (DRIVE drive) { \
@@ -938,6 +944,8 @@ UpdateInit(PVOID ThreadParameter)
 {
    INT cDrivesTmp;
 
+   return;
+
    while (bUpdateRun) {
 
       WaitForSingleObject(hEventUpdate, INFINITE);
@@ -953,8 +961,7 @@ UpdateInit(PVOID ThreadParameter)
             // Do something friendly here before we quit!
             //
             LoadFailMessage();
-
-            ExitProcess(1);
+            break;
          }
          SetThreadPriority(GetCurrentThread(),THREAD_PRIORITY_BELOW_NORMAL);
 

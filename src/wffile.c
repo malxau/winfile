@@ -1010,6 +1010,8 @@ CancelCompress:
     return (bRet);
 }
 
+#define FSCTL_SET_COMPRESSION           CTL_CODE(FILE_DEVICE_FILE_SYSTEM,16, METHOD_BUFFERED, FILE_ANY_ACCESS)
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
