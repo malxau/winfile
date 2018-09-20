@@ -69,6 +69,10 @@ INT atoiW(LPWSTR sz);
 
 #define WM_LBTRACKPOINT                 0x0131
 
+#ifndef TB_SETINDENT
+#define TB_SETINDENT            (WM_USER + 47)
+#endif
+
 #ifdef  UNICODE                     // r_winnt
 typedef WCHAR TUCHAR, *PTUCHAR;
 #else   /* UNICODE */               // r_winnt
@@ -250,6 +254,31 @@ typedef unsigned char TUCHAR, *PTUCHAR;
 typedef HWND *PHWND;
 typedef INT DRIVE;
 typedef INT DRIVEIND;
+
+#ifndef DOF_EXECUTABLE
+typedef struct tagDROPSTRUCT
+{
+    HWND    hwndSource;
+    HWND    hwndSink;
+    DWORD   wFmt;
+    DWORD   dwData;
+    POINT   ptDrop;
+    DWORD   dwControlData;
+} DROPSTRUCT, *PDROPSTRUCT, *LPDROPSTRUCT;
+
+#define DOF_EXECUTABLE      0x8001
+#define DOF_DOCUMENT        0x8002
+#define DOF_DIRECTORY       0x8003
+#define DOF_MULTIPLE        0x8004
+#define DOF_PROGMAN         0x0001
+#define DOF_SHELLDATA       0x0002
+
+#define DO_DROPFILE         0x454C4946L
+#define DO_PRINTFILE        0x544E5250L
+#endif
+
+#define SPI_GETWORKAREA     48
+#define WM_NOTIFY           0x004E
 
 #include "wfinfo.h"
 
@@ -679,8 +708,13 @@ VOID  GetTreeUNCName(HWND hwndTree, LPTSTR szBuf, INT nBuf);
 //
 //--------------------------------------------------------------------------
 
+#ifndef SST_RESOURCE
 #define SST_RESOURCE 0X1
+#endif
+
+#ifndef SST_FORMAT
 #define SST_FORMAT   0x2
+#endif
 
 #define DRIVE_INFO_NAME_HEADER 4
 

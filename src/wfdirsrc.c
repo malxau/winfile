@@ -8,7 +8,7 @@
 ********************************************************************/
 
 #include "winfile.h"
-#include <shlobj.h>
+//#include <shlobj.h>
 #include <commctrl.h>
 
 #ifdef PROGMAN
@@ -18,6 +18,14 @@
 #define DO_DROPFILE 0x454C4946L
 #define DO_PRINTFILE 0x544E5250L
 #define DO_DROPONDESKTOP 0x504D42L
+
+typedef struct _DROPFILES {
+   DWORD pFiles;                       // offset of file list
+   POINT pt;                           // drop point (client coords)
+   BOOL fNC;                           // is it on NonClient area
+				       // and pt is in screen coords
+   BOOL fWide;                         // WIDE character switch
+} DROPFILES, FAR * LPDROPFILES;
 
 HWND hwndGlobalSink = NULL;
 

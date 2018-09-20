@@ -24,6 +24,12 @@
 
 #define FILETYPEBLOCK MAX_PATH
 
+#define BST_UNCHECKED      0x0000
+#define BST_CHECKED        0x0001
+#define BST_INDETERMINATE  0x0002
+#define BST_PUSHED         0x0004
+#define BST_FOCUS          0x0008
+
 
 #if 0
 #define odf(x,y) {TCHAR szT[100]; wsprintf(szT,x,y); OutputDebugString(szT);}
@@ -4575,4 +4581,3 @@ GenerateFriendlyName(LPTSTR lpszCommand)
     return (p);
 }
 
-

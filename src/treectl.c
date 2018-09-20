@@ -23,6 +23,12 @@
 #define READDIRLEVEL_YIELDBIT 2
 
 
+WINUSERAPI
+DWORD
+WINAPI
+DragObject(HWND, HWND, UINT, DWORD, HCURSOR);
+
+
 #define IS_PARTIALSORT(drive) (aDriveInfo[drive].dwFileSystemFlags & FS_CASE_IS_PRESERVED)
 
 #define CALC_EXTENT(pNode)                                                  \

@@ -11,6 +11,67 @@
 
 #include "winfile.h"
 
+typedef struct {
+    INT iBitmap;     /* index into mondo bitmap of this button's picture */
+    INT idCommand;   /* WM_COMMAND menu ID that this button sends */
+    BYTE fsState;    /* button's state, see TBSTATE_XXXX below */
+    BYTE fsStyle;    /* button's style, see TBSTYLE_XXXX below */
+    INT idsHelp;     /* string ID for button's status bar help */
+} WFTBBUTTON, NEAR *PWFTBBUTTON, FAR *LPWFTBBUTTON;
+
+typedef struct tagNMHDR
+{
+    HWND hwndFrom;
+    UINT idFrom;
+    UINT code;         // NM_ code
+} NMHDR, FAR * LPNMHDR;
+
+typedef struct tagTBNOTIFYW {
+    NMHDR hdr;
+    int iItem;
+    WFTBBUTTON tbButton;
+    int cchText;
+    LPWSTR pszText;
+} TBNOTIFYW, FAR *LPTBNOTIFYW;
+
+typedef struct tagTOOLTIPTEXTW {
+    NMHDR hdr;
+    LPWSTR lpszText;
+    WCHAR szText[80];
+    HINSTANCE hinst;
+    UINT uFlags;
+} TOOLTIPTEXTW, FAR *LPTOOLTIPTEXTW;
+
+typedef struct tagTBADDBITMAP {
+    HINSTANCE hInst;
+    UINT nID;
+} TBADDBITMAP, *LPTBADDBITMAP;
+
+typedef struct tagTBSAVEPARAMSW {
+    HKEY hkr;
+    LPCWSTR pszSubKey;
+    LPCWSTR pszValueName;
+} TBSAVEPARAMSW;
+
+#define TBNOTIFY                TBNOTIFYW
+#define LPTBNOTIFY              LPTBNOTIFYW
+#define TOOLTIPTEXT             TOOLTIPTEXTW
+#define LPTOOLTIPTEXT           LPTOOLTIPTEXTW
+#define TBSAVEPARAMS            TBSAVEPARAMSW
+#define TBN_GETBUTTONINFOA      (TBN_FIRST-0)
+#define TBN_GETBUTTONINFOW      (TBN_FIRST-20)
+#define TBN_FIRST               (0U-700U)       // toolbar
+#define TBN_LAST                (0U-720U)
+#define TTN_FIRST               (0U-520U)       // tooltips
+#define TTN_LAST                (0U-549U)
+#define TTN_NEEDTEXTA           (TTN_FIRST - 0)
+#define TTN_NEEDTEXTW           (TTN_FIRST - 10)
+#define TTN_SHOW                (TTN_FIRST - 1)
+#define TTN_POP                 (TTN_FIRST - 2)
+#define TTN_NEEDTEXT            TTN_NEEDTEXTW
+
+#define TBN_GETBUTTONINFO       TBN_GETBUTTONINFOW
+
 #define DRIVELIST_BORDER        3
 #define MINIDRIVE_MARGIN        4
 
@@ -50,7 +111,7 @@ static UINT uExtraCommands[] =
 /* Note that the idsHelp field is used internally to determine if the
  * button is "available" or not.
  */
-static TBBUTTON tbButtons[] = {
+static WFTBBUTTON tbButtons[] = {
   { 0, 0              , TBSTATE_ENABLED, TBSTYLE_SEP   , 0 },
   { 0, IDM_CONNECTIONS, TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
   { 1, IDM_DISCONNECT , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
@@ -565,20 +626,20 @@ ResetToolbar(void)
    // Add the default list of buttons
 
    SendMessage(hwndToolbar, TB_ADDBUTTONS, TBAR_BUTTON_COUNT,
-      (LPARAM)(LPTBBUTTON)tbButtons);
+      (LPARAM)(LPWFTBBUTTON)tbButtons);
 
    // Add the extensions back in
 
    if (hwndExtensions) {
       INT nExtButtons;
-      TBBUTTON tbButton;
+      WFTBBUTTON tbButton;
 
       nExtButtons = (INT)SendMessage(hwndExtensions, TB_BUTTONCOUNT, 0, 0L);
       for (nItem=0; nItem<nExtButtons; ++nItem) {
          SendMessage(hwndExtensions, TB_GETBUTTON, nItem,
-            (LPARAM)(LPTBBUTTON)&tbButton);
+            (LPARAM)(LPWFTBBUTTON)&tbButton);
          SendMessage(hwndToolbar, TB_ADDBUTTONS, 1,
-            (LPARAM)(LPTBBUTTON)&tbButton);
+            (LPARAM)(LPWFTBBUTTON)&tbButton);
       }
    }
 
@@ -678,7 +739,7 @@ LoadDesc(UINT uID, LPTSTR lpDesc)
 Static BOOL
 GetAdjustInfo(LPTBNOTIFY lpTBNotify)
 {
-   LPTBBUTTON lpButton = &lpTBNotify->tbButton;
+   LPWFTBBUTTON lpButton = &lpTBNotify->tbButton;
    FMS_HELPSTRING tbl;
    int iExt;
    int j = lpTBNotify->iItem;
@@ -1095,11 +1156,11 @@ CreateFMToolbar(void)
    // We'll start out by adding no buttons; that will be done in
    // InitToolbarButtons
 
-   hwndToolbar = CreateToolbarEx(hwndFrame,
-      WS_CHILD|WS_BORDER|CCS_ADJUSTABLE|WS_CLIPSIBLINGS|TBSTYLE_TOOLTIPS|
+   hwndToolbar = CreateToolbar(hwndFrame,
+      WS_CHILD|WS_BORDER|CCS_ADJUSTABLE|WS_CLIPSIBLINGS|
       (bToolbar ? WS_VISIBLE : 0),
       IDC_TOOLBAR, TBAR_BITMAP_COUNT, hAppInstance, IDB_TOOLBAR,
-      tbButtons, 0, 0,0,0,0, sizeof(TBBUTTON));
+      tbButtons, 0);
 
    if (!hwndToolbar)
       return;
@@ -1210,7 +1271,7 @@ InitToolbarButtons(VOID)
 BOOL
 InitToolbarExtension(INT iExt)
 {
-   TBBUTTON extButton;
+   WFTBBUTTON extButton;
    FMS_TOOLBARLOAD tbl;
    LPEXT_BUTTON lpButton;
    INT i, iStart, iBitmap;
@@ -1247,13 +1308,12 @@ InitToolbarExtension(INT iExt)
 
       i = (INT)SendMessage(hwndToolbar, TB_BUTTONCOUNT, 0, 0L);
       SendMessage(hwndToolbar, TB_GETBUTTON, i-1,
-         (LPARAM)(LPTBBUTTON)&extButton);
+         (LPARAM)(LPWFTBBUTTON)&extButton);
       if (!(extButton.fsStyle & TBSTYLE_SEP))
          goto AddSep;
    } else {
-      hwndExtensions = CreateToolbarEx(hwndFrame, WS_CHILD,
-         IDC_EXTENSIONS, 0, hAppInstance, IDB_TOOLBAR, tbButtons, 0,
-         0,0,0,0,sizeof(TBBUTTON));
+      hwndExtensions = CreateToolbar(hwndFrame, WS_CHILD,
+         IDC_EXTENSIONS, 0, hAppInstance, IDB_TOOLBAR, tbButtons, 0);
 
       if (!hwndExtensions)
          return FALSE;
@@ -1265,7 +1325,7 @@ AddSep:
       extButton.fsStyle = TBSTYLE_SEP;
 
       SendMessage(hwndExtensions, TB_INSERTBUTTON, (WORD)-1,
-         (LPARAM)(LPTBBUTTON)&extButton);
+         (LPARAM)(LPWFTBBUTTON)&extButton);
    }
 
    // Notice we add the bitmaps to hwndToolbar, not hwndExtensions, because
@@ -1305,7 +1365,7 @@ AddSep:
       extButton.fsState   = TBSTATE_ENABLED;
 
       SendMessage(hwndExtensions, TB_INSERTBUTTON, (WORD)-1,
-         (LPARAM)(LPTBBUTTON)&extButton);
+         (LPARAM)(LPWFTBBUTTON)&extButton);
    }
 
    return TRUE;
@@ -1360,11 +1420,11 @@ SaveRestoreToolbar(BOOL bSave)
       // Add the beginning space back in.
 
       SendMessage(hwndToolbar, TB_INSERTBUTTON, 0,
-         (LPARAM)(LPTBBUTTON)tbButtons);
+         (LPARAM)(LPWFTBBUTTON)tbButtons);
    } else {
       INT i, iExt, nExtButtons;
       BOOL bRestored;
-      TBBUTTON tbButton;
+      WFTBBUTTON tbButton;
       LPTSTR pName, pEnd;
 
       // Only load the buttons for the extensions that were the same as
@@ -1421,13 +1481,13 @@ SaveRestoreToolbar(BOOL bSave)
          if(GetMenuState(hMenu, idGood, MF_BYCOMMAND)!=(UINT)-1 && nItem>=0) {
             SendMessage(hwndToolbar, TB_DELETEBUTTON, nItem, 0L);
             SendMessage(hwndToolbar, TB_INSERTBUTTON, nItem,
-               (LPARAM)(LPTBBUTTON)(&tbButtons[ICONNECTIONS]));
+               (LPARAM)(LPWFTBBUTTON)(&tbButtons[ICONNECTIONS]));
          }
 
          // Add in the beginning separator and the "new" extensions
 
          SendMessage(hwndToolbar, TB_INSERTBUTTON, 0,
-            (LPARAM)(LPTBBUTTON)tbButtons);
+            (LPARAM)(LPWFTBBUTTON)tbButtons);
 
          // Add in any extensions that are new
 
@@ -1437,9 +1497,9 @@ SaveRestoreToolbar(BOOL bSave)
             0, 0L) - nExtButtons;
             for ( ; nExtButtons>0; ++i, --nExtButtons) {
                SendMessage(hwndExtensions, TB_GETBUTTON, i,
-                  (LPARAM)(LPTBBUTTON)&tbButton);
+                  (LPARAM)(LPWFTBBUTTON)&tbButton);
                SendMessage(hwndToolbar, TB_ADDBUTTONS, 1,
-                  (LPARAM)(LPTBBUTTON)&tbButton);
+                  (LPARAM)(LPWFTBBUTTON)&tbButton);
             }
          }
 

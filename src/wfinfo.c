@@ -13,6 +13,9 @@
 #include "wnetcaps.h"
 #include <commctrl.h>
 
+#define WNFMT_MULTILINE         0x01
+#define WNFMT_ABBREVIATED       0x02
+
 
 #define U_HEAD(type) \
    VOID \
