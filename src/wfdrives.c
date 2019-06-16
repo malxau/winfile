@@ -761,7 +761,11 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
                    {
                       HWND hwndLB;
 
+#if _WIN64
+                      bChangeDisplay = GetWindowLongPtr(hwndDir, GWLP_USERDATA);
+#else
                       bChangeDisplay = GetWindowLong(hwndDir, GWL_USERDATA);
+#endif
 
                       hwndLB = GetDlgItem (hwndDir, IDCW_LISTBOX);
                       if (hwndLB && !bChangeDisplay)

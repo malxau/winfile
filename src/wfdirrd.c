@@ -409,7 +409,11 @@ DirReadDone(
 
    FillDirList(hwndDir, lpStart);
 
+#if _WIN64
+   SetWindowLongPtr(hwndDir, GWLP_USERDATA, 0);
+#else
    SetWindowLong(hwndDir, GWL_USERDATA, 0);
+#endif
 
    hwndNext = (HWND)GetWindowLong(hwndDir, GWL_NEXTHWND);
    if (hwndNext)
@@ -664,7 +668,11 @@ Restart:
                CreateDTABlockWorker(hwnd, hwndDir);
                goto Restart;
             }
+#if _WIN64
+            SetWindowLongPtr(hwndDir, GWLP_USERDATA, 0);
+#else
             SetWindowLong(hwndDir, GWL_USERDATA, 0);
+#endif
          }
       }
 #ifdef PROGMAN

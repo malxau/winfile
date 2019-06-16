@@ -432,7 +432,11 @@ AssociateDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
          INT iItem;
 
          // Turn off refresh flag (GWL_USERDATA)
+#if _WIN64
+         SetWindowLongPtr(hDlg, GWLP_USERDATA, 0L);
+#else
          SetWindowLong(hDlg, GWL_USERDATA, 0L);
+#endif
 
          // Make 'p' point to the file's extension.
          pSave = GetSelection(1, NULL);
@@ -616,7 +620,11 @@ DoConfigWinIni:
             // If prev dialog requests build doc refresh, set our flag
 
             if (AssociateFileDlgInfo.bRefresh)
+#if _WIN64
+               SetWindowLongPtr(hDlg, GWLP_USERDATA, 1L);
+#else
                SetWindowLong(hDlg, GWL_USERDATA, 1L);
+#endif
 
             //
             // Instead of clearing IDD_EXT, go ahead and leave
@@ -697,7 +705,11 @@ DoConfigWinIni:
             //
             // Only set refresh if we deleted one of them.
             //
+#if _WIN64
+            SetWindowLongPtr(hDlg, GWLP_USERDATA, 1L);
+#else
             SetWindowLong(hDlg, GWL_USERDATA, 1L);
+#endif
          }
 
          //
@@ -813,7 +825,11 @@ DoConfigWinIni:
                }
 
                // Request refresh
+#if _WIN64
+               SetWindowLongPtr(hDlg, GWLP_USERDATA, 1L);
+#else
                SetWindowLong(hDlg, GWL_USERDATA, 1L);
+#endif
 
                goto Done;
             }
@@ -882,7 +898,11 @@ DoConfigWinIni:
             //
             // Request refresh
             //
+#if _WIN64
+            SetWindowLongPtr(hDlg, GWLP_USERDATA, 1L);
+#else
             SetWindowLong(hDlg, GWL_USERDATA, 1L);
+#endif
 
             // Flush it!
 Done:
@@ -899,7 +919,11 @@ Cancel:
             //
             // If refresh request, then do it.
             //
+#if _WIN64
+            if (GetWindowLongPtr(hDlg, GWLP_USERDATA)) {
+#else
             if (GetWindowLong(hDlg, GWL_USERDATA)) {
+#endif
 
                BuildDocumentString();
 
@@ -1024,7 +1048,11 @@ AssociateFileDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam
    PASSOCIATEFILEDLGINFO pAssociateFileDlgInfo;
    PTCHAR p;
 
+#if _WIN64
+   pAssociateFileDlgInfo = (PASSOCIATEFILEDLGINFO)GetWindowLongPtr(hDlg, GWLP_USERDATA);
+#else
    pAssociateFileDlgInfo = (PASSOCIATEFILEDLGINFO)GetWindowLong(hDlg, GWL_USERDATA);
+#endif
 
    switch (wMsg) {
    case WM_INITDIALOG:
@@ -1060,7 +1088,11 @@ AssociateFileDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam
          // Initialize pAssociateFileDlgInfo;
          //
          pAssociateFileDlgInfo = (PASSOCIATEFILEDLGINFO) lParam;
+#if _WIN64
+         SetWindowLongPtr(hDlg, GWLP_USERDATA, (LONGLONG)pAssociateFileDlgInfo);
+#else
          SetWindowLong(hDlg, GWL_USERDATA, (LONG)pAssociateFileDlgInfo);
+#endif
 
          //
          // Set up combo box

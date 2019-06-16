@@ -338,7 +338,11 @@ GetRealParent(HWND hwnd)
    // that doesn't have WS_CHILD set
 
    while (GetWindowLong(hwnd, GWL_STYLE) & WS_CHILD)
+#if _WIN64
+      hwnd = (HWND)GetWindowLongPtr(hwnd, GWLP_HWNDPARENT);
+#else
       hwnd = (HWND)GetWindowLong(hwnd, GWL_HWNDPARENT);
+#endif
 
    return hwnd;
 }

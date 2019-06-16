@@ -1319,8 +1319,13 @@ GetDrive(HWND hwnd, POINT pt)
    //
    // make sure we are not sending the FS_GETDRIVE message to other apps
    //
+#if _WIN64
+   if (GetWindowLongPtr(hwnd, GWLP_HINSTANCE) != (LONGLONG)hAppInstance)
+      return 0;
+#else
    if (GetWindowLong(hwnd, GWL_HINSTANCE) != (LONG)hAppInstance)
       return 0;
+#endif
 
    chDrive = CHAR_NULL;
    while (hwnd && (hwnd != hwndMDIClient)) {
@@ -2831,7 +2836,11 @@ SameSelection:
          {
             HWND hwndLB;
 
+#if _WIN64
+            bChangeDisplay = GetWindowLongPtr(hwndDir, GWLP_USERDATA);
+#else
             bChangeDisplay = GetWindowLong(hwndDir, GWL_USERDATA);
+#endif
 
             hwndLB = GetDlgItem (hwndDir, IDCW_LISTBOX);
             if (hwndLB && !bChangeDisplay)

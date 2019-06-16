@@ -1284,7 +1284,11 @@ ChangeDisplay(
          dwNewView = GetWindowLong(hwndListParms, GWL_VIEW);
          dwNewAttribs = GetWindowLong(hwndListParms, GWL_ATTRIBS);
 
+#if _WIN64
+         SetWindowLongPtr(hwnd, GWLP_USERDATA, 1);
+#else
          SetWindowLong(hwnd, GWL_USERDATA, 1);
+#endif
          SendMessage(hwndLB, LB_RESETCONTENT, 0, 0L);
 
          goto CreateNewPath;

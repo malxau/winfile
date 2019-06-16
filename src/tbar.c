@@ -11,6 +11,10 @@
 
 #include "winfile.h"
 
+#ifndef TB_SETINDENT
+#define TB_SETINDENT            (WM_USER + 47)
+#endif
+
 #define DRIVELIST_BORDER        3
 #define MINIDRIVE_MARGIN        4
 
