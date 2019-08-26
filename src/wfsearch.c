@@ -193,7 +193,7 @@ MemoryError:
       //
       MemLinkToHead(*plpStart)->dwAlternateFileNameExtent = 0;
 
-      SetWindowLong(GetParent(hwndLB), GWL_HDTA, (LPARAM)*plpStart);
+      SetWindowLongPtr(GetParent(hwndLB), GWLP_HDTA, (LPARAM)*plpStart);
       SearchInfo.lpStart = *plpStart;
    }
 
@@ -631,7 +631,7 @@ SearchWndProc(
       return (LRESULT)DirGetSelection(NULL,
                                    hwnd,
                                    hwndLB,
-                                   wParam,
+                                   (INT)wParam,
                                    (BOOL *)lParam,
                                    NULL);
       break;
@@ -717,7 +717,7 @@ SearchWndProc(
          }
 
          FixTabsAndThings(hwndLB,
-                          (WORD *)GetWindowLong(hwnd, GWL_TABARRAY),
+                          (WORD *)GetWindowLongPtr(hwnd, GWLP_TABARRAY),
                           maxExt + dxText,
                           0,
                           dwNewView);
@@ -812,7 +812,7 @@ SearchWndProc(
       ClearSearchLB(FALSE);
       SearchInfo.hwndLB = NULL;
 
-      if (hMem = (HANDLE)GetWindowLong(hwnd, GWL_TABARRAY))
+      if (hMem = (HANDLE)GetWindowLongPtr(hwnd, GWLP_TABARRAY))
          LocalFree(hMem);
 
       break;
@@ -848,11 +848,11 @@ SearchWndProc(
       SetWindowLong(hwnd, GWL_SORT,   IDD_NAME);
       SetWindowLong(hwnd, GWL_ATTRIBS,ATTR_DEFAULT);
       SetWindowLong(hwnd, GWL_FSCFLAG,   FALSE);
-      SetWindowLong(hwnd, GWL_HDTA, 0L);
-      SetWindowLong(hwnd, GWL_TABARRAY, (LPARAM)pwTabs);
-      SetWindowLong(hwnd, GWL_LASTFOCUS, (LPARAM)hwndLB);
+      SetWindowLongPtr(hwnd, GWLP_HDTA, 0L);
+      SetWindowLongPtr(hwnd, GWLP_TABARRAY, (LPARAM)pwTabs);
+      SetWindowLongPtr(hwnd, GWLP_LASTFOCUS, (LPARAM)hwndLB);
 
-      SetWindowLong(hwnd, GWL_LISTPARMS, (LPARAM)hwnd);
+      SetWindowLongPtr(hwnd, GWLP_LISTPARMS, (LPARAM)hwnd);
       SetWindowLong(hwnd, GWL_IERROR, 0);
 
       //
@@ -970,7 +970,7 @@ SearchWndProc(
 
       if (maxExt > maxExtLast) {
 
-         pwTabs = (WORD *)GetWindowLong(hwndSearch, GWL_TABARRAY);
+         pwTabs = (WORD *)GetWindowLongPtr(hwndSearch, GWLP_TABARRAY);
 
          //
          // Need to update tabs
@@ -1081,7 +1081,7 @@ UnlockSearchFile()
 }
 
 
-BOOL CALLBACK
+INT_PTR CALLBACK
 SearchProgDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
    DWORD dwIgnore;
@@ -1274,7 +1274,7 @@ SearchDrive(LPVOID lpParameter)
    maxExtLast = SEARCH_FILE_WIDTH_DEFAULT;
 
    FixTabsAndThings(SearchInfo.hwndLB,
-                    (WORD *)GetWindowLong(hwndSearch, GWL_TABARRAY),
+                    (WORD *)GetWindowLongPtr(hwndSearch, GWLP_TABARRAY),
                     maxExtLast,
                     0,
                     GetWindowLong(hwndSearch, GWL_VIEW));

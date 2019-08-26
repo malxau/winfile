@@ -200,7 +200,7 @@ DirReadAbort(
 
    FreeDTA(hwnd);
 
-   SetWindowLong(hwnd, GWL_HDTA, (LPARAM)lpStart);
+   SetWindowLongPtr(hwnd, GWLP_HDTA, (LPARAM)lpStart);
    SetWindowLong(hwnd, GWL_HDTAABORT, eDirAbort);
    bDirReadAbort = TRUE;
 
@@ -257,7 +257,7 @@ StealDTABlock(
 
          if ((dwAttribs == (DWORD)GetWindowLong(hwnd, GWL_ATTRIBS)) &&
             !lstrcmpi(pPath, szPath) &&
-            (lpStart = (LPXDTALINK)GetWindowLong(hwndDir, GWL_HDTA))) {
+            (lpStart = (LPXDTALINK)GetWindowLongPtr(hwndDir, GWLP_HDTA))) {
 
             iError = (INT)GetWindowLong(hwndDir, GWL_IERROR);
             if (!iError || IDS_NOFILES == iError) {
@@ -314,13 +314,13 @@ FreeDTA(HWND hwnd)
    //
    // Must destory icon data before continuing
    //
-   if (hwnd != (HWND)GetWindowLong(hwnd, GWL_LISTPARMS))
+   if (hwnd != (HWND)GetWindowLongPtr(hwnd, GWLP_LISTPARMS))
       IconDTADestroy(GetParent(hwnd));
 #endif
 
-   lpxdtaLink = (LPXDTALINK)GetWindowLong(hwnd, GWL_HDTA);
+   lpxdtaLink = (LPXDTALINK)GetWindowLongPtr(hwnd, GWLP_HDTA);
 
-   SetWindowLong(hwnd, GWL_HDTA, 0L);
+   SetWindowLongPtr(hwnd, GWLP_HDTA, 0L);
 
    //
    // Only delete it if it's not in use.
@@ -384,7 +384,7 @@ DirReadDone(
    // Last chance check for abort
    //
    if ((eDirAbort & (EDIRABORT_READREQUEST|EDIRABORT_WINDOWCLOSE)) ||
-      GetWindowLong(hwndDir, GWL_HDTA)) {
+      GetWindowLongPtr(hwndDir, GWLP_HDTA)) {
 
       //
       // We don't want it
@@ -400,7 +400,7 @@ DirReadDone(
                    FILE_NOTIFY_CHANGE_FLAGS);
 
    SetWindowLong(hwndDir, GWL_IERROR, iError);
-   SetWindowLong(hwndDir, GWL_HDTA, (LPARAM)lpStart);
+   SetWindowLongPtr(hwndDir, GWLP_HDTA, (LPARAM)lpStart);
 
    //
    // Remove the "reading" token
@@ -415,12 +415,12 @@ DirReadDone(
    SetWindowLong(hwndDir, GWL_USERDATA, 0);
 #endif
 
-   hwndNext = (HWND)GetWindowLong(hwndDir, GWL_NEXTHWND);
+   hwndNext = (HWND)GetWindowLongPtr(hwndDir, GWLP_NEXTHWND);
    if (hwndNext)
    {
        SendMessage(hwndDir, FS_TESTEMPTY, 0L, (LPARAM)hwndNext);
    }
-   SetWindowLong(hwndDir, GWL_NEXTHWND, 0L);
+   SetWindowLongPtr(hwndDir, GWLP_NEXTHWND, 0L);
 
    //
    // Refresh display, but don't hit disk
@@ -658,7 +658,7 @@ Restart:
             //
             EnterCriticalSection(&CriticalSectionDirRead);
 
-            bRead = !GetWindowLong(hwndDir, GWL_HDTA) &&
+            bRead = !GetWindowLongPtr(hwndDir, GWLP_HDTA) &&
                        EDIRABORT_READREQUEST ==
                           (EDIRABORT)GetWindowLong(hwndDir, GWL_HDTAABORT);
 
@@ -1032,7 +1032,7 @@ Abort:
          bAbort = ((GetWindowLong(hwndDir,
                                   GWL_HDTAABORT) & (EDIRABORT_WINDOWCLOSE|
                                                     EDIRABORT_READREQUEST)) ||
-                   GetWindowLong(hwndDir, GWL_HDTA));
+                   GetWindowLongPtr(hwndDir, GWLP_HDTA));
 
          LeaveCriticalSection(&CriticalSectionDirRead);
 

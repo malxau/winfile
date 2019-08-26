@@ -561,7 +561,7 @@ ReadDirLevel(
 
             if (!lstrcmp(szMessage, szStarDotStar)) {
 
-               lpStart = (LPXDTALINK)GetWindowLong(hwndDir, GWL_HDTA);
+               lpStart = (LPXDTALINK)GetWindowLongPtr(hwndDir, GWLP_HDTA);
 
                if (lpStart) {
 
@@ -1989,7 +1989,7 @@ TreeControlWndProc(
       //
       INT i;
 
-      i = (INT)FindItemFromPath(hwndLB, (LPTSTR)lParam, wParam, NULL);
+      i = (INT)FindItemFromPath(hwndLB, (LPTSTR)lParam, (BOOL)wParam, NULL);
 
       if (i != -1)
          SendMessage(hwndLB, LB_SETCURSEL, i, 0L);
@@ -2318,7 +2318,7 @@ TreeControlWndProc(
       case LBN_SELCHANGE:
       {
          HWND hwndDir;
-         INT CurSel;
+         INT_PTR CurSel;
          UINT uStrLen;
 
          //
@@ -2374,7 +2374,7 @@ TreeControlWndProc(
       {
          RECT rect;
 
-         SetWindowLong(hwndParent, GWL_LASTFOCUS, (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
+         SetWindowLongPtr(hwndParent, GWLP_LASTFOCUS, (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
          UpdateStatus(hwndParent);  // update the status bar
 UpdateSelection:
 
@@ -2391,8 +2391,8 @@ UpdateSelection:
       }
 
       case LBN_KILLFOCUS:
-         SetWindowLong(hwndParent, GWL_LASTFOCUS, 0L);
-         SetWindowLong(hwndParent, GWL_LASTFOCUS, (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
+         SetWindowLongPtr(hwndParent, GWLP_LASTFOCUS, 0L);
+         SetWindowLongPtr(hwndParent, GWLP_LASTFOCUS, (LPARAM)GET_WM_COMMAND_HWND(wParam, lParam));
 
          goto UpdateSelection;
       }
@@ -2837,7 +2837,7 @@ SameSelection:
             HWND hwndLB;
 
 #if _WIN64
-            bChangeDisplay = GetWindowLongPtr(hwndDir, GWLP_USERDATA);
+            bChangeDisplay = (BOOL)GetWindowLongPtr(hwndDir, GWLP_USERDATA);
 #else
             bChangeDisplay = GetWindowLong(hwndDir, GWL_USERDATA);
 #endif
@@ -2881,7 +2881,7 @@ SameSelection:
          SetFocus(hwndSet);
          if ((hwndSet == hwndDir) && bChangeDisplay)
          {
-             SetWindowLong(hwndDir, GWL_NEXTHWND, (LPARAM)hwndNext);
+             SetWindowLongPtr(hwndDir, GWLP_NEXTHWND, (LPARAM)hwndNext);
          }
 
          return -2L;   // I dealt with this!
@@ -3037,7 +3037,7 @@ ResetTreeMax(
     BOOL fReCalcExtent)
 
 {
-    DWORD NumItems;
+    DWORD_PTR NumItems;
     DWORD ctr;
     PDNODE pNode;
     int Len;

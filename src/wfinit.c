@@ -122,7 +122,7 @@ InitExtensions()
    TCHAR szPath[MAXPATHLEN];
    LPTSTR p;
    HANDLE hMod;
-   FM_EXT_PROC fp;
+   FM_EXT_PROC_EX fp;
    HMENU hMenu;
    INT iMax;
    HMENU hMenuFrame;
@@ -147,11 +147,11 @@ InitExtensions()
       hMod = LoadLibrary(szPath);
 
       if (hMod) {
-         fp = (FM_EXT_PROC)GetProcAddress(hMod, FM_EXT_PROC_ENTRYW);
+         fp = (FM_EXT_PROC_EX)GetProcAddress(hMod, FM_EXT_PROC_ENTRYW);
          if (fp) {
             bUnicode = TRUE;
          } else {
-            fp = (FM_EXT_PROC)GetProcAddress(hMod, FM_EXT_PROC_ENTRYA);
+            fp = (FM_EXT_PROC_EX)GetProcAddress(hMod, FM_EXT_PROC_ENTRYA);
             bUnicode = FALSE;
          }
 
@@ -1146,9 +1146,9 @@ JAPANEND
 // wndClass.cbClsExtra     = 0;
 
 #ifdef PROGMAN
-   wndClass.cbWndExtra     = 11 * sizeof(LONG);
+   wndClass.cbWndExtra     = 11 * sizeof(LONG_PTR);
 #else
-   wndClass.cbWndExtra     = 10 * sizeof(LONG);
+   wndClass.cbWndExtra     = 10 * sizeof(LONG_PTR);
 #endif
 
 

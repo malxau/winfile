@@ -27,11 +27,11 @@ LIBS=kernel32.lib user32.lib gdi32.lib comctl32.lib comdlg32.lib advapi32.lib \
 LDFLAGS=-nologo -subsystem:windows -incremental:no -out:"$(OUTDIR)/WinFile.exe"
 
 !IF $(DEBUG)==1
-CFLAGS=$(CFLAGS) -Gy -Zi -Od
+CFLAGS=$(CFLAGS) -Gy -Z7 -Od
 !ELSE
 CFLAGS=$(CFLAGS) -Gy -O1sb1
 !IF $(PDB)==1
-CFLAGS=$(CFLAGS) -Zi
+CFLAGS=$(CFLAGS) -Z7
 !ENDIF
 !ENDIF
 

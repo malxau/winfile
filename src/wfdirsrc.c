@@ -118,7 +118,7 @@ DSSetSelection(
 
    CharUpper(szSpec);
 
-   lpStart = (LPXDTALINK)GetWindowLong(GetParent(hwndLB), GWL_HDTA);
+   lpStart = (LPXDTALINK)GetWindowLongPtr(GetParent(hwndLB), GWLP_HDTA);
 
    if (!lpStart)
       return;
@@ -708,7 +708,7 @@ DSTrackPoint(
    UINT      iSel;
    MSG       msg;
    RECT      rc;
-   DWORD     dwAnchor;
+   DWORD_PTR dwAnchor;
    DWORD     dwTemp;
    LPWSTR    pch;
    BOOL      bDir;
@@ -1019,7 +1019,7 @@ DSDropObject(
    //
    // check for drop on a directory
    //
-   lpStart = (LPXDTALINK)GetWindowLong(hwndHolder, GWL_HDTA);
+   lpStart = (LPXDTALINK)GetWindowLongPtr(hwndHolder, GWLP_HDTA);
 
    //
    // If dropping on "No files." or "Access denied." then do normal thing.
@@ -1166,8 +1166,8 @@ NormalMoveCopy:
    //
    // Make sure that we don't move into same dir.
    //
-   if (GetWindowLong(hwndHolder,
-                     GWL_LISTPARMS) == SendMessage(hwndMDIClient,
+   if (GetWindowLongPtr(hwndHolder,
+                     GWLP_LISTPARMS) == SendMessage(hwndMDIClient,
                                                    WM_MDIGETACTIVE,
                                                    0,
                                                    0L)) {

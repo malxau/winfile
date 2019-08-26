@@ -930,16 +930,16 @@ NormalHelp:
 
 
        if (lpnmhdr->code == TTN_NEEDTEXT) {
-           int iExt;
+           INT iExt;
            UINT idString;
            LPTOOLTIPTEXT lpTT = (LPTOOLTIPTEXT) lParam;
            FMS_HELPSTRING tbl;
 
 
-           iExt = lpTT->hdr.idFrom/100 - IDM_EXTENSIONS - 1;
+           iExt = (INT)(lpTT->hdr.idFrom/100 - IDM_EXTENSIONS - 1);
 
            if (hwndExtensions && ((UINT)iExt < (UINT)iNumExtensions)) {
-               tbl.idCommand = lpTT->hdr.idFrom % 100;
+               tbl.idCommand = (UINT)(lpTT->hdr.idFrom % 100);
                tbl.hMenu = extensions[iExt].hMenu;
                tbl.szHelp[0] = TEXT('\0');
 
@@ -957,7 +957,7 @@ NormalHelp:
                StrNCpy(lpTT->szText, tbl.szHelp, MAXDESCLEN - 1);
 
            } else {
-               idString = lpTT->hdr.idFrom + MH_MYITEMS;
+               idString = (UINT)(lpTT->hdr.idFrom + MH_MYITEMS);
 
                if (lpTT->hdr.idFrom == IDM_CONNECTIONS) {
                    idString = IDM_CONNECT + MH_MYITEMS;

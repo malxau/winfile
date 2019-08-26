@@ -14,8 +14,7 @@
 #include "heap.h"
 #endif
 
-#include <windows.h>
-#include "wfmem.h"
+#include "winfile.h"
 
 LPXDTALINK
 MemNew()
@@ -228,7 +227,7 @@ MemClone(LPXDTALINK lpStart)
    LPXDTALINK lpPrev;
    LPXDTALINK lpLink;
    LPXDTALINK lpNext;
-   DWORD dwSize;
+   DWORD_PTR dwSize;
 
 #ifdef TESTING
 // TESTING

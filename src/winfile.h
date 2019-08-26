@@ -20,6 +20,19 @@
 #include <setjmp.h>
 #include <string.h>
 #include <memory.h>
+
+#ifndef DWORD_PTR
+#ifndef _WIN64
+#ifndef MAXUINT_PTR
+typedef UINT UINT_PTR;
+#endif
+typedef DWORD DWORD_PTR;
+typedef LONG LONG_PTR;
+typedef ULONG ULONG_PTR;
+#define SetWindowLongPtr SetWindowLong
+#define GetWindowLongPtr GetWindowLong
+#endif
+#endif
 #include "mpr.h"
 #include <wfext.h>
 #include <commdlg.h>
@@ -606,28 +619,28 @@ BOOLEAN (*lpfnSetLabel)(PWSTR,PWSTR);
 BOOLEAN (*lpfnQuerySupportedMedia)(PWSTR,PFMIFS_MEDIA_TYPE,DWORD,PDWORD);
 BOOL Callback_Function(FMIFS_PACKET_TYPE PacketType, DWORD PacketLength, PVOID PacketData);
 
-BOOL CALLBACK CancelDlgProc  (HWND, UINT, WPARAM, LPARAM);
-BOOL CALLBACK DrivesDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK AssociateDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK SearchDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK RunDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK SelectDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK SuperDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK AttribsDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK MakeDirDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK DiskLabelDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK ChooseDriveDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK FormatDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK OtherDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK CancelDlgProc  (HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK DrivesDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK AssociateDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK SearchDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK RunDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK SelectDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK SuperDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK AttribsDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK MakeDirDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK DiskLabelDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK ChooseDriveDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK FormatDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK OtherDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
 
-BOOL CALLBACK ProgressDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK IncludeDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK ConfirmDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK ProgressDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK IncludeDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK ConfirmDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
 
 // WFSEARCH.C
 
 VOID GetSearchPath(HWND hwnd, LPWSTR szTemp);
-BOOL CALLBACK SearchProgDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK SearchProgDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 VOID UpdateSearchStatus(HWND hwndLB, INT nCount);
 VOID SearchEnd(VOID);
 
@@ -710,30 +723,30 @@ VOID  GetTreeUNCName(HWND hwndTree, LPTSTR szBuf, INT nBuf);
 //
 
 
-#define GWL_SPLIT         (0*sizeof(LONG))
-#define GWL_HDTA          (0*sizeof(LONG))
+#define GWL_SPLIT         (0*sizeof(LONG_PTR))
+#define GWLP_HDTA         (0*sizeof(LONG_PTR))
 
-#define GWL_PATHLEN       (1*sizeof(LONG))
-#define GWL_TABARRAY      (1*sizeof(LONG))
+#define GWL_PATHLEN       (1*sizeof(LONG_PTR))
+#define GWLP_TABARRAY     (1*sizeof(LONG_PTR))
 
-#define GWL_VOLNAME       (2*sizeof(LONG))
-#define GWL_LISTPARMS     (2*sizeof(LONG))
+#define GWL_VOLNAME       (2*sizeof(LONG_PTR))
+#define GWLP_LISTPARMS    (2*sizeof(LONG_PTR))
 
-#define GWL_NOTIFYPAUSE  (3*sizeof(LONG))
-#define GWL_IERROR       (3*sizeof(LONG))
+#define GWL_NOTIFYPAUSE  (3*sizeof(LONG_PTR))
+#define GWL_IERROR       (3*sizeof(LONG_PTR))
 
-#define GWL_TYPE         (4*sizeof(LONG))     // > 0 Tree, -1 = search
-#define GWL_HDTAABORT    (4*sizeof(LONG))
+#define GWL_TYPE         (4*sizeof(LONG_PTR))     // > 0 Tree, -1 = search
+#define GWL_HDTAABORT    (4*sizeof(LONG_PTR))
 
-#define GWL_VIEW         (5*sizeof(LONG))
-#define GWL_SELINFO      (5*sizeof(LONG))
+#define GWL_VIEW         (5*sizeof(LONG_PTR))
+#define GWLP_SELINFO     (5*sizeof(LONG_PTR))
 
-#define GWL_SORT         (6*sizeof(LONG))
-#define GWL_NEXTHWND     (6*sizeof(LONG))
+#define GWL_SORT         (6*sizeof(LONG_PTR))
+#define GWLP_NEXTHWND    (6*sizeof(LONG_PTR))
 
-#define GWL_ATTRIBS      (7*sizeof(LONG))
-#define GWL_FSCFLAG      (8*sizeof(LONG))
-#define GWL_LASTFOCUS    (9*sizeof(LONG))
+#define GWL_ATTRIBS      (7*sizeof(LONG_PTR))
+#define GWL_FSCFLAG      (8*sizeof(LONG_PTR))
+#define GWLP_LASTFOCUS   (9*sizeof(LONG_PTR))
 
 #ifdef PROGMAN
 #define GWL_PICONBLOCK 40
@@ -1629,7 +1642,7 @@ Extern DWORD (APIENTRY *lpfnWNetDirectoryNotifyW)(HWND, LPWSTR, DWORD);
 #endif
 
 
-Extern FM_EXT_PROC lpfnAcledit;
+Extern FM_EXT_PROC_EX lpfnAcledit;
 
 Extern HANDLE hVersion             EQ( NULL );
 Extern HANDLE hMPR                 EQ( NULL );

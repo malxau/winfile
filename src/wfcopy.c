@@ -39,7 +39,7 @@ VOID DialogEnterFileStuff(register HWND hwnd);
 DWORD SafeFileRemove(LPTSTR szFileOEM);
 BOOL IsWindowsFile(LPTSTR szFileOEM);
 
-BOOL CALLBACK ReplaceDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK ReplaceDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
 
 
 BOOL
@@ -469,7 +469,7 @@ AddComponent:
              //
              if (lpszDot) {
 
-                nSpaceLeft += pT-lpszDot;
+                nSpaceLeft += (DWORD)(pT-lpszDot);
                 pT = lpszDot;
              }
 
@@ -938,7 +938,7 @@ SetDlgItemPath(HWND hDlg, INT id, LPTSTR pszPath)
 
 
 
-BOOL
+INT_PTR
 CALLBACK
 ReplaceDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -1047,7 +1047,7 @@ ConfirmDialog(
    BOOL bConfirmReadOnlyByDefault,
    BOOL *pbReadOnlyAll)
 {
-   INT nRetVal;
+   INT_PTR nRetVal;
    PARAM_REPLACEDLG params;
    WCHAR szMessage[MAXMESSAGELEN];
 
@@ -3329,7 +3329,7 @@ Error:
    lstrcpy(pCopyInfo->pFrom, pFrom);
    lstrcpy(pCopyInfo->pTo, pTo);
 
-   dwStatus = DialogBoxParam(hAppInstance,
+   dwStatus = (DWORD)DialogBoxParam(hAppInstance,
                             (LPTSTR) MAKEINTRESOURCE(DMSTATUSDLG),
                             hwndFrame,
                             ProgressDlgProc,

@@ -93,7 +93,7 @@ CompressErrMessageBox(
     LPTSTR szFile,
     PHANDLE phFile);
 
-BOOL CALLBACK
+INT_PTR CALLBACK
 CompressErrDialogProc(
     HWND hDlg,
     UINT uMsg,
@@ -379,7 +379,7 @@ VOID DisplayUncompressProgress(
 //
 /////////////////////////////////////////////////////////////////////////////
 
-BOOL CALLBACK UncompressProgDlg(
+INT_PTR CALLBACK UncompressProgDlg(
     HWND hDlg,
     UINT nMsg,
     WPARAM wParam,
@@ -598,7 +598,7 @@ void DisplayCompressProgress(
 //
 /////////////////////////////////////////////////////////////////////////////
 
-BOOL CALLBACK CompressProgDlg(
+INT_PTR CALLBACK CompressProgDlg(
     HWND hDlg,
     UINT nMsg,
     WPARAM wParam,
@@ -1770,7 +1770,7 @@ int CompressErrMessageBox(
     LPTSTR szFile,
     PHANDLE phFile)
 {
-    int rc;
+    INT_PTR rc;
 
 
     //
@@ -1809,7 +1809,7 @@ int CompressErrMessageBox(
             *phFile = INVALID_HANDLE_VALUE;
         }
 
-        return (rc);
+        return (int)(rc);
     }
 }
 
@@ -1823,7 +1823,7 @@ int CompressErrMessageBox(
 //
 /////////////////////////////////////////////////////////////////////////////
 
-BOOL CALLBACK CompressErrDialogProc(
+INT_PTR CALLBACK CompressErrDialogProc(
     HWND hDlg,
     UINT uMsg,
     WPARAM wParam,

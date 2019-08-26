@@ -40,7 +40,7 @@ typedef enum {
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-BOOL
+INT_PTR
 CALLBACK
 ChooseDriveDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -149,7 +149,7 @@ DoHelp:
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-BOOL
+INT_PTR
 CALLBACK
 DiskLabelDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -280,7 +280,7 @@ DoHelp:
 VOID
 FormatDiskette(HWND hwnd, BOOL bModal)
 {
-    INT res = 0;
+    INT_PTR res = 0;
     DWORD dwSave;
 
     // in case current drive is on floppy
@@ -505,7 +505,7 @@ FillDriveCapacity(HWND hDlg, INT nDrive, FMIFS_MEDIA_TYPE fmSelect, BOOL fDoPopu
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-BOOL
+INT_PTR
 CALLBACK
 FormatDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -959,7 +959,7 @@ Callback_Function(FMIFS_PACKET_TYPE   PacketType,
  *
  */
 
-BOOL
+INT_PTR
 CALLBACK
 CancelDlgProc(HWND hDlg,
    UINT message,
@@ -1170,7 +1170,7 @@ CancelDlgProc(HWND hDlg,
 //
 /////////////////////////////////////////////////////////////////////
 
-BOOL
+INT_PTR
 CALLBACK
 ProgressDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -1398,7 +1398,7 @@ UpdateConnections(BOOL bUpdateDriveList)
 
 }
 
-BOOL
+INT_PTR
 CALLBACK
 DrivesDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {

@@ -63,7 +63,7 @@ GetExtSelection(
       hwnd :
       HasDirWindow(hwnd);
 
-   lpStart = (LPXDTALINK)GetWindowLong(hwndView, GWL_HDTA);
+   lpStart = (LPXDTALINK)GetWindowLongPtr(hwndView, GWLP_HDTA);
    hwndLB = GetDlgItem(hwndView, IDCW_LISTBOX);
 
    if (uExtSelItems == (UINT)-1) {

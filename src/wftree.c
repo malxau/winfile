@@ -65,7 +65,7 @@ GetTreeFocus(HWND hwndTree)
    if (bDriveBar && GetFocus() == hwndDriveBar)
       return hwndDriveBar;
 
-   hwndLast = hwnd = (HWND)GetWindowLong(hwndTree, GWL_LASTFOCUS);
+   hwndLast = hwnd = (HWND)GetWindowLongPtr(hwndTree, GWLP_LASTFOCUS);
 
    while (hwnd && hwnd != hwndTree) {
       hwndLast = hwnd;
@@ -120,7 +120,7 @@ CompactPath(HDC hDC, LPTSTR lpszPath, DWORD dx)
    GetTextExtentPoint32(hDC, lpFixed, lstrlen(lpFixed), &sizeF);
 
    while (TRUE) {
-      GetTextExtentPoint32(hDC, lpszPath, lpEnd - lpszPath, &sizeT);
+      GetTextExtentPoint32(hDC, lpszPath, (DWORD)(lpEnd - lpszPath), &sizeT);
       len = sizeF.cx + sizeT.cx;
 
       if (bEllipsesIn)
@@ -552,7 +552,7 @@ TreeWndProc(
 
             SetWindowLong(hwnd, GWL_NOTIFYPAUSE, 0L);
             SetWindowLong(hwnd, GWL_SPLIT, dxSplit);
-            SetWindowLong(hwnd, GWL_LASTFOCUS, 0L);
+            SetWindowLongPtr(hwnd, GWLP_LASTFOCUS, 0L);
             SetWindowLong(hwnd, GWL_FSCFLAG, FALSE);
 
             SetWindowLong(hwnd, GWL_VOLNAME, 0L);
@@ -566,7 +566,7 @@ TreeWndProc(
                return -1;
 
             GetTreeWindows(hwnd, &hwndTree, &hwndDir);
-            SetWindowLong(hwnd, GWL_LASTFOCUS, (LPARAM)(hwndTree ? hwndTree : hwndDir));
+            SetWindowLongPtr(hwnd, GWLP_LASTFOCUS, (LPARAM)(hwndTree ? hwndTree : hwndDir));
 
             iNumWindows++;
 
@@ -643,7 +643,7 @@ TreeWndProc(
 
             UpdateStatus(hwnd);
 
-            hwndFocus = (HWND)GetWindowLong(hwnd, GWL_LASTFOCUS);
+            hwndFocus = (HWND)GetWindowLongPtr(hwnd, GWLP_LASTFOCUS);
             SetFocus(hwndFocus);
 
             SwitchDriveSelection(hwnd, TRUE);
@@ -654,7 +654,7 @@ TreeWndProc(
 
       case WM_SETFOCUS:
 
-          hwndFocus = (HWND)GetWindowLong(hwnd, GWL_LASTFOCUS);
+          hwndFocus = (HWND)GetWindowLongPtr(hwnd, GWLP_LASTFOCUS);
           SetFocus(hwndFocus);
           break;
 

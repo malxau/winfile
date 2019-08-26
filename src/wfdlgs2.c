@@ -102,7 +102,7 @@ StarFilename(LPTSTR pszPath)
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-BOOL
+INT_PTR
 CALLBACK
 SearchDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -231,7 +231,7 @@ DoHelp:
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-BOOL
+INT_PTR
 CALLBACK
 RunDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -527,7 +527,7 @@ MessWithRenameDirPath(LPTSTR pszPath)
 // The calling routine (AppCommandProc()) sets 'dwSuperDlgMode' before
 // calling DialogBox() to indicate which function is being used.
 
-BOOL
+INT_PTR
 CALLBACK
 SuperDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -634,7 +634,7 @@ JAPANEND
             wParam = IDD_FROM;
          else
             wParam = IDD_TO;
-         SendDlgItemMessage(hDlg, wParam, EM_LIMITTEXT, COUNTOF(szTo) - 1, 0L);
+         SendDlgItemMessage(hDlg, (int)wParam, EM_LIMITTEXT, COUNTOF(szTo) - 1, 0L);
 
          break;
       }
@@ -1174,7 +1174,7 @@ FillVersionList(HWND hDlg)
 
    DWORD cbValue;
    UINT i, j, cchOffset;
-   INT idx;
+   INT_PTR idx;
    HWND hwndLB;
 
    hwndLB = GetDlgItem(hDlg, IDD_VERSION_KEY);
@@ -1271,7 +1271,8 @@ InitPropertiesDialog(
    WCHAR szTemp[MAXPATHLEN + 20];
    WCHAR szBuf[MAXPATHLEN];
    WCHAR szNum[MAXPATHLEN];
-   INT i, iMac, iCount, dyButton;
+   INT i, iCount, dyButton;
+   INT_PTR iMac;
    RECT rc, rcT;
    DWORD dwAttrib;
    FILETIME ftLastWrite;
@@ -1632,7 +1633,7 @@ FullPath:
 // assumes the active MDI child has a directory window
 /*--------------------------------------------------------------------------*/
 
-BOOL
+INT_PTR
 CALLBACK
 AttribsDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -1888,7 +1889,7 @@ DoHelp:
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-BOOL
+INT_PTR
 CALLBACK
 MakeDirDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {

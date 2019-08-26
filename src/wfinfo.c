@@ -1505,7 +1505,7 @@ UpdateDriveListComplete(VOID)
    HWND hwnd, hwndNext;
    DRIVE drive;
    DRIVEIND driveInd;
-   INT CurSel;
+   INT_PTR CurSel;
    TCHAR szPath[2*MAXPATHLEN];
    LPTSTR lpszVol, lpszOldVol;
 
@@ -1773,9 +1773,9 @@ Fail:
 
    if (hAcledit) {
 
-      lpfnAcledit = (FM_EXT_PROC) GetProcAddress(hAcledit, FM_EXT_PROC_ENTRYW);
+      lpfnAcledit = (FM_EXT_PROC_EX) GetProcAddress(hAcledit, FM_EXT_PROC_ENTRYW);
       if (!lpfnAcledit)
-         lpfnAcledit = (FM_EXT_PROC) GetProcAddress(hAcledit, FM_EXT_PROC_ENTRYA);
+         lpfnAcledit = (FM_EXT_PROC_EX) GetProcAddress(hAcledit, FM_EXT_PROC_ENTRYA);
 
       ls.wMenuDelta = bias;
       ls.hMenu = GetSubMenu(hMenuFrame, IDM_SECURITY);

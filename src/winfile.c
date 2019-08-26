@@ -1193,7 +1193,7 @@ EnablePropertiesMenu(
    if (!pSel || (lstrlen (pSel) == 3 && pSel[2] == CHAR_BACKSLASH))
       return (FALSE);
 
-   hwndLB = (HWND)GetWindowLong(hwndActive, GWL_LASTFOCUS);
+   hwndLB = (HWND)GetWindowLongPtr(hwndActive, GWLP_LASTFOCUS);
 
    if (!hwndLB)
       return (FALSE);
@@ -1215,7 +1215,7 @@ EnablePropertiesMenu(
       //
       // Lock down DTA data
       //
-      if (!(lpStart = (LPXDTALINK)GetWindowLong(GetParent(hwndLB), GWL_HDTA)))
+      if (!(lpStart = (LPXDTALINK)GetWindowLongPtr(GetParent(hwndLB), GWLP_HDTA)))
          return (FALSE);
 
       if (dwHilight <= 0)

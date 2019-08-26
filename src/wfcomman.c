@@ -767,7 +767,7 @@ AppCommandProc(register DWORD id)
    BOOL          bTemp;
    HWND          hwndT;
    TCHAR         szPath[MAXPATHLEN];
-   INT           ret;
+   INT_PTR       ret;
 
    hwndActive = (HWND)SendMessage(hwndMDIClient, WM_MDIGETACTIVE, 0, 0L);
    if (hwndActive && GetWindowLong(hwndActive, GWL_STYLE) & WS_MAXIMIZE)
@@ -1060,7 +1060,7 @@ AppCommandProc(register DWORD id)
          //
          // Is the first item the [..] directory?
          //
-         lpStart = (LPXDTALINK)GetWindowLong(hwndDir, GWL_HDTA);
+         lpStart = (LPXDTALINK)GetWindowLongPtr(hwndDir, GWLP_HDTA);
 
          if (lpStart) {
 
@@ -1297,7 +1297,7 @@ AppCommandProc(register DWORD id)
 
 DealWithNetError:
 
-            FormatError(TRUE, szMessage, COUNTOF(szMessage), ret);
+            FormatError(TRUE, szMessage, COUNTOF(szMessage), (DWORD)ret);
 
             LoadString(hAppInstance, IDS_NETERR, szTitle, COUNTOF(szTitle));
             MessageBox(hwndFrame, szMessage, szTitle, MB_OK|MB_ICONSTOP);
@@ -1365,7 +1365,7 @@ DealWithNetError:
          ret = UpdateConnectionsOnConnect();
 
          if (bNewWinOnConnect && -1 != ret) {
-            NewTree(ret, hwndActive);
+            NewTree((DRIVE)ret, hwndActive);
          }
 
          //
@@ -1381,7 +1381,7 @@ DealWithNetError:
 
 DealWithNetError_NotifyResume:
 
-         FormatError(TRUE, szMessage, COUNTOF(szMessage), ret);
+         FormatError(TRUE, szMessage, (DWORD)COUNTOF(szMessage), (DWORD)ret);
 
          LoadString(hAppInstance, IDS_NETERR, szTitle, COUNTOF(szTitle));
          MessageBox(hwndFrame, szMessage, szTitle, MB_OK|MB_ICONSTOP);

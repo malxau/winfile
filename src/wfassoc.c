@@ -142,7 +142,7 @@ PEXT pExtBase = NULL;
 
 // Prototypes
 
-BOOL CALLBACK AssociateFileDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK AssociateFileDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam);
 BOOL AssociateDlgInit(HWND hDlg, LPTSTR lpszExt, INT iSel);
 VOID AssoicateFileDlgCommand(HWND hDlg, WPARAM wParam, LPARAM lParam, PASSOCIATEFILEDLGINFO pAssociateFileDlgInfo);
 BOOL AssociateFileDlgExtAdd(HWND hDlg, PASSOCIATEFILEDLGINFO pAssociateFileDlgInfo);
@@ -302,7 +302,7 @@ UpdateSelectionExt(HWND hDlg, BOOL bForce)
 {
    TCHAR szExt[EXTSIZ+1];
    PEXT pExt;
-   INT i;
+   INT_PTR i;
    TCHAR c, c2;
    PTCHAR p;
    PFILETYPE pFileType;
@@ -411,13 +411,13 @@ UpdateSelectionExt(HWND hDlg, BOOL bForce)
 //--------------------------------------------------------------------------
 
 
-BOOL
+INT_PTR
 CALLBACK
 AssociateDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    TCHAR szTemp[STRINGSIZ];
    PFILETYPE pFileType, pft2;
-   INT i;
+   INT_PTR i;
    DWORD dwError;
    PEXT pExt, pExtNext;
 
@@ -752,7 +752,7 @@ DoConfigWinIni:
          //
          // Set it to the next thing
          //
-         dwError = SendDlgItemMessage(hDlg, IDD_CLASSLIST, LB_SETCURSEL, i, 0L);
+         dwError = (DWORD)SendDlgItemMessage(hDlg, IDD_CLASSLIST, LB_SETCURSEL, i, 0L);
          if (LB_ERR == dwError)
             i--;
 
@@ -1038,7 +1038,7 @@ DoHelp:
 /////////////////////////////////////////////////////////////////////
 
 
-BOOL
+INT_PTR
 CALLBACK
 AssociateFileDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -1219,7 +1219,7 @@ AssociateFileDlgCommand(HWND hDlg,
    LPARAM lParam,
    PASSOCIATEFILEDLGINFO pAssociateFileDlgInfo)
 {
-   INT i;
+   INT_PTR i;
    TCHAR szExt[EXTSIZ];
    BOOL bChange;
 
@@ -1405,13 +1405,13 @@ AddDelUpdate:
       if (BN_CLICKED == GET_WM_COMMAND_CMD(wParam, lParam))
       {
          i = pAssociateFileDlgInfo->iAction =
-            SendDlgItemMessage(hDlg, IDD_ACTION, CB_GETCURSEL, 0, 0L);
+            (INT)SendDlgItemMessage(hDlg, IDD_ACTION, CB_GETCURSEL, 0, 0L);
 
-         DDEDlgRead(hDlg, pAssociateFileDlgInfo, i);
+         DDEDlgRead(hDlg, pAssociateFileDlgInfo, (INT)i);
          pAssociateFileDlgInfo->DDEInfo[i].bUsesDDE =
             SendDlgItemMessage(hDlg, IDD_DDE, BM_GETCHECK, 0, 0L) != BST_UNCHECKED;
 
-         DDEUpdate(hDlg, pAssociateFileDlgInfo,i);
+         DDEUpdate(hDlg, pAssociateFileDlgInfo, (INT)i);
 
          //
          // Modified, must update!
@@ -2258,7 +2258,7 @@ DWORD
 FileTypeRead(HWND hDlg,
    PASSOCIATEFILEDLGINFO pAssociateFileDlgInfo)
 {
-   UINT i;
+   UINT_PTR i;
    PEXT pExt;
    PEXT pExtNext;
    PFILETYPE pFileType = pAssociateFileDlgInfo->pFileType;
@@ -2366,7 +2366,7 @@ FileTypeRead(HWND hDlg,
 
       for (i=0; i < DDETYPEMAX; i++) {
          // Read in everything
-         if (ERROR_SUCCESS != (dwError = DDERead(pAssociateFileDlgInfo, i)))
+         if (ERROR_SUCCESS != (dwError = DDERead(pAssociateFileDlgInfo, (UINT)i)))
             break;
       }
    }
@@ -2890,19 +2890,19 @@ VOID
 ActionUpdate(HWND hDlg,
    PASSOCIATEFILEDLGINFO pAssociateFileDlgInfo)
 {
-    INT i;
+    INT_PTR i;
 
     i = SendDlgItemMessage(hDlg, IDD_ACTION, CB_GETCURSEL, 0, 0L);
 
     //
     // Update out internal variable
     //
-    pAssociateFileDlgInfo->iAction = i;
+    pAssociateFileDlgInfo->iAction = (INT)i;
     SetDlgItemText( hDlg,
                     IDD_COMMAND,
                     pAssociateFileDlgInfo->DDEInfo[i].szCommand );
 
-    DDEUpdate(hDlg, pAssociateFileDlgInfo, i);
+    DDEUpdate(hDlg, pAssociateFileDlgInfo, (INT)i);
 }
 
 
@@ -3165,7 +3165,7 @@ AssociateFileDlgExtDelete(HWND hDlg,
    PASSOCIATEFILEDLGINFO pAssociateFileDlgInfo)
 {
     PEXT pExt;
-    INT i;
+    INT_PTR i;
 
 
     GetDlgItemText(hDlg, IDD_EXT, pAssociateFileDlgInfo->szExt, COUNTOF(pAssociateFileDlgInfo->szExt));
@@ -3475,7 +3475,7 @@ DWORD
 RegExtDelete(HWND hDlg, HKEY hk, PEXT pExt)
 {
     DWORD dwError;
-    INT i;
+    INT_PTR i;
     PEXT pExt2;
 
 

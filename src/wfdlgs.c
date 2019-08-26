@@ -126,7 +126,7 @@ DO_AGAIN:
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-BOOL
+INT_PTR
 CALLBACK
 OtherDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -218,7 +218,7 @@ DoHelp:
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-BOOL
+INT_PTR
 CALLBACK
 IncludeDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -321,7 +321,7 @@ DoHelp:
 }
 
 
-BOOL
+INT_PTR
 CALLBACK
 SelectDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -397,7 +397,7 @@ DoHelp:
 }
 
 
-BOOL
+UINT_PTR
 CALLBACK
 FontHookProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -601,7 +601,7 @@ NewFont()
                       hwndT2,
                       hFont,
                       GetWindowLong(hwnd, GWL_VIEW),
-                      (LPXDTALINK)GetWindowLong(hwndT, GWL_HDTA));
+                      (LPXDTALINK)GetWindowLongPtr(hwndT, GWLP_HDTA));
 
             InvalidateRect(hwndT2, NULL, TRUE);
          }
@@ -633,7 +633,7 @@ NewFont()
 /*                                                                          */
 /*--------------------------------------------------------------------------*/
 
-BOOL
+INT_PTR
 CALLBACK
 ConfirmDlgProc(HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {

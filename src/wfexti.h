@@ -12,10 +12,12 @@
 #ifndef _INC_WFEXTI
 #define _INC_WFEXTI
 
+typedef DWORD (APIENTRY *FM_EXT_PROC_EX)(HWND, WORD, LPARAM);
+
 //------------------ private stuff ---------------------------  /* ;Internal */
                                                                 /* ;Internal */
 typedef struct _EXTENSION {                                     /* ;Internal */
-        DWORD    (APIENTRY *ExtProc)(HWND, WORD, LONG);         /* ;Internal */
+        DWORD    (APIENTRY *ExtProc)(HWND, WORD, LPARAM);       /* ;Internal */
         WORD     Delta;                                         /* ;Internal */
         HANDLE   hModule;                                       /* ;Internal */
         HMENU    hMenu;                                         /* ;Internal */

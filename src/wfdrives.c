@@ -762,7 +762,7 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
                       HWND hwndLB;
 
 #if _WIN64
-                      bChangeDisplay = GetWindowLongPtr(hwndDir, GWLP_USERDATA);
+                      bChangeDisplay = (BOOL)GetWindowLongPtr(hwndDir, GWLP_USERDATA);
 #else
                       bChangeDisplay = GetWindowLong(hwndDir, GWL_USERDATA);
 #endif
@@ -799,7 +799,7 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
                    SetFocus(hwndSet);
                    if ((hwndSet == hwndDir) && bChangeDisplay)
                    {
-                       SetWindowLong(hwndDir, GWL_NEXTHWND, (LPARAM)hwndNext);
+                       SetWindowLongPtr(hwndDir, GWLP_NEXTHWND, (LPARAM)hwndNext);
                    }
 
                    break;
@@ -972,7 +972,7 @@ DrivesWndProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
           return TRUE;
 
       case WM_SETFOCUS:
-          SetWindowLong(hwndChild, GWL_LASTFOCUS, (LPARAM)hWnd);
+          SetWindowLongPtr(hwndChild, GWLP_LASTFOCUS, (LPARAM)hWnd);
           // fall through
 
       case WM_KILLFOCUS:
